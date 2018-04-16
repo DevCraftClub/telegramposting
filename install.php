@@ -92,6 +92,9 @@ switch ($_GET['action']) {
                         <ol>
                             <li>Для установки достаточно закинуть в корень сайта все файлы и запустить <a href="{$_SERVER['PHP_SELF']}?action=install" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a> (раз вы это читаете, значит вы молодец).</li>
 							<li>В настройках модуля укажите токен бота и ID чата, иначе работать не будет.</li>
+							<li>Открываем <b>engine/inc/addnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/addnews.php");</pre></li>
+							<li>Открываем <b>engine/inc/editnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'full_'.$item_db[0], 'comm_'.$item_db[0], 'tagscloud_', 'archives_', 'calendar_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/editnews.php");</pre></li>
+							<li>Удаляем install.php с корня сайта</li>
                         </ol>
                     </div>
                     <div class="ui segment tab" data-tab="help">
