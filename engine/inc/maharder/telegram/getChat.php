@@ -50,7 +50,7 @@ switch ($_GET['action']) {
 	
 		fwrite($handler, "<?PHP\n//	===============================\n//	Конфигурация модуля\n//	===============================\n//	Автор: Maxim Harder\n//	Сайт: https://maxim-harder.de\n//	Телеграм: http://t.me/MaHarder\n//	===============================\n//	Меняем, если скрипт неверно сохраняет\n//	===============================\n\n\$telebot = array (");
 		foreach ($telebot as $key => $value) {
-			fwrite($handler, "\t'{$name}' => \"{$value}\",\n");
+			fwrite($handler, "\t'{$key}' => \"{$value}\",\n");
 		}
 		fwrite($handler, "\t'webhook' => \"1\",\n");
 		fwrite($handler, ");\n?>");
