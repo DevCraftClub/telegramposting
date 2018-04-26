@@ -50,8 +50,10 @@ function segment($name, $inhalt, $first = FALSE) {
 	echo $out;
 }
 
-function addInput($name, $value, $label) {
-	$out = "<div class=\"field\"><input type=\"text\" id=\"{$name}\" name=\"save[{$name}]\" placeholder=\"{$label}\" value=\"{$value}\"></div>";
+function addInput($name, $value, $label, $chosen = false) {
+	if($chosen) $placebo = "class=\"chosen\"";
+	else $placebo = "";
+	$out = "<div class=\"field\"><input type=\"text\" id=\"{$name}\" name=\"save[{$name}]\" placeholder=\"{$label}\" value=\"{$value}\" {$placebo}></div>";
 	return $out;
 }
 
@@ -83,6 +85,40 @@ function addSelect($name, $value, $label, $selected) {
 	}
 	$output .= "</div></div></div>";
 	return $output;
+}
+
+function addChosenSelect($name, $value, $selected) {
+    global $db;
+    $tempList = array();
+    $tempList2 = array();
+    $tempList3 = array();
+    $sels = explode(',', $selected);
+    if($value == 'cats') {
+        $cats = $db->query("SELECT id, name FROM " . PREFIX . "_category");
+        while ($entry = $db->get_array($cats)){
+            if (in_array($entry['id'], $sels)) {
+				$tempList2[] = "<a class=\"ui label transition visible\" data-value=\"" . $entry['id'] . "\" style=\"display: inline-block !important;\">" . $entry['name'] . "<i class=\"delete icon\"></i></a>";
+				$activ2 = " active filtered";
+				$active = " selected";
+			} else {
+				$active = "";
+				$activ2 = "";
+			}
+			$tempList[] = "<option value=\"" . $entry['id'] . "\"".$active.">" . $entry['name'] . "</option>";
+			$tempList3[] = "<div class=\"item".$activ2."\" data-value=\"" . $entry['id'] . "\">" . $entry['name'] . "</div>";
+        }
+        unset($cats);
+    }
+    $output = "<div class=\"inline field\"><div class=\"label ui selection fluid dropdown multiple\" tabindex=\"0\"><select id=\"{$name}\" name=\"{$name}[]\" multiple=\"\" class=\"\">";
+    $output .= implode('', $tempList);
+	$output .= "</select><i class=\"dropdown icon\"></i>";
+	$output .= implode('', $tempList2);
+	$output .= "<div class=\"text\"></div><div class=\"menu transition hidden\" tabindex=\"-1\">";
+	$output .= implode('', $tempList3);
+	$output .= "</div></div></div>";
+
+    unset($tempList);
+    return $output;
 }
 
 function segRow($name, $descr, $action, $id = "") {
@@ -142,6 +178,25 @@ function messageOut($header, $message, $buttons){
 	</div>
 HTML;
 	echo $out;
+}
+
+function getXfields($id, $type = "post") {
+	global $db;
+
+	if($type == "post")
+		$post = $db->super_query("SELECT xfields FROM " . PREFIX . "_post WHERE id = '{$id}'");
+	 elseif($type == "user")
+		$post = $db->super_query("SELECT xfields FROM " . PREFIX . "_users WHERE user_id = '{$id}'");
+	
+	if($post) {
+		$xfout = array();
+		$fields = explode('||', $post['xfields']);
+		foreach ($fields as $key => $value) {
+			$xfout[$key] = $value;
+		}
+	} else $xfout = false;
+
+	return $xfout;
 }
 
 class pagination {
@@ -209,8 +264,7 @@ class pagination {
 		return '<div class="ui right floated pagination menu" id="'.$this->id.'">' . $htmlOut . '</div>';
 	}
 	
-    protected function searchPage( array $pagessList, $needPage )
-    {
+    protected function searchPage( array $pagessList, $needPage ) {
         foreach( $pagessList AS $chunk => $pagess  ){
             if( in_array($needPage, $pagess) ){
                 return $chunk;

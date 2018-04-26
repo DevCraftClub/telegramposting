@@ -65,7 +65,7 @@ if(count($post) > 0) {
 		$xf[$sfields[0]] = $sfields[1];
 	}
 	foreach ($tempFields[1] as $id => $value) {
-		$temes = str_replace("%xf_". $value ."%", $xf[$value], $temes);
+		$temes = str_replace('%xf_'. $value .'%', $xf[$value], $temes);
 	}
 	$temes = str_replace('<br>', "\r\n", $temes);
 	$turl = "https://api.telegram.org/bot". $telebot['token'] ."/sendMessage?chat_id=". $telebot['chat'] ."&text=" . urlencode ( $temes ) . "&parse_mode=HTML";
