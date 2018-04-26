@@ -54,12 +54,14 @@ if(count($post) > 0) {
 	$temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
 	$temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
 	preg_match_all("/%xf_(.*)%/", $temes, $tempFields);
+	$xfields = xfieldsload($post['xfields']);
 	$xfields = explode( '||', $post['xfields']);
 	$xf = array();
 	foreach ($xfields as $key => $value) {
-		$sfields = explode( '|', $value);
+		$sfields = implode( '|', $value);
 		$xf[$sfields[0]] = $sfields[1];
 	}
+	var_dump($xfields);
 	foreach ($tempFields[1] as $id => $value) {
 		$temes = str_replace('%xf_'. $value .'%', $xf[$value], $temes);
 	}
