@@ -15,7 +15,7 @@ echoheader( "<i class=\"cogs icon\"></i> ".$name." ".$version."<br><small>".$des
 $save_con = $_REQUEST['save'];
 $handler = fopen(ENGINE_DIR . '/data/'.$codename.'.php', "w");
 	
-fwrite($handler, "<?PHP\n//	===============================\n//	Конфигурация модуля\n//	===============================\n//	Автор: Maxim Harder\n//	Сайт: https://maxim-harder.de\n//	Телеграм: http://t.me/MaHarder\n//	===============================\n//	Меняем, если скрипт неверно сохраняет\n//	===============================\n\n\$telebot = array (");
+fwrite($handler, "<?PHP\n//	===============================\n//	Конфигурация модуля\n//	===============================\n//	Автор: Maxim Harder\n//	Сайт: https://maxim-harder.de\n//	Телеграм: http://t.me/MaHarder\n//	===============================\n//	Меняем, если скрипт неверно сохраняет\n//	===============================\n\n\$telebot = array (\n");
 foreach ($save_con as $name => $value) {
 	$value = htmlspecialchars($value);
 	fwrite($handler, "\t'{$name}' => \"{$value}\",\n");

@@ -40,6 +40,20 @@ switch ($_GET['action']) {
         }
         break;
 
+    case 'update':
+        try {
+            $tableSchema = array();
+            $tableSchema[] = "DELETE FROM " . PREFIX . "_admin_sections WHERE name = '{$codename}'";
+            $tableSchema[] = "INSERT INTO " . PREFIX . "_admin_sections (name, title, descr, icon, allow_groups) VALUES ('{$codename}', '{$name} v{$version}', '{$descr}', '{$codename}.png', '1')";
+            foreach ($tableSchema as $table) {
+                $db->query($table);
+            }
+            $html = "Успешно обновлено";
+        } catch (Exception $e) {
+            $fail = $e->getMessage();
+            $html = "Произошла ошибка: {$fail}";
+        }        break;
+
     default:
         $html = <<<HTML
 <!DOCTYPE html>
@@ -51,7 +65,7 @@ switch ($_GET['action']) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta http-equiv="Access-Control-Allow-Credentials" content="True">
-    <link href="https://ui.sakuranight.net/css/frame.css" rel="stylesheet">
+    <link href="/engine/skins/maharder/css/frame.css" rel="stylesheet">
     <link href="https://ui.sakuranight.net/css/prettify.css" rel="stylesheet">
     <link href="https://ui.sakuranight.net/css/installpage.css" rel="stylesheet">
     <title>{$name} v{$version}</title>
@@ -65,6 +79,7 @@ switch ($_GET['action']) {
                     <div class="ui vertical fluid tabular menu">
                         <a class="active item" data-tab="descr">Описание</a>
                         <a class="item" data-tab="install">Установка</a>
+                        <a class="item" data-tab="update11">Обновление до 1.1</a>
                         <a class="item" data-tab="update101">Обновление до 1.01</a>
                         <a class="item" data-tab="help">Поддержка</a>
                     </div>
@@ -94,8 +109,22 @@ switch ($_GET['action']) {
                             <li>Для установки достаточно закинуть в корень сайта все файлы и запустить <a href="{$_SERVER['PHP_SELF']}?action=install" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a> (раз вы это читаете, значит вы молодец).</li>
 							<li>В настройках модуля укажите токен бота и ID чата, иначе работать не будет.</li>
 							<li>Открываем <b>engine/inc/addnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/addnews.php");</pre></li>
-							<li>Открываем <b>engine/inc/editnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'full_'.$item_db[0], 'comm_'.$item_db[0], 'tagscloud_', 'archives_', 'calendar_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/editnews.php");</pre></li>
+							<li>Открываем <b>engine/inc/editnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'full_'.\$item_db[0], 'comm_'.\$item_db[0], 'tagscloud_', 'archives_', 'calendar_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/editnews.php");</pre></li>
 							<li>Удаляем install.php с корня сайта</li>
+                        </ol>
+                    </div>
+                    <div class="ui segment tab" data-tab="update11">
+                        <h2 class="ui header">
+                            <i class="fas fa-list-ol"></i>
+                            <div class="content">
+                                Обновление
+                                <div class="sub header">Обновляемая документация всегда <a href="{$helplink}" target="_blank">здесь  <i class="fas fa-external-link-alt"></i></a></div>
+                            </div>
+                        </h2>
+                        <ol>
+                            <li>Замените просто все файлы с заменой</li>
+                            <li>Запустить <a href="{$_SERVER['PHP_SELF']}?action=update" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a></li>
+                            <li>Удалить файл install.php с сервера</li>
                         </ol>
                     </div>
                     <div class="ui segment tab" data-tab="update101">
