@@ -44,7 +44,16 @@ foreach ($telebot as $name => $value) {
 
 $blockstart = [
 	segRow("Включить модуль?", "Включает и выключает модуль", addCheckbox('onof', ($telebot['onof'] == 1) ? true : false), 'onof'),
+	segRow("Включить модуль?", "Включает и выключает модуль", addCheckbox('onof', ($telebot['onof'] == 1) ? true : false), 'onof'),
 	segRow("Укажите зависимость", "Укажите поле, от чего будет зависеть отправка уведомления в телеграм.<br>Если это поле в dle_post или dle_post_extra, то впишите <b>post</b>:field|value.<br>Если это значение зависит от доп. поля, то укажите <b>xf</b>:field|value.<br>Как уже понятно, то вместо field вписываем название поля, а вместо value - значение, которое будет влиять на выборку<br>Пример:<br>- xf:telegraminform|1<br>- post:allow_main|1<br>Т.е., при этих значениях в канале телеграма появится информация", addInput('field', $telebot['field'], "Укажите зависимость"), 'field'),
+    segRow("Метод подключения", "Для file_get_contents - нужна поддержке <b>allow_url_fopen</b><br>Для cUrl нужна поддержка <b>curl</b>", addSelect('method', array(1 => "file_get_contents", 2 => "cUrl"), 'Метод подключение', $telebot['method']), 'method'),
+    segRow("Включить прокси?", "Включает и выключает прокси", addCheckbox('proxy', ($telebot['proxy'] == 1) ? true : false), 'proxy'),
+    segRow("Укажите IP-Адрес", "Укажите IP-адрес прокси сервера", addInput('proxyip', $telebot['proxyip'], "Укажите IP-адрес"), 'proxyip'),
+    segRow("Укажите IP-порт", "Укажите IP-порт прокси сервера", addInput('proxyport', $telebot['proxyport'], "Укажите IP-порт"), 'proxyport'),
+    segRow("Нужна ли авторизация?", "Если для проски нужны данные авторизации - включаем ", addCheckbox('proxyauth', ($telebot['proxyauth'] == 1) ? true : false), 'proxyauth'),
+    segRow("Укажите пользователя", "Укажите пользователя для прокси сервера", addInput('proxyuser', $telebot['proxyuser'], "Пользователь прокси"), 'proxyuser'),
+    segRow("Укажите пароль", "Укажите пароль для прокси сервера", addInput('proxypass', $telebot['proxypass'], "Пароль пользователя"), 'proxypass'),
+
 ];
 if($config['only_ssl'] && !empty($telebot['token']) && !empty($telebot['chat']) && !$telebot['webhook']) $blockstart[] = segRow("Активируем WebHook", "Для более стабильной работы нужно активировать вебхук для бота. Для этого обязателен SSL сертификат. Сертификаты от Wildcard могут не работать", "<a href=\"{$adminlink}&do=chat_id&action=webhook\">Активировать</a>", '');
 

@@ -20,6 +20,7 @@ if(!$id) return;
 @include (ENGINE_DIR . '/data/'.$codename.'.php');
 require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
 require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/version.php');
+require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php');
 
 if($telebot['onof']) {
     $xfields = explode('||', $filecontents);
@@ -74,5 +75,5 @@ if($telebot['onof']) {
     }
     $temes = str_replace('<br>', "\r\n", $temes);
     $turl = "https://api.telegram.org/bot" . $telebot['token'] . "/sendMessage?chat_id=" . $telebot['chat'] . "&text=" . urlencode($temes) . "&parse_mode=HTML";
-    file_get_contents($turl);
+    sendMessage($turl);
 }
