@@ -16,10 +16,7 @@ include ENGINE_DIR.'/data/config.php';
 require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
 require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/version.php');
 
-if($config['version_id'] < 13) die('Версия DLE ниже 13. Данная версия предназначена для версий 13 и выше.');
-
-
-
+if($config['version_id'] >= 13) die('Версия DLE ниже 13. Данная версия предназначена для версий 13 и выше.');
 
 $html = <<<HTML
 <!DOCTYPE html>
