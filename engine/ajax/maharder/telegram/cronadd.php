@@ -17,8 +17,8 @@ define( 'DATALIFEENGINE', true );
 define( 'ROOT_DIR', dirname( dirname( dirname( dirname( dirname(  __FILE__ ) ) ) ) ) );
 define( 'ENGINE_DIR', ROOT_DIR . '/engine' );
 
-include ENGINE_DIR . "/data/telegram.php";
-include ENGINE_DIR . '/data/config.php';
+include (DLEPlugins::Check(ENGINE_DIR . "/data/telegram.php"));
+include (DLEPlugins::Check(ENGINE_DIR . '/data/config.php'));
 date_default_timezone_set ( $config['date_adjust'] );
 
 if( $config['http_home_url'] == "" ) {
@@ -29,11 +29,11 @@ if( $config['http_home_url'] == "" ) {
 
 }
 
-require_once ENGINE_DIR . '/classes/mysql.php';
-require_once ENGINE_DIR . '/data/dbconfig.php';
+require_once (DLEPlugins::Check(ENGINE_DIR . '/classes/mysql.php'));
+require_once (DLEPlugins::Check(ENGINE_DIR . '/data/dbconfig.php'));
 
 if($telebot['onof'] && $telebot['cron']) {
-    require_once (ENGINE_DIR . "/inc/maharder/telegram/functions.php");
+    require_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/functions.php"));
 
     if($telebot['cron_news'] > 0) $limit = "LIMIT " . $telebot['cron_news'];
     else $limit = "";
