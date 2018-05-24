@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Origin: http://ui.sakuranight.net");
+header("Access-Control-Allow-Origin: //static.maxim-harder.de/semantic");
 
 $codename = "telegram";
 $helplink = "http://help.maxim-harder.de/forum/31-telegram-posting/";
@@ -29,8 +29,8 @@ $html = <<<HTML
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta http-equiv="Access-Control-Allow-Credentials" content="True">
     <link href="/engine/skins/maharder/css/frame.css" rel="stylesheet">
-    <link href="http://ui.sakuranight.net/css/prettify.css" rel="stylesheet">
-    <link href="http://ui.sakuranight.net/css/installpage.css" rel="stylesheet">
+    <link href="//static.maxim-harder.de/semantic/css/prettify.css" rel="stylesheet">
+    <link href="//static.maxim-harder.de/semantic/css/installpage.css" rel="stylesheet">
     <title>{$name} v{$version}</title>
 </head>
 
@@ -168,12 +168,12 @@ $html = <<<HTML
             </div>
         </div>
     </div>
-    <script src="http://ui.sakuranight.net/js/jquery.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/jquery.js"></script>
     <script src="/engine/skins/maharder/js/frame.js"></script>
     <script src="/engine/skins/maharder/js/icons.js"></script>
-    <script src="http://ui.sakuranight.net/js/prettify.js"></script>
-    <script src="http://ui.sakuranight.net/js/run_prettify.js"></script>
-    <script src="http://ui.sakuranight.net/js/installpage.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/prettify.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/run_prettify.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/installpage.js"></script>
 </body>
 
 </html>
