@@ -11,7 +11,6 @@
 //	===============================
 
 if(!$telebot['token'] && !$telebot['chat']) messageOut("Нехватает настроек", "Убедитесь, что вы сохранили токен бота и ID чата.", array($adminlink => "Настройки"));
-require_once (ENGINE_DIR . '/inc/maharder/telegram/functions.php');
 
 switch ($_GET['action']) {
 	case 'send':
@@ -26,9 +25,13 @@ switch ($_GET['action']) {
 		$temes = str_replace('[/code]', '</code>', $temes);
 		$temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
 		$temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
+        if($config['charset'] != "utf-8") $temes = mb_convert_encoding($temes, "utf-8", "windows-1251");
 		$turl = "https://api.telegram.org/bot". $telebot['token'] ."/sendMessage?chat_id=". $telebot['chat'] ."&text=" . urlencode ( $temes ) . "&parse_mode=HTML";
-        sendMessage($turl);
-		messageOut("Сообщение отправлено", "Дообщение было отправлено в чат.", array($adminlink => "Настройки", $adminlink."&do=sendMessage" => "Отправить ещё одно сообщение"));
+        $send = sendMessage($turl);
+        if($send != false)
+		    messageOut("Сообщение отправлено", "Сообщение было отправлено в чат.", array($adminlink => "Настройки", $adminlink."&do=sendMessage" => "Отправить ещё одно сообщение"));
+        else
+            messageOut("Сообщение не отправлено!", "Сообщение не было доставлено. Проверьте настройки.", array($adminlink => "Настройки", $adminlink."&do=sendMessage" => "Отправить ещё одно сообщение"));
 		break;
 
 	default:
