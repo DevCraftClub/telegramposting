@@ -19,8 +19,8 @@ if(!$id) return;
 
 $TIME = time();
 
-@include (ENGINE_DIR . '/data/'.$codename.'.php');
-require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php');
+@include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
+require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php'));
 
 if($telebot['onof']) {
 
