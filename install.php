@@ -1,6 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Origin: //static.maxim-harder.de/semantic");
+header("Access-Control-Allow-Origin: //static.maxim-harder.de/");
 
 $codename = "telegram";
 $helplink = "http://help.maxim-harder.de/forum/31-telegram-posting/";
