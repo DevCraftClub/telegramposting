@@ -41,7 +41,7 @@ if(!function_exists('sendMessage')) {
                         ),
                         'https' => array (
                             'method'=>'GET',
-                            'proxy'=>'tcp://' . $telebot['proxyip'] . ':' . $telebot['proxyport'],,
+                            'proxy'=>'tcp://' . $telebot['proxyip'] . ':' . $telebot['proxyport'],
                             'request_fulluri' => true
                         )
                     );
@@ -69,5 +69,3 @@ if(!function_exists('sendMessage')) {
         return $content;
     }
 }
-
-?>
