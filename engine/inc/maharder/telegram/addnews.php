@@ -11,10 +11,10 @@
 //	===============================
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
-global $db, $row;
+global $db, $id;
 $codename = "telegram";
 
-$id = intval($row);
+$id = intval($id);
 if(!$id) return;
 
 @include (ENGINE_DIR . '/data/'.$codename.'.php');
