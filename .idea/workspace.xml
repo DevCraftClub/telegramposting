@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="37d99a53-b8a3-400d-942a-8f6b2e369f9d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/engine/inc/maharder/assets/functions.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/inc/maharder/telegram/addnews.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/inc/maharder/telegram/addnews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/inc/maharder/telegram/editnews.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/inc/maharder/telegram/editnews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/inc/maharder/telegram/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/inc/maharder/telegram/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/accordion.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/accordion.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/accordion.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/accordion.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/ad.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/ad.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/api.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/breadcrumb.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/breadcrumb.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/button.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/button.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/card.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/card.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/checkbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/checkbox.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/checkbox.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/checkbox.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/comment.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/comment.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/container.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/container.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dimmer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dimmer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dimmer.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dimmer.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/divider.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/divider.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dropdown.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dropdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dropdown.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/dropdown.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/embed.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/embed.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/embed.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/embed.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/feed.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/feed.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/flag.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/flag.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/form.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/form.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/form.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/grid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/grid.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/header.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/header.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/icon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/icon.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/image.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/image.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/input.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/input.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/item.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/item.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/label.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/label.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/list.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/loader.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/loader.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/menu.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/menu.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/message.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/message.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/modal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/modal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/modal.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/modal.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/nag.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/nag.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/nag.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/nag.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/popup.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/popup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/popup.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/popup.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/progress.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/progress.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/progress.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/progress.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rail.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rating.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rating.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rating.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/rating.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/reset.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/reveal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/reveal.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/search.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/search.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/search.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/segment.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/segment.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/shape.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/shape.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/shape.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/shape.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sidebar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sidebar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sidebar.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sidebar.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/site.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/site.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/site.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/site.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/state.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/state.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/statistic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/statistic.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/step.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/step.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sticky.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sticky.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sticky.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/sticky.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/tab.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/tab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/tab.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/tab.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/table.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/table.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/transition.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/transition.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/transition.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/transition.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/visibility.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/components/visibility.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/frame.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/basic/assets/fonts/icons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/basic/assets/fonts/icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/basic/assets/fonts/icons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/basic/assets/fonts/icons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/fonts/icons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/fonts/icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/fonts/icons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/fonts/icons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/fonts/icons.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/default/assets/images/flags.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/github/assets/fonts/octicons-local.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/github/assets/fonts/octicons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/github/assets/fonts/octicons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/github/assets/fonts/octicons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/material/assets/fonts/icons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/material/assets/fonts/icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/material/assets/fonts/icons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/material/assets/fonts/icons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/themes/material/assets/fonts/icons.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/css/tokens.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/extra/tabs.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/extra/tabs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/js/fa-v4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/js/frame.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/js/icons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/skins/maharder/js/tokens.js" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="siteadd.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/siteadd.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-392">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addnews.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/addnews.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="713">
+              <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addnews.php" pinned="false" current-in-tab="false">
+        <entry file="file://C:/OSPanel/domains/dle130/engine/modules/addnews.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-11">
+              <caret line="407" column="372" lean-forward="true" selection-start-line="407" selection-start-column="372" selection-end-line="407" selection-end-column="372" />
+              <folding>
+                <element signature="n#style#0;n#select#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="editnews.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/editnews.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="45" column="100" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="functions.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/functions.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="237">
+              <caret line="73" column="26" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="26" />
+              <folding>
+                <element signature="e#324#3020#0#PHP" expanded="true" />
+                <element signature="e#3068#4300#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.full.php" pinned="false" current-in-tab="false">
+        <entry file="file://C:/OSPanel/domains/dle130/engine/modules/show.full.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="1324" column="76" selection-start-line="1324" selection-start-column="73" selection-end-line="1324" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>clear</find>
+      <find>set_block</find>
+      <find>block_data</find>
+      <find>[xf</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="C:/OSPanel/domains/dle130/engine/modules/addnews.php" />
+        <option value="$PROJECT_DIR$/engine/inc/maharder/telegram/siteadd.php" />
+        <option value="$PROJECT_DIR$/engine/inc/maharder/telegram/editnews.php" />
+        <option value="$PROJECT_DIR$/engine/inc/maharder/telegram/functions.php" />
+        <option value="$PROJECT_DIR$/engine/inc/maharder/telegram/addnews.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="engine" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="engine" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="inc" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="engine" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="inc" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="maharder" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="engine" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="inc" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="maharder" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="telegram" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="telegramposting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="telegramposting" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="engine" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="skins" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="C:/OSPanel/domains/dle130" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="37d99a53-b8a3-400d-942a-8f6b2e369f9d" name="Default" comment="" />
+      <created>1527529808616</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527529808616</updated>
+      <workItem from="1527529810103" duration="6229000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6229000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://C:/OSPanel/domains/dle130/engine/modules/addnews.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="407" column="372" lean-forward="true" selection-start-line="407" selection-start-column="372" selection-end-line="407" selection-end-column="372" />
+          <folding>
+            <element signature="n#style#0;n#select#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="73" column="26" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="26" />
+          <folding>
+            <element signature="e#324#3020#0#PHP" expanded="true" />
+            <element signature="e#3068#4300#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/siteadd.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-392">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/YandexDisk/arbeit/People (1)/People/parse_pic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="5" />
+          <folding>
+            <element signature="e#0#5#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/OSPanel/domains/dle130/engine/classes/templates.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-436">
+          <caret line="34" column="19" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="19" />
+          <folding>
+            <element signature="n#set_block#0;n#dle_template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DIa2024.3960/newms.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4794">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="e#61#69#1" expanded="true" />
+            <element signature="e#46#54#1" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/YandexDisk/arbeit/People (1)/People/engine/modules/people.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="53" column="32" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/editnews.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="45" column="100" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/OSPanel/domains/dle130/engine/modules/show.full.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="1324" column="76" selection-start-line="1324" selection-start-column="73" selection-end-line="1324" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine/inc/maharder/telegram/addnews.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="713">
+          <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
