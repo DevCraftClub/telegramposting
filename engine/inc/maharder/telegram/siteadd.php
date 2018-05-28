@@ -1,7 +1,7 @@
 <?php
 
 //	===============================
-//	Скрипт отправки при добавлении новости
+//	Скрипт отправки при добавлении новости с сайта
 //	===============================
 //	Автор: Maxim Harder
 //	Сайт: https://maxim-harder.de
@@ -11,14 +11,14 @@
 //	===============================
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
-global $db, $id;
+global $db, $row;
 $codename = "telegram";
 
 if(!file_exists((DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/assets/functions.php')))) {
     die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
 }
 
-$id = intval($id);
+$id = intval($row['id']);
 if(!$id) return;
 
 @include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
@@ -57,7 +57,7 @@ if($telebot['onof']) {
                     $full_link = $config['http_home_url'] . $id . "-" . $alt_name . ".html";
                 }
             } else {
-                $full_link = $config['http_home_url'] . date('Y/m/d/', strtotime($added_time)) . $alt_name . ".html";
+                $full_link = $config['http_home_url'] . date('Y/m/d/', strtotime($thistime)) . $alt_name . ".html";
             }
         } else {
             $full_link = $config['http_home_url'] . "index.php?newsid=" . $id;
