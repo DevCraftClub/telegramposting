@@ -101,7 +101,7 @@ if(!function_exists('getCategories')) {
             } else $cat_name[] = $temp_cat['name'];
         }
 
-        return implode(" " .$config['category_separator'] ." ", $cat_name);
+        return implode($config['category_separator'] ." ", $cat_name);
 
     }
 }
