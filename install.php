@@ -13,7 +13,9 @@ define('INC_DIR', ENGINE_DIR.'/inc');
 
 require_once INC_DIR.'/include/functions.inc.php';
 include ENGINE_DIR.'/data/config.php';
-require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
+if(!file_exists(ENGINE_DIR . '/inc/maharder/assets/functions.php')) {
+    die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
+} else require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
 require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/version.php');
 
 if($config['version_id'] < 13) die('Версия DLE ниже 13. Данная версия предназначена для версий 13 и выше.');
@@ -29,8 +31,8 @@ $html = <<<HTML
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta http-equiv="Access-Control-Allow-Credentials" content="True">
     <link href="/engine/skins/maharder/css/frame.css" rel="stylesheet">
-    <link href="//static.maxim-harder.de/semantic/css/prettify.css" rel="stylesheet">
-    <link href="//static.maxim-harder.de/semantic/css/installpage.css" rel="stylesheet">
+    <link href="//static.maxim-harder.de/semantic/css/prettify.css" rel="stylesheet" integrity="sha384-tGeLopS7aWCwgeqg+ah7c+iI19JU3teQPshyaQVybvOMRravAVLscwoeT4HPsfoW" crossorigin="anonymous">
+    <link rel="stylesheet" href="//static.maxim-harder.de/semantic/css/installpage.css" integrity="sha384-52WMk/u9qMdHs6Q2JvnYGca3v19hLxXAJvHYPRX5lTxss9fu3g2HS/mF4RZOiZNW" crossorigin="anonymous">
     <title>{$name} v{$version}</title>
 </head>
 
@@ -42,6 +44,7 @@ $html = <<<HTML
                     <div class="ui vertical fluid tabular menu">
                         <a class="active item" data-tab="descr">Описание</a>
                         <a class="item" data-tab="install">Установка</a>
+                        <a class="item" data-tab="update13">Обновление до 1.3</a>
                         <a class="item" data-tab="update12">Обновление до 1.2</a>
                         <a class="item" data-tab="update11">Обновление до 1.1</a>
                         <a class="item" data-tab="update101">Обновление до 1.01</a>
@@ -78,6 +81,25 @@ $html = <<<HTML
             die ("done");
 </pre></li>
 							<li>Удаляем install.php с корня сайта</li>
+                        </ol>
+                    </div>
+                    <div class="ui segment tab" data-tab="update13">
+                        <h2 class="ui header">
+                            <i class="fas fa-list-ol"></i>
+                            <div class="content">
+                                Обновление
+                                <div class="sub header">Обновляемая документация всегда <a href="{$helplink}" target="_blank">здесь  <i class="fas fa-external-link-alt"></i></a></div>
+                            </div>
+                        </h2>
+                        <ol>
+                            <li>Замените просто все файлы с заменой</li>
+                            <li>Открываем <b>/cron.php</b> и ищем <pre class="prettyprint linenums">\$allow_cron = 0;</pre> и меняем значение на <pre class="prettyprint linenums">\$allow_cron = 1;</pre></li>
+							<li>Ищем в <b>/cron.php</b> <pre class="prettyprint linenums">} elseif(\$cronmode == "antivirus") {</pre> и ставим выше <pre class="prettyprint linenums">} elseif(\$cronmode == "telegram") {
+            include(ENGINE_DIR . "/ajax/maharder/telegram/cronadd.php");
+            die ("done");
+</pre></li>
+                            <li>Запустить <a href="{$_SERVER['PHP_SELF']}?action=update" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a></li>
+                            <li>Удалить файл install.php с сервера</li>
                         </ol>
                     </div>
                     <div class="ui segment tab" data-tab="update12">
@@ -168,12 +190,12 @@ $html = <<<HTML
             </div>
         </div>
     </div>
-    <script src="//static.maxim-harder.de/semantic/js/jquery.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/jquery.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="/engine/skins/maharder/js/frame.js"></script>
     <script src="/engine/skins/maharder/js/icons.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/prettify.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/run_prettify.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/installpage.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/prettify.js" integrity="sha384-9luOpjvvELVvMT+TKP6AFimTg5Q6kp0QVdKdK1pN+7OaQnnYe5sDKnb7gctU1v6n" crossorigin="anonymous"></script>
+    <script src="//static.maxim-harder.de/semantic/js/run_prettify.js" integrity="sha384-nbv7QmJPtJfSM8Zj+wAaWoGGWcH/SfmcIkvRlkaNEr0dVOQKgFkP8uls2uiVkjy3" crossorigin="anonymous"></script>
+    <script src="//static.maxim-harder.de/semantic/js/installpage.js" integrity="sha384-+aPCYH6BOkjVB47rr71yrgeDG1acw++qivrQXhEoonmNvx+ybK1jj71aqrQApBY9" crossorigin="anonymous"></script>
 </body>
 
 </html>
