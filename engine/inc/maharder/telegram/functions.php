@@ -69,3 +69,39 @@ if(!function_exists('sendMessage')) {
         return $content;
     }
 }
+
+if(!function_exists('getCategories')) {
+    function getCategories ($news_id, $link = false) {
+        global $db, $config, $PHP_SELF;
+
+        $cat_name = array();
+        $cats = $db->super_query("SELECT category FROM " . PREFIX . "_post WHERE id = '{$news_id}'");
+        $cat = explode(',', $cats['category']);
+        foreach ($cat as $category) {
+            $temp_cat = $db->super_query("SELECT * FROM " . PREFIX . "_category WHERE id = '{$category}'");
+            if($link) {
+                if( $config['allow_alt_url'] ) {
+                    $pid = $temp_cat['parentid'];
+                    $url = "&lt;a href=\"" . $config['http_home_url'];
+                    $parent_list = array();
+                    if(isset($pid) && $pid != 0) {
+                        while($pid != 0){
+                            $par_id = $db->super_query("SELECT * FROM " . PREFIX . "_category WHERE id = '{$pid}'");
+                            $parent_list[] = $par_id['alt_name'];
+                            $pid = $par_id['parentid'];
+                        }
+                    }
+                    rsort($parent_list);
+                    $parent_list[] = $temp_cat['alt_name'];
+                    $url .= implode('/', $parent_list) . "/\" &gt;{$temp_cat['name']}&lt;/a&gt;";
+                    $cat_name[] = $url;
+                } else {
+                    $cat_name[] = "&lt;a href=\"{$PHP_SELF}?do=cat&amp;category={$temp_cat['alt_name']}\"&gt;{$temp_cat['name']}&lt;/a&gt;";
+                }
+            } else $cat_name[] = $temp_cat['name'];
+        }
+
+        return implode($config['category_separator'] ." ", $cat_name);
+
+    }
+}

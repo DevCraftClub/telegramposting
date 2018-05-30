@@ -19,8 +19,8 @@ if(!$id) return;
 
 $TIME = time();
 
-@include (ENGINE_DIR . '/data/'.$codename.'.php');
-require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php');
+@include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
+require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php'));
 
 if($telebot['onof']) {
 
@@ -65,8 +65,9 @@ if($telebot['onof']) {
         $temes = str_replace('%descr%', "%short_descr%", $temes);
         $temes = str_replace('%short_descr%', $short_story, $temes);
         $temes = str_replace('%full_descr%', $full_story, $temes);
-        $temes = str_replace('%autor%', $item_db[1], $temes);
-        $temes = str_replace('%editreason%', $editreason, $temes);
+        $temes = str_replace('%categories%', getCategories($id), $temes);
+        $temes = str_replace('%category_links%', getCategories($id, true), $temes);
+        $temes = str_replace('%autor%', $author, $temes);
         $temes = str_replace('[b]', '<b>', $temes);
         $temes = str_replace('[/b]', '</b>', $temes);
         $temes = str_replace('[i]', '<i>', $temes);
@@ -75,8 +76,18 @@ if($telebot['onof']) {
         $temes = str_replace('[/code]', '</code>', $temes);
         $temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
         $temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
+        $temes = str_replace(array("&lt;", "&gt;"),array("<", ">"), $temes);
+        preg_match_all("/\[xfgiven_(.*)\](.*)\[\/xfgiven_(.*)\]/", $temes, $tempFieldBlocks);
+        foreach ($tempFieldBlocks[1] as $id => $value) {
+            if($xf[$value]) $temes = preg_replace("'\\[xfgiven_{$value}\\](.*?)\\[/xfgiven_{$value}\\]'is", "$1", $temes);
+            else  $temes = preg_replace("'\\[xfgiven_{$value}\\](.*?)\\[/xfgiven_{$value}\\]'is", "", $temes);
+        }
+        preg_match_all("/\[xfnotgiven_(.*)\](.*)\[\/xfnotgiven_(.*)\]/", $temes, $tempNoFieldBlocks);
+        foreach ($tempNoFieldBlocks[1] as $id => $value) {
+            if(empty($xf[$value])) $temes = preg_replace("'\\[xfnotgiven_{$value}\\](.*?)\\[/xfnotgiven_{$value}\\]'is", "$1", $temes);
+            else $temes = preg_replace("'\\[xfnotgiven_{$value}\\](.*?)\\[/xfnotgiven_{$value}\\]'is", "", $temes);
+        }
         preg_match_all("/%xf_(.*)%/", $temes, $tempFields);
-
         foreach ($tempFields[1] as $id => $value) {
             $temes = str_replace('%xf_' . $value . '%', $xf[$value], $temes);
         }

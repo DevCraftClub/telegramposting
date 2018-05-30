@@ -11,55 +11,16 @@ define('ROOT_DIR', dirname (__FILE__));
 define('ENGINE_DIR', ROOT_DIR.'/engine');
 define('INC_DIR', ENGINE_DIR.'/inc');
 
-require_once ENGINE_DIR.'/classes/mysql.php';
 require_once INC_DIR.'/include/functions.inc.php';
-include ENGINE_DIR.'/data/dbconfig.php';
 include ENGINE_DIR.'/data/config.php';
-require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
+if(!file_exists(ENGINE_DIR . '/inc/maharder/assets/functions.php')) {
+    die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
+} else require_once (ENGINE_DIR . '/inc/maharder/assets/functions.php');
 require_once (ENGINE_DIR . '/inc/maharder/'.$codename.'/version.php');
 
-if($config['version_id'] >= 13) die('Версия DLE равна или больше 13. Данная версия предназначена для версий 12.1 и ниже.');
+if($config['version_id'] < 13) die('Версия DLE ниже 13. Данная версия предназначена для версий 13 и выше.');
 
-$check_db = new db;
-$check_db->connect(DBUSER, DBPASS, DBNAME, DBHOST, false);
-if( version_compare($check_db->mysql_version, '5.6.4', '<') ) {
-    $storage_engine = "MyISAM";
-} else $storage_engine = "InnoDB";
-unset($check_db);
-
-switch ($_GET['action']) {
-    case 'install':
-        try {
-            $tableSchema = array();
-            $tableSchema[] = "INSERT INTO " . PREFIX . "_admin_sections (name, title, descr, icon, allow_groups) VALUES ('{$codename}', '{$name} v{$version}', '{$descr}', '{$codename}.png', '1')";
-            $tableSchema[] = "CREATE TABLE IF NOT EXISTS " . PREFIX . "_telegram_cron ( cron_id int auto_increment primary key, news_id int not null, time timestamp null, type varchar(255) not null ) comment 'Отправка сообщений по крону';";
-            foreach ($tableSchema as $table) {
-                $db->query($table);
-            }
-            $html = "Успешно установлено";
-        } catch (Exception $e) {
-            $fail = $e->getMessage();
-            $html = "Произошла ошибка: {$fail}";
-        }
-        break;
-
-    case 'update':
-        try {
-            $tableSchema = array();
-            $tableSchema[] = "DELETE FROM " . PREFIX . "_admin_sections WHERE name = '{$codename}'";
-            $tableSchema[] = "INSERT INTO " . PREFIX . "_admin_sections (name, title, descr, icon, allow_groups) VALUES ('{$codename}', '{$name} v{$version}', '{$descr}', '{$codename}.png', '1')";
-            $tableSchema[] = "CREATE TABLE IF NOT EXISTS " . PREFIX . "_telegram_cron ( cron_id int auto_increment primary key, news_id int not null, time timestamp null, type varchar(255) not null ) comment 'Отправка сообщений по крону';";
-            foreach ($tableSchema as $table) {
-                $db->query($table);
-            }
-            $html = "Успешно обновлено";
-        } catch (Exception $e) {
-            $fail = $e->getMessage();
-            $html = "Произошла ошибка: {$fail}";
-        }        break;
-
-    default:
-        $html = <<<HTML
+$html = <<<HTML
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -70,8 +31,8 @@ switch ($_GET['action']) {
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta http-equiv="Access-Control-Allow-Credentials" content="True">
     <link href="/engine/skins/maharder/css/frame.css" rel="stylesheet">
-    <link href="//static.maxim-harder.de/semantic/css/prettify.css" rel="stylesheet">
-    <link href="//static.maxim-harder.de/semantic/css/installpage.css" rel="stylesheet">
+    <link href="//static.maxim-harder.de/semantic/css/prettify.css" rel="stylesheet" integrity="sha384-tGeLopS7aWCwgeqg+ah7c+iI19JU3teQPshyaQVybvOMRravAVLscwoeT4HPsfoW" crossorigin="anonymous">
+    <link rel="stylesheet" href="//static.maxim-harder.de/semantic/css/installpage.css" integrity="sha384-52WMk/u9qMdHs6Q2JvnYGca3v19hLxXAJvHYPRX5lTxss9fu3g2HS/mF4RZOiZNW" crossorigin="anonymous">
     <title>{$name} v{$version}</title>
 </head>
 
@@ -83,6 +44,7 @@ switch ($_GET['action']) {
                     <div class="ui vertical fluid tabular menu">
                         <a class="active item" data-tab="descr">Описание</a>
                         <a class="item" data-tab="install">Установка</a>
+                        <a class="item" data-tab="update13">Обновление до 1.3</a>
                         <a class="item" data-tab="update12">Обновление до 1.2</a>
                         <a class="item" data-tab="update11">Обновление до 1.1</a>
                         <a class="item" data-tab="update101">Обновление до 1.01</a>
@@ -111,16 +73,33 @@ switch ($_GET['action']) {
                             </div>
                         </h2>
                         <ol>
-                            <li>Для установки достаточно закинуть в корень сайта все файлы и запустить <a href="{$_SERVER['PHP_SELF']}?action=install" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a> (раз вы это читаете, значит вы молодец).</li>
-							<li>В настройках модуля укажите токен бота и ID чата, иначе работать не будет.</li>
-							<li>Открываем <b>engine/inc/addnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/addnews.php");</pre></li>
-							<li>Открываем <b>engine/inc/editnews.php</b> и ищем <pre class="prettyprint linenums">clear_cache( array('news_', 'full_'.\$item_db[0], 'comm_'.\$item_db[0], 'tagscloud_', 'archives_', 'calendar_', 'rss', 'stats') );</pre> и ставим выше <pre class="prettyprint linenums">include_once (ENGINE_DIR . "/inc/maharder/telegram/editnews.php");</pre></li>
-							<li>Открываем <b>/cron.php</b> и ищем <pre class="prettyprint linenums">\$allow_cron = 0;</pre> и меняем значение на <pre class="prettyprint linenums">\$allow_cron = 1;</pre></li>
+                            <li>Для установки достаточно закинуть в корень сайта все файлы</li>
+                            <li>Установите <b>install_telegramposting.xml</b> в админпанеле <a href="{$config['http_home_url']}{$config['admin_path']}?mod=plugins" target="_blank">через систему плагинов  <i class="fas fa-external-link-alt"></i></a>.</li>
+                            <li>Открываем <b>/cron.php</b> и ищем <pre class="prettyprint linenums">\$allow_cron = 0;</pre> и меняем значение на <pre class="prettyprint linenums">\$allow_cron = 1;</pre></li>
+							<li>Ищем в <b>/cron.php</b> <pre class="prettyprint linenums">} elseif(\$cronmode == "antivirus") {</pre> и ставим выше <pre class="prettyprint linenums">} elseif(\$cronmode == "telegram") {
+            include_once (DLEPlugins::Check(ENGINE_DIR . "/ajax/maharder/telegram/cronadd.php"));
+            die ("done");
+</pre></li>
+							<li>Удаляем install.php с корня сайта</li>
+                        </ol>
+                    </div>
+                    <div class="ui segment tab" data-tab="update13">
+                        <h2 class="ui header">
+                            <i class="fas fa-list-ol"></i>
+                            <div class="content">
+                                Обновление
+                                <div class="sub header">Обновляемая документация всегда <a href="{$helplink}" target="_blank">здесь  <i class="fas fa-external-link-alt"></i></a></div>
+                            </div>
+                        </h2>
+                        <ol>
+                            <li>Замените просто все файлы с заменой</li>
+                            <li>Открываем <b>/cron.php</b> и ищем <pre class="prettyprint linenums">\$allow_cron = 0;</pre> и меняем значение на <pre class="prettyprint linenums">\$allow_cron = 1;</pre></li>
 							<li>Ищем в <b>/cron.php</b> <pre class="prettyprint linenums">} elseif(\$cronmode == "antivirus") {</pre> и ставим выше <pre class="prettyprint linenums">} elseif(\$cronmode == "telegram") {
             include(ENGINE_DIR . "/ajax/maharder/telegram/cronadd.php");
             die ("done");
 </pre></li>
-							<li>Удаляем install.php с корня сайта</li>
+                            <li>Запустить <a href="{$_SERVER['PHP_SELF']}?action=update" target="_blank">этот скрипт  <i class="fas fa-external-link-alt"></i></a></li>
+                            <li>Удалить файл install.php с сервера</li>
                         </ol>
                     </div>
                     <div class="ui segment tab" data-tab="update12">
@@ -211,19 +190,15 @@ switch ($_GET['action']) {
             </div>
         </div>
     </div>
-    <script src="//static.maxim-harder.de/semantic/js/jquery.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/jquery.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="/engine/skins/maharder/js/frame.js"></script>
     <script src="/engine/skins/maharder/js/icons.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/prettify.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/run_prettify.js"></script>
-    <script src="//static.maxim-harder.de/semantic/js/installpage.js"></script>
+    <script src="//static.maxim-harder.de/semantic/js/prettify.js" integrity="sha384-9luOpjvvELVvMT+TKP6AFimTg5Q6kp0QVdKdK1pN+7OaQnnYe5sDKnb7gctU1v6n" crossorigin="anonymous"></script>
+    <script src="//static.maxim-harder.de/semantic/js/run_prettify.js" integrity="sha384-nbv7QmJPtJfSM8Zj+wAaWoGGWcH/SfmcIkvRlkaNEr0dVOQKgFkP8uls2uiVkjy3" crossorigin="anonymous"></script>
+    <script src="//static.maxim-harder.de/semantic/js/installpage.js" integrity="sha384-+aPCYH6BOkjVB47rr71yrgeDG1acw++qivrQXhEoonmNvx+ybK1jj71aqrQApBY9" crossorigin="anonymous"></script>
 </body>
 
 </html>
 HTML;
-
-        break;
-
-}
 
 echo $html;
