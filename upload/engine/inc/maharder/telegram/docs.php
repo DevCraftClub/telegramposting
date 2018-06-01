@@ -64,6 +64,7 @@ $update13 = [
         "Обновляемая документация всегда <a href=\"{$helplink}\" target=\"_blank\">здесь  <i class=\"external alternate icon\"></i></a>",
         stepByStep(array(
             'Удалить все файлы связанные с TelegramPosting. <ul><li>engine/ajax/maharder/telegram</li><li>engine/inc/maharder/telegram</li><li>engine/skins/images/telegram.png</li></ul>',
+            'Удалить все файлы связанные с авторской админкой. <ul><li>engine/skins/maharder</li><li>engine/inc/maharder/assets</li></ul>',
             'Установить плагин через менеджер плагинов'
         ))
     ),
@@ -76,6 +77,7 @@ $update12 = [
         "Обновляемая документация всегда <a href=\"{$helplink}\" target=\"_blank\">здесь  <i class=\"external alternate icon\"></i></a>",
         stepByStep(array(
             'Удалить все файлы связанные с TelegramPosting. <ul><li>engine/ajax/maharder/telegram</li><li>engine/inc/maharder/telegram</li><li>engine/skins/images/telegram.png</li></ul>',
+            'Удалить все файлы связанные с авторской админкой. <ul><li>engine/skins/maharder</li><li>engine/inc/maharder/assets</li></ul>',
             'Установить плагин через менеджер плагинов',
             "Открываем <b>/cron.php</b> и ищем <pre class=\"prettyprint linenums\">\$allow_cron = 0;</pre> и меняем значение на <pre class=\"prettyprint linenums\">\$allow_cron = 1;</pre>",
             "Ищем в <b>/cron.php</b> <pre class=\"prettyprint linenums\">} elseif(\$cronmode == \"antivirus\") {</pre> и ставим выше <pre class=\"prettyprint linenums\">} elseif(\$cronmode == \"telegram\") {
