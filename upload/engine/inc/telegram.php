@@ -12,7 +12,7 @@
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 
-$assets = $db->super_query("SELECT count(*) FROM " . PREFIX . "_plugins WHERE name LIKE '%MaHarder Assets%' ");
+$assets = $db->super_query("SELECT count(*) as count FROM " . PREFIX . "_plugins WHERE name LIKE '%MaHarder Assets%' ");
 if($assets['count'] == 0)  die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
 
 $codename = "telegram";
