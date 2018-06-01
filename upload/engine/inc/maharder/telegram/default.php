@@ -81,6 +81,7 @@ $blockmessage = [
 ];
 $blockauthor = [
 	segRow("Автор", "", author('name')),
+	segRow("Документация", "Инструкции по установке, использованию, обновлению...", "<a href=\"{$doc_link}\">{$doc_link}</a>"),
 	segRow("Связь", "", author('social')),
 	segRow("Версия модуля", "", $version),
 	segRow("Изменения", "", author('changes')),
