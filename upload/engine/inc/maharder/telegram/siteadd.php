@@ -11,10 +11,10 @@
 //	===============================
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
-global $db, $row;
+global $db, $id;
 $codename = "telegram";
 
-$id = intval($row['id']);
+$id = intval($id);
 if(!$id) return;
 
 @include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
@@ -53,7 +53,7 @@ if($telebot['onof']) {
                     $full_link = $config['http_home_url'] . $id . "-" . $alt_name . ".html";
                 }
             } else {
-                $full_link = $config['http_home_url'] . date('Y/m/d/', strtotime($thistime)) . $alt_name . ".html";
+                $full_link = $config['http_home_url'] . date('Y/m/d/', strtotime($added_time)) . $alt_name . ".html";
             }
         } else {
             $full_link = $config['http_home_url'] . "index.php?newsid=" . $id;
