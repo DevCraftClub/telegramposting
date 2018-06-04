@@ -14,15 +14,7 @@ if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 global $db, $id;
 $codename = "telegram";
 
-<<<<<<< HEAD:engine/inc/maharder/telegram/addnews.php
-if(!file_exists((DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/assets/functions.php')))) {
-    die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
-}
-
 $id = intval($id);
-=======
-$id = intval($row['id']);
->>>>>>> origin/1.3:upload/engine/inc/maharder/telegram/siteadd.php
 if(!$id) return;
 
 @include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
