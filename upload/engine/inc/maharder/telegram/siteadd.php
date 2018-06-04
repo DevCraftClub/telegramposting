@@ -14,8 +14,6 @@ if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 global $db, $row;
 $codename = "telegram";
 
-var_dump($row);
-
 $id = intval($row['id']);
 if(!$id) return;
 
@@ -43,8 +41,6 @@ if($telebot['onof']) {
         if ($quest[$field[0]] != $field[1]) return;
         else $post_tg = true;
     }
-
-	var_dump($post_tg);
 	
     if($telebot['cron'] && $post_tg) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type, time) VALUES ('{$id}', 'add', '{$added_time}')");
     if($post_tg) {
