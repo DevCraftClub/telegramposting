@@ -16,9 +16,9 @@ echoheader( "<i class=\"cogs icon\"></i> ".$name." ".$version."<br><small>".$des
 $helplink = "http://help.maxim-harder.de/forum/31-telegram-posting/";
 $sitelink = "https://maxim-harder.de/dle/71-telegram-posting.html";
 
-$jsfiles[] = '/engine/skins/maharder/js/prettify.js';
-$jsfiles[] = '/engine/skins/maharder/js/run_prettify.js';
-$cssfiles[] = '/engine/skins/maharder/cdd/prettify.css';
+$jsfiles[] = 'engine/skins/maharder/js/prettify.js';
+$jsfiles[] = 'engine/skins/maharder/js/run_prettify.js';
+$cssfiles[] = 'engine/skins/maharder/cdd/prettify.css';
 
 $boxList = [
     'install' => [
