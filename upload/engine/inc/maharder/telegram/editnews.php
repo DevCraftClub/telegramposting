@@ -49,7 +49,7 @@ if($telebot['onof']) {
     }
 
     if($telebot['cron'] && $post_tg) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type, time) VALUES ('{$id}', 'edit', '{$added_time}')");
-    else {
+    if($post_tg) {
         if ($config['allow_alt_url']) {
             if ($config['seo_type'] == 1 OR $config['seo_type'] == 2) {
                 if (intval($category_list) and $config['seo_type'] == 2) {
@@ -72,12 +72,9 @@ if($telebot['onof']) {
         $temes = str_replace('%categories%', getCategories($id), $temes);
         $temes = str_replace('%category_links%', getCategories($id, true), $temes);
         $temes = str_replace('%autor%', $author, $temes);
-        $temes = str_replace('[b]', '<b>', $temes);
-        $temes = str_replace('[/b]', '</b>', $temes);
-        $temes = str_replace('[i]', '<i>', $temes);
-        $temes = str_replace('[/i]', '</i>', $temes);
-        $temes = str_replace('[code]', '<code>', $temes);
-        $temes = str_replace('[/code]', '</code>', $temes);
+        $temes = str_replace(array("[b]", "[/b]"), array("<b>", "</b>"), $temes);
+        $temes = str_replace(array("[i]", "[/i]"), array("<i>", "</i>"), $temes);
+        $temes = str_replace(array("[code]", "[/code]"), array("<code>", "</code>"), $temes);
         $temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
         $temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
         $temes = str_replace(array("&lt;", "&gt;"),array("<", ">"), $temes);
