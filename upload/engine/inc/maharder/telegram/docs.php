@@ -25,6 +25,10 @@ $boxList = [
         'name' => "Установка",
         'icon' => "tasks icon",
     ],
+    'update14' => [
+        'name' => "Обновление с 1.3 до 1.x",
+        'icon' => "tasks icon",
+    ],
     'update13' => [
         'name' => "Обновление с 1.2 до 1.3",
         'icon' => "tasks icon",
@@ -47,12 +51,23 @@ $install = [
         'Установка',
         "Обновляемая документация всегда <a href=\"{$helplink}\" target=\"_blank\">здесь  <i class=\"external alternate icon\"></i></a>",
         stepByStep(array(
-            "Установите <b>install_telegramposting.xml</b> в админпанеле <a href=\"{$config['http_home_url']}{$config['admin_path']}?mod=plugins\" target=\"_blank\">через систему плагинов  <i class=\"external alternate icon\"></i></a>",
+            "Установите <b>модуль</b> в админпанеле <a href=\"{$config['http_home_url']}{$config['admin_path']}?mod=plugins\" target=\"_blank\">через систему плагинов  <i class=\"external alternate icon\"></i></a>",
             "Открываем <b>/cron.php</b> и ищем <pre class=\"prettyprint linenums\">\$allow_cron = 0;</pre> и меняем значение на <pre class=\"prettyprint linenums\">\$allow_cron = 1;</pre>",
             "Ищем в <b>/cron.php</b> <pre class=\"prettyprint linenums\">} elseif(\$cronmode == \"antivirus\") {</pre> и ставим выше <pre class=\"prettyprint linenums\">} elseif(\$cronmode == \"telegram\") {
             include_once (DLEPlugins::Check(ENGINE_DIR . \"/ajax/maharder/telegram/cronadd.php\"));
             die (\"done\");
 </pre>"
+        ))
+    ),
+];
+
+$update14 = [
+    addDocItem(
+        'list ol icon',
+        'Обновление с 1.3 до 1.x',
+        "Обновляемая документация всегда <a href=\"{$helplink}\" target=\"_blank\">здесь  <i class=\"external alternate icon\"></i></a>",
+        stepByStep(array(
+            'Обновите <b>модуль</b> в админпанеле <a href=\"{$config[\'http_home_url\']}{$config[\'admin_path\']}?mod=plugins\" target=\"_blank\">через систему плагинов  <i class=\"external alternate icon\"></i></a>',
         ))
     ),
 ];
@@ -98,6 +113,7 @@ $changelog = [
 ];
 
 $columnTwo = docBoxes('install', $install, true);
+$columnTwo .= docBoxes('update14', $update14);
 $columnTwo .= docBoxes('update13', $update13);
 $columnTwo .= docBoxes('update12', $update12);
 $columnTwo .= docBoxes('changelog', $changelog);
