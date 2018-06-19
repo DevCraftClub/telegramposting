@@ -5,7 +5,7 @@
 ![DLE-12.x](https://img.shields.io/badge/DLE-12.x-red.svg?style=flat-square)
 ![DLE-13.x](https://img.shields.io/badge/DLE-13.x-green.svg?style=flat-square)
 
-![Версия_релиза](https://img.shields.io/badge/Version-1.3-orange.svg?style=flat-square)
+![Версия_релиза](https://img.shields.io/badge/Version-1.4-orange.svg?style=flat-square)
 
 # Telegram Posting
 Модификация для админпанели и глобальные функции для моих разработок
