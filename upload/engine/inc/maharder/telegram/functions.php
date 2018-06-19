@@ -12,7 +12,7 @@
 if(!function_exists('sendMessage')) {
     function sendMessage ($url) {
         global $telebot;
-        if($telebot['method'] == 1) {
+        if($telebot['method'] == 1 && $telebot['proxytype'] == "http") {
             if($telebot['proxy']) {
                 if($telebot['proxyauth']) {
                     $auth = base64_encode($telebot['proxyuser'] . ':' . $telebot['proxypass']);
@@ -51,12 +51,14 @@ if(!function_exists('sendMessage')) {
             } else {
                 $content = file_get_contents($url);
             }
-        } elseif ($telebot['method'] == 2) {
+        } elseif ($telebot['method'] == 2 || $telebot['proxytype'] == "socks") {
             if($telebot['proxy']) $proxy = $telebot['proxyip'] . ':' . $telebot['proxyport'];
+            if($telebot['proxytype'] == "socks") $proxy = "socks5://" . $proxy;
             if($telebot['proxyauth']) $proxyauth = $telebot['proxyuser'] . ':' . $telebot['proxypass'];
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
+            if($telebot['proxytype'] == "socks") curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
             if($telebot['proxy']) curl_setopt($ch, CURLOPT_PROXY, $proxy);
             if($telebot['proxyauth']) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
