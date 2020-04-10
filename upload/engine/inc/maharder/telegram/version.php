@@ -13,16 +13,22 @@
 $name = "Telegram Posting";
 $author = [
 	'name' => "Maxim Harder",
-	'site' => "https://maxim-harder.de",
+	'site' => "https://devcraft.club",
 	'social' => [
 		'Telegram' => "https://t.me/MaHarder",
-		'E-Mail' => "info@maxim-harder.de",
+		'E-Mail' => "dev@devcraft.club",
 	],
 ];
-$version = "1.4";
+$version = "1.5";
 $descr = "Позволяет уведомлять пользователей в телеграме о новых добавлениях на сайте";
 $doc_link = "?mod=" . $codename . "&do=documentation";
 $changes = [
+	'1.5' => [
+		'Обновлено для версии DLE 14.x',
+		'Добавлена возможность выводить лимитированные описания',
+		'Исправлен поиск чата',
+		'Исправлены мелкие баги и недочёты'
+	],
     '1.4' => [
         'Добавлена поддержка SOCKS5 прокси.'
     ],
