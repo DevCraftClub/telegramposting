@@ -19,7 +19,7 @@ $author = [
 		'E-Mail' => "dev@devcraft.club",
 	],
 ];
-$version = "1.5";
+$version = "1.5.1";
 $descr = "Позволяет уведомлять пользователей в телеграме о новых добавлениях на сайте";
 $doc_link = "?mod=" . $codename . "&do=documentation";
 $changes = [
