@@ -35,8 +35,10 @@ require_once (DLEPlugins::Check(ENGINE_DIR . '/data/dbconfig.php'));
 if($telebot['onof'] && $telebot['cron']) {
     require_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/functions.php"));
 
+    if (!isset($telebot['cron_news'] ) || empty($telebot['cron_news'] )) $telebot['cron_news'] = 0;
     if($telebot['cron_news'] > 0) $limit = "LIMIT " . $telebot['cron_news'];
     else $limit = "";
+
     $cron = $db->query("SELECT * FROM " . PREFIX . "_telegram_cron {$limit}" );
     if(count($cron) <= 0) return;
     else {
@@ -44,7 +46,7 @@ if($telebot['onof'] && $telebot['cron']) {
             $news_id = intval($row['news_id']);
             $news = $db->super_query("SELECT * FROM " . PREFIX . "_post LEFT JOIN " . PREFIX . "_post_extras ON " . PREFIX . "_post.id = " . PREFIX . "_post_extras.news_id  WHERE id = '{$news_id}'");
             $news_time = $row['time'];
-            if(!isset($telebot['cron_time'])) $telebot['cron_time'] = 0;
+            if(!isset($telebot['cron_time']) || empty($telebot['cron_time'])) $telebot['cron_time'] = 0;
             $cron_time = $telebot['cron_time'];
             $cron_time = $cron_time * 60;
             $news_time = $news_time+$cron_time;
@@ -91,6 +93,15 @@ if($telebot['onof'] && $telebot['cron']) {
                 $temes = str_replace('[/i]', '</i>', $temes);
                 $temes = str_replace('[code]', '<code>', $temes);
                 $temes = str_replace('[/code]', '</code>', $temes);
+	            $temes = str_replace(array("<p>", "</p>"),array("", "<br>"), $temes);
+	            preg_match_all('/%short_descr limit=(\d+)%/', $temes, $shortLimit);
+	            foreach ($shortLimit[0] as $id => $line) {
+		            $temes = str_replace($line, mb_strimwidth($short_story, 0, intval($shortLimit[1][$id]), '...'), $temes);
+	            }
+	            preg_match_all('/%full_descr limit=(\d+)%/', $temes, $fullLimit);
+	            foreach ($fullLimit[0] as $id => $line) {
+		            $temes = str_replace($line, mb_strimwidth($full_story, 0, intval($fullLimit[1][$id]), '...'), $temes);
+	            }
                 if ($row['type'] == "edit") $temes = str_replace('%editreason%', $news['reason'], $temes);
                 $temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
                 $temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
