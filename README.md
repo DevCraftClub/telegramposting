@@ -4,9 +4,9 @@
 ![DLE-11.x](https://img.shields.io/badge/DLE-11.x-red.svg?style=flat-square)
 ![DLE-12.x](https://img.shields.io/badge/DLE-12.x-red.svg?style=flat-square)
 ![DLE-13.x](https://img.shields.io/badge/DLE-13.x-red.svg?style=flat-square)
-![DLE-14.x](https://img.shields.io/badge/DLE-14.x-green.svg?style=flat-square)
+![DLE-14.x](https://img.shields.io/badge/DLE-13.x-green.svg?style=flat-square)
 
-![Версия_релиза](https://img.shields.io/badge/Version-1.5-orange.svg?style=flat-square)
+![Версия_релиза](https://img.shields.io/badge/Version-1.3-orange.svg?style=flat-square)
 
 # Telegram Posting
 Отправка сообщений в телеграм при отправке новостей на сайте
