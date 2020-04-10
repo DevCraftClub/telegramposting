@@ -63,8 +63,8 @@ if(!function_exists('sendMessage')) {
             if($telebot['proxy']) curl_setopt($ch, CURLOPT_PROXY, $proxy);
             if($telebot['proxyauth']) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
-            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
             $content = curl_exec($ch);
             curl_close($ch);
         }
