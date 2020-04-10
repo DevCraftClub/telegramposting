@@ -65,6 +65,14 @@ if($telebot['onof']) {
         $temes = str_replace('%descr%', "%short_descr%", $temes);
         $temes = str_replace('%short_descr%', $short_story, $temes);
         $temes = str_replace('%full_descr%', $full_story, $temes);
+	    preg_match_all('/%short_descr limit=(\d+)%/', $temes, $shortLimit);
+	    foreach ($shortLimit[0] as $id => $line) {
+		    $temes = str_replace($line, mb_strimwidth($short_story, 0, intval($shortLimit[1][$id]), '...'), $temes);
+	    }
+	    preg_match_all('/%full_descr limit=(\d+)%/', $temes, $fullLimit);
+	    foreach ($fullLimit[0] as $id => $line) {
+		    $temes = str_replace($line, mb_strimwidth($full_story, 0, intval($fullLimit[1][$id]), '...'), $temes);
+	    }
         $temes = str_replace('%categories%', getCategories($id), $temes);
         $temes = str_replace('%category_links%', getCategories($id, true), $temes);
         $temes = str_replace('%autor%', $author, $temes);
@@ -74,6 +82,7 @@ if($telebot['onof']) {
         $temes = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $temes);
         $temes = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $temes);
         $temes = str_replace(array("&lt;", "&gt;"),array("<", ">"), $temes);
+	    $temes = str_replace(array("<p>", "</p>"),array("", "<br>"), $temes);
         preg_match_all("/\[xfgiven_(.*)\](.*)\[\/xfgiven_(.*)\]/", $temes, $tempFieldBlocks);
         foreach ($tempFieldBlocks[1] as $id => $value) {
             if($xf[$value]) $temes = preg_replace("'\\[xfgiven_{$value}\\](.*?)\\[/xfgiven_{$value}\\]'is", "$1", $temes);

@@ -3,13 +3,14 @@
 
 ![DLE-11.x](https://img.shields.io/badge/DLE-11.x-red.svg?style=flat-square)
 ![DLE-12.x](https://img.shields.io/badge/DLE-12.x-red.svg?style=flat-square)
-![DLE-13.x](https://img.shields.io/badge/DLE-13.x-green.svg?style=flat-square)
+![DLE-13.x](https://img.shields.io/badge/DLE-13.x-red.svg?style=flat-square)
+![DLE-14.x](https://img.shields.io/badge/DLE-13.x-green.svg?style=flat-square)
 
 ![Версия_релиза](https://img.shields.io/badge/Version-1.3-orange.svg?style=flat-square)
 
 # Telegram Posting
-Модификация для админпанели и глобальные функции для моих разработок
-Совместимость проверенна на DLE-версиях 13.х
+Отправка сообщений в телеграм при отправке новостей на сайте
+Полная совместимость проверенна на DLE-версиях 14.х
 
 Для установки достаточно скачать [релиз](https://github.com/Gokujo/telegramposting/releases).
 
