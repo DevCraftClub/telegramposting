@@ -26,12 +26,15 @@ switch ($_GET['action']) {
 				'name' => ''
 			];
 			foreach ($answer['result'] as $id => $array) {
-				if ($array['channel_post']['chat']['title'] == $request['channelName']) {
+				if (in_array($request['channelName'], [ $array['channel_post']['chat']['title'], $array['message']['chat']['title'] ])) {
+					$chName = 'message';
+					if ($array['channel_post']['chat']['title'] != NULL) $chName = 'channel_post';
 					$chatArr = [
-						'id' => $array['channel_post']['chat']['id'],
-						'title' => $array['channel_post']['chat']['title'],
-						'name' => $array['channel_post']['chat']['username']
+						'id' => $array[$chName]['chat']['id'],
+						'title' => $array[$chName]['chat']['title'],
+						'name' => $array[$chName]['chat']['username']
 					];
+					break;
 				}
 
 			}
