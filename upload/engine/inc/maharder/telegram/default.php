@@ -46,27 +46,222 @@ foreach ($telebot as $name => $value) {
 	$telebot[$name] = htmlspecialchars_decode ( $value );
 }
 
-$checkMethod = array();
-$methods = array();
-$site = file_get_contents($config['http_home_url']);
-if ($site) {
-    $checkMethod[] = "Ваш хостинг <b>поддерживает</b> функционал <b>file_get_contents</b>";
-    $methods[1] = "file_get_contents";
-} else {
-    $checkMethod[] = "Ваш хостинг <b>не</b> поддерживает функционал <b>file_get_contents</b>";
-}
-if (function_exists('curl_init')) {
-    $checkMethod[] = "Ваш хостинг <b>поддерживает</b> функционал <b>cUrl</b>";
-    $methods[2] = "cUrl";
-} else $checkMethod[] = "Ваш хостинг <b>не</b> поддерживает функционал <b>cUrl</b>";
+$xfields = loadXfields();
+$categories = load_categories();
 
-$checkMethod = implode("<br>", $checkMethod);
+$dependencies = [
+	[
+		'source' => '',
+		'name' => '',
+		'value' => '-- выбираем, не стесняемся --'
+	],
+	[
+		'source' => 'post',
+		'name' => 'autor',
+		'value' => 'Автор'
+	],
+	[
+		'source' => 'post',
+		'name' => 'title',
+		'value' => 'Заголовок',
+	],
+	[
+		'source' => 'post',
+		'name' => 'date',
+		'value' => 'Дата',
+	],
+	[
+		'source' => 'post',
+		'name' => 'short_story',
+		'value' => 'Короткое содержание',
+	],
+	[
+		'source' => 'post',
+		'name' => 'full_story',
+		'value' => 'Полное содержание',
+	],
+	[
+		'source' => 'post',
+		'name' => 'descr',
+		'value' => 'Описание',
+	],
+	[
+		'source' => 'post',
+		'name' => 'alt_name',
+		'value' => 'ЧПУ Имя',
+	],
+	[
+		'source' => 'post',
+		'name' => 'comm_num',
+		'value' => 'Кол-во комментариев',
+	],
+	[
+		'source' => 'post',
+		'name' => 'allow_comm',
+		'value' => 'Разрешеить комментарии',
+	],
+	[
+		'source' => 'post',
+		'name' => 'allow_main',
+		'value' => 'Вывод на главной',
+	],
+	[
+		'source' => 'post',
+		'name' => 'approve',
+		'value' => 'Проверено',
+	],
+	[
+		'source' => 'post',
+		'name' => 'fixed',
+		'value' => 'Фиксированная новость',
+	],
+	[
+		'source' => 'post',
+		'name' => 'allow_br',
+		'value' => 'Разрешить перенос строк',
+	],
+	[
+		'source' => 'post',
+		'name' => 'symbol',
+		'value' => 'Символ',
+	],
+	[
+		'source' => 'post',
+		'name' => 'tags',
+		'value' => 'Теги',
+	],
+	[
+		'source' => 'post',
+		'name' => 'metatitle',
+		'value' => 'Метазаголовок',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'news_read',
+		'value' => 'Кол-во прочтений',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'allow_rate',
+		'value' => 'Разрешить рейтинг',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'rating',
+		'value' => 'Рейтинг',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'vote_num',
+		'value' => 'ID Опроса',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'votes',
+		'value' => 'Кол-во голосов',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'view_edit',
+		'value' => 'view_edit',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'disable_index',
+		'value' => 'Запретить индексировние',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'related_ids',
+		'value' => 'Похожие новости',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'access',
+		'value' => 'Доступ',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'editdate',
+		'value' => 'Время редактирования',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'editor',
+		'value' => 'Редактор',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'reason',
+		'value' => 'Причина',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'user_id',
+		'value' => 'ID автора',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'disable_search',
+		'value' => 'Исключить из поиска',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'need_pass',
+		'value' => 'Нужен пароль',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'allow_rss',
+		'value' => 'Резрешить вывод в RSS-ленту',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'allow_rss_turbo',
+		'value' => 'Резрешить вывод в Турбо-ленту',
+	],
+	[
+		'source' => 'post_extras',
+		'name' => 'allow_rss_dzen',
+		'value' => 'Резрешить Дзен',
+	],
+];
+
+foreach ($categories as $id => $cat) {
+	$dependencies[] = [
+		'source' => 'category',
+		'name' => $cat['id'],
+		'value' => $cat['name'],
+	];
+}
+
+foreach ($xfields as $id => $xf) {
+	$dependencies[] = [
+		'source' => 'xfields',
+		'name' => $id,
+		'value' => $xf,
+	];
+}
+
+$dependencies[] = [
+	'source' => 'other',
+	'name' => '',
+	'value' => 'Прочее',
+];
 
 $blockstart = [
 	segRow("Включить модуль?", "Включает и выключает модуль", addCheckbox('onof', ($telebot['onof'] == 1) ? true : false), 'onof'),
-	segRow("Укажите зависимость", "Укажите поле, от чего будет зависеть отправка уведомления в телеграм.<br>Если это поле в dle_post или dle_post_extra, то впишите <b>post</b>:field|value.<br>Если это значение зависит от доп. поля, то укажите <b>xf</b>:field|value.<br>Как уже понятно, то вместо field вписываем название поля, а вместо value - значение, которое будет влиять на выборку<br>Пример:<br>- xf:telegraminform|1<br>- post:allow_main|1<br>Т.е., при этих значениях в канале телеграма появится информация", addInput('field', $telebot['field'], "Укажите зависимость"), 'field'),
-    segRow("Метод подключения", "Для file_get_contents - нужна поддержка <b>allow_url_fopen</b><br>Для cUrl нужна поддержка <b>curl</b><br><br>" . $checkMethod, addSelect('method', $methods, 'Метод подключение', $telebot['method']), 'method'),
-    segRow("Включить прокси?", "Включает и выключает прокси", addCheckbox('proxy', ($telebot['proxy'] == 1) ? true : false), 'proxy'),
+	segRow("Укажите зависимость", "Выберите поля зависимости, а так-же укажите значения, по которым будет вестись проверка данных перед отправкой в телеграм.<br><br>При выборе 'Прочее' указываем из какой таблицы (post, post_extras), из какого поля и какое значение должно быть в следующей формате - таблица:поле|значение. Пример: post:allow_main|1.<br><br>Если поле не связано с новостями, то значение игнорируется.<br><br>Зависимости типа 'Категория' отмечаются любым значением, желательно единицей (1).", addInput('field',  $telebot['field'], "Укажите зависимость"), 'field'),
+	segRow("Миниатюра", "Эта заглушка будет использоваться, чтобы заполнить создать превью для сообщения", addInput('thumb_placeholder',  $telebot['thumb_placeholder'], "Укажите ссылку на миниатюру"), 'thumb_placeholder'),
+	segRow("Отношение зависимостей", "Выбираем отношение между зависимостями, по которым будет вестись фильтрация.<br><b>И</b>: Пока все зависимости не будут соответствовать заданным параметрам, отправки в телеграм не будет<br><b>ИЛИ</b>: Пока одна из зависимистей не будет соответствовать заданным параметрам, то отправки в телеграм не будет.", addSelect('field_relation', array('or' =>	"ИЛИ", 'and'	=> "И"),	'Отношение зависимостей', $telebot['field_relation']), 'field_relation'),
+	segRow("Вывод сообщений", "Выбираем вывод сообщений в телеграм.<br>
+			<b>Текстовой вывод</b> - Обыкновенный вывод сообщений.<br>
+			<b>Галлерийный вывод</b> - Вывод сообщений с поддержкой медиавставок (до 10-ти штук)<br>
+			<b>Сообщение с постером</b> - Вывод сообщения с основным постером, в качестве постера берётся первое указанное изображение, другие игнорируются<br>
+			<b>Сообщение с аудио</b> - Вывод сообщения с аудио, как основа, в качестве аудио берётся первое указанное аудио, другие игнорируются<br>
+			<b>Сообщение с видео</b> - Вывод сообщения с видео, как основа, в качестве видео берётся первое указанное видео, другие игнорируются", addSelect
+	('message_type', array('text' => "Текстовой", 'media'	=> "Галлерийный", 'photo'	=> "С постером", 'audio' => "С аудио", 'video' => "С видео"), 'Вывод сообщений', $telebot['message_type']), 'message_type'),
+	segRow("Включить прокси?", "Включает и выключает прокси", addCheckbox('proxy', ($telebot['proxy'] == 1) ? true : false), 'proxy'),
     segRow("Тип прокси", "Позволяет выбрать тип прокси для подключения. SOCKS5 проски работают ТОЛЬКО с cUrl!", addSelect('proxytype', array('http' => "http(s)", 'socks' => "socks5"), 'Тип прокси', $telebot['proxytype']), 'proxytype'),
     segRow("Укажите IP-Адрес", "Укажите IP-адрес прокси сервера", addInput('proxyip', $telebot['proxyip'], "Укажите IP-адрес"), 'proxyip'),
     segRow("Укажите IP-порт", "Укажите IP-порт прокси сервера", addInput('proxyport', $telebot['proxyport'], "Укажите IP-порт"), 'proxyport'),
@@ -87,7 +282,48 @@ $blocktelegram = [
 	segRow("Укажите ID канала", "Не давайте доступа к настройкам никому. Как узнать ID чата - можно узнать <a href=\"http://help.maxim-harder.de/topic/35-kak-uznat-id-chata/\" target=\"_blank\">тут</a>, либо узнать через скрипт <a href=\"{$adminlink}&do=chat_id\" target=\"_blank\">тут</a>.", addInput('chat', $telebot['chat'], "Укажите токен вашего бота"), 'chat'),
 ];
 $blocktemplates = [
-	segRow('Поддерживаемые теги', 'Следующие BB- & HTML-теги поддерживаются', '<b>&lt;b&gt;, &lt;strong&gt;, [b]</b> - жирный текст<br><b>&lt;i&gt;, &lt;em&gt;, [i]</b> - курсивный текст<br><b>&lt;a&gt;</b> - Ссылка<br><b>&lt;code&gt;, [code]</b> - фиксированный код<br><b>&lt;pre&gt;</b> - отформатировынй код<br><b>[url=Ссылка]Название Ссылки[/url]</b> - Форматирование ссылки с её названием<br><b>[url]Ссылка[/url]</b> - Форматирование ссылки<br><br><b>Следующие теги будут заменены на данные:</b><ul><li><b>%link%</b> - Ссылка на новость</li><li><b>%xf_field%</b> - выводит значение поля, вместо field название доп.поля</li><li><b>%autor%</b> - автор новости</li><li><b>%title%</b> - название новости</li><li><b>%short_descr%</b> - короткое описание новости</li><li><b>%full_descr%</b> - полное описание новости</li><li><b>%short_descr/full_descr limit=XXX%</b> - вместо ХХХ вводим число и после этого числа описание будет прервано ...</li></ul>', ''),
+	segRow('Поддерживаемые теги', 'Следующие BB- & HTML-теги поддерживаются', '<b>&lt;b&gt;, &lt;strong&gt;, [b]</b> - жирный текст<br>
+			<b>&lt;i&gt;, &lt;em&gt;, [i]</b> - курсивный текст<br>
+			<b>&lt;a&gt;</b> - Ссылка<br>
+			<b>&lt;code&gt;, [code]</b> - фиксированный код
+			<br><b>&lt;pre&gt;</b> - отформатировынй код
+			<br><b>[url=Ссылка]Название Ссылки[/url]</b> - Форматирование ссылки с её названием
+			<br><b>[url]Ссылка[/url]</b> - Форматирование ссылки<br><br>
+			
+			<b>Следующие теги будут заменены на данные:</b><ul>
+				<li><b>Стандартные теги полной новости</b> - Ссылка на документацию DLE: <a href="https://dle-news.ru/extras/online/all17.html" target="_blank">/extras/online/all17</a>. За исплючением ссылок на печатные и постраничные страницы. Все функциональные ссылки, типа поднятия рейтинга, были удалены.</li>
+				<li><b>Дополнительная поддержка</b> - Модуль Xf Select: <a href="https://devcraft.club/threads/xf-select-vyvod-pravilnogo-znachenija.82/" target="_blank">на сайт плагина</a>.</li>
+				<li><b>Следуищие теги теряют свою силу и будут заменены на пустышки:</b> [edit], [/edit], {favorites}, [add-favorites], [/add-favorites], [del-favorites], [/del-favorites], [complaint], [/complaint], {poll}, баннеры, {comments}, {addcomments}, {navigation}, [hide], {pages}, {PAGEBREAK}, [comments-subscribe]</li>
+				<li><b>Следующие теги были изменены для модуля:</b> [xfvalue_thumb_url_XXX], [xfvalue_image_url_XXX] - Содержимое ссылок на увелечение было заменено на описание изображения</li>
+				<li><b>{tags_no_link}</b> - Вывод тегов без ссылок</li><li><b>{hashtags}</b> - Вывод тегов в виде хештегов (тег без ссылки, но добавляется # к тегу)</li>
+				<li><b>[xfvalue_XXX_text]</b> - Если доп. поле является перекрёсной ссылкой, то выводиться будет как простой текст</li>
+				<li><b>[xfvalue_XXX_hashtag]</b> - Если доп. поле является перекрёсной ссылкой, то выводиться будет как хештег</li>
+				<li><b>[telegram_media_xfield_XXX file=Y max=Z]</b> - Добавляет значение в массив медиа для сообщения.<br>
+					XXX - название доп. поля<br>Y - Номер медиафайла, если в перечени несколько файлов (file= не обязателен)<br>
+					Z - максимальное кол-во добовляемых файлов, если в перечени несколько файлов, иначе добавятся все (max= не обязателен). Не совместим с опцией file.</li>
+				<li><b>[telegram_media_video video=X max=Z]</b> - Добавление видео в массив медиа.<br>
+					X - номер видео<br>
+					Y - Номер медиафайла, если в перечени несколько файлов (video= не обязателен)<br>
+					Z - максимальное кол-во добовляемых файлов, если в перечени несколько файлов, иначе добавятся все (max= не обязателен). Не совместим с опцией video.</li>
+				<li><b>[telegram_media_audio audio=X max=Z]</b> - Добавление аудио в массив медиа.<br>
+					Y - Номер медиафайла, если в перечени несколько файлов (audio= не обязателен). Не совместим с опцией audio.<br>
+					Z - максимальное кол-во добовляемых файлов, если в перечени несколько файлов, иначе добавятся все (max= не обязателен)</li>
+				<li><b>[telegram_media_image image=X max=Z]</b> - Добавление изображений в массив медиа.<br>
+					Y - Номер медиафайла, если в перечени несколько файлов (image= не обязателен). Не совместим с опцией image.<br>
+					Z - максимальное кол-во добовляемых файлов, если в перечени несколько файлов, иначе добавятся все (max= не обязателен). Не совместим с опцией image.</li>
+				<li><b>[telegram_media_allimages image=X max=Z]</b> - Учитываются все изображения добавленные в краткую и полную новость, а так-же из доп. полей.<br>
+					Y - Номер медиафайла, если в перечени несколько файлов (image= не обязателен)<br>
+					Z - максимальное кол-во добовляемых файлов, если в перечени несколько файлов, иначе добавятся все (max= не обязателен). Не совместим с опцией image.</li>
+				<li><b>[telegram_thumb]XXX[/telegram_thumb]</b> - Миниатюра или же превьюшка. Вместо XXX заполняем теги, иначе будет браться первое изображение из массива изображений.<br>
+				Максимальный размер изображения - 200 kb<br>
+				Максимальная высота и ширина - 320 px<br>
+				Указывать только онду ссылку на миниатюру, иначе будет браться первое изображение из массива изображений</li>
+				<li><b>[telegram_title]XXX[/telegram_title]</b> - Заголовок для сообщения в телеграме. Вмсесто XXX выши теги, иначе будет браться заголовок новости.</li>
+				<li><b>[button=X]Y[/button]</b> - Добавление кнопки под сообщением.<br>
+						X - ссылка<br>
+						Y - описание ссылки</li>
+			</ul><br><br>
+			Теги <b>[telegram_media_</b> будут обработаны в том случае, если выбран медийный шаблон. Иначе - станут пустышкой. Если загруженный файл не будет являться разрешённым форматом, то он будет загружен как документ. Максимальное кол-во медиа файлов: 10.', ''),
 	segRow('Шаблон сообщения при добавлении новости', '<b>Разрешены BB-Code и HTML-Code</b>', addTextarea('addnews', $telebot['addnews'], 'Шаблон сообщения при добавлении новости'), 'addnews'),
 	segRow('Шаблон сообщения при редактировании новости', '<b>Разрешены BB-Code и HTML-Code</b><br>Следующие теги будут заменены на данные:<ul><li><b>%editreason%</b> - если было заполнено поле \"Причина редактирования\", то используйте этот тег</li></ul>', addTextarea('editnews', $telebot['editnews'], 'Шаблон сообщения при редактировании новости'), 'editnews'),
     segRow('Шаблон сообщения при добавлении новости по крону', '<b>Разрешены BB-Code и HTML-Code</b><br>Если поле будет пустым, то будет использоваться шаблон при добавлении новости', addTextarea('cron_addnews', $telebot['cron_addnews'], 'Шаблон сообщения при добавлении новости'), 'cron_addnews'),
@@ -113,3 +349,158 @@ segment('author', $blockauthor);
 saveButton();
 if($telebot['webhook']) echo "<input type=\"hidden\" id=\"webhook\" name=\"save[webhook]\" value=\"1\">";
 echo "</form>";
+
+$dependencies = json_encode($dependencies);
+
+echo <<<HTML
+<script>
+	var dependencyFields = JSON.parse('{$dependencies}'), 
+		depID = '#field', 
+		parentDependencyFields = $(document).find(depID).first().parent(), 
+		dependencyFieldItems = 0, 
+		dependencyFieldCount = 0;
+	function createItem(num_id, field_id = null, field_value = '', field_source = '', field_name = '') {
+	    
+		let html = '<div class="item fieldItem" data-id="' + num_id + '"><div class="content"><div class="description"><div class="ui right labeled input"><input class="depField" data-source="'+field_source+'" data-field_id="'+field_id+'" data-name="'+field_name+'" type="text" placeholder="Зависимость" name="field-' + num_id + '" id="field-' + num_id + '" value="' + field_value + '"><div class="ui selection dropdown aksDd label"><input data-name="field" type="hidden" name="field-' + num_id + '-dependency" id="field-' + num_id + '-dependency">';
+										if (field_id !== null) html += '<div class="text">' + 
+											dependencyFields[field_id].value + 
+										'</div>';
+										else html += '<div class="text">Выбрать зависимость</div>';
+										html += '<i class="dropdown icon"></i><div class="menu">';
+										$.each(dependencyFields, function (key, value) {
+										    let next_id = key +1, next_item = dependencyFields[next_id];
+											html += '<div class="item"' +
+											 'data-field_num="' + num_id + '"' +
+											 'data-value="' + key + '"' +
+											 'data-source="' + value.source + '"' +
+											 'data-name="' + value.name + '"><b>' +
+											  value.source + '</b>: ' + value.value + ' ('+ value.name +')' +
+											'</div>';
+										    if(next_item !== undefined && next_item.source != value.source) html += `<div 
+										    class="ui divider"></div>`;
+										});
+										html += `</div>
+									</div>
+								</div>
+							<div class="ui icon buttons">
+								<div role="button" class="ui green button" data-action="addNewField" title="Добавить новую зависимость">
+									<i class="plus icon"></i>
+								</div>
+								<div role="button" class="ui red button" data-action="delThisField" data-id="${id}" title="Удалить зависимость">
+									<i class="minus icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>`;
+
+		return html;
+	}
+
+	function createKeyInputs() {
+		let html = '<div class="ui items" name="dependencyFields">';
+		let keysValue = {}, countFields = 0;
+		try {
+			keysValue = JSON.parse(atob($(depID).val()));
+			countFields = keysValue.length;
+		} catch (e) {
+			console.log('No field dependencies were set');
+			// $.alert({
+			// 	title: 'Ошибка!',
+			// 	content: 'Не указана зависимость!',
+			// });
+		}
+
+		if (countFields > 0) {
+			for (let i = 0; i < countFields; i++) {
+				dependencyFieldItems++;
+				dependencyFieldCount++;
+				html += createItem(dependencyFieldItems, keysValue[i].field_id, keysValue[i].value, keysValue[i].source, keysValue[i].name);
+			}
+		} else {
+			dependencyFieldItems++;
+			dependencyFieldCount++;
+			html += createItem(dependencyFieldItems);
+		}
+
+		html += '</div>';
+
+		return html;
+	}
+
+	function modifyApiKeyVal() {
+		let fields = [];
+
+		$('.aksDd').dropdown({
+			onChange: function(value, text, selectedItem) {
+			    let field_data = $(selectedItem).data(), field = $('#field-' + field_data.field_num);
+				$(field).data('source', field_data.source).data('name', field_data.name).data('field_id', value);
+				$(field).attr('data-source', field_data.source).attr('data-name', field_data.name).attr('data-field_id', value);
+			}
+		});
+
+		$('[name="dependencyFields"] .fieldItem').each(function () {
+			let thisID = $(this).data('id'), field_data = $('#field-' + thisID).data(), field_val = $(document).find('#field-' + thisID).first().val();
+		
+			if (field_data.source === 'other') {
+			    let source_split = field_val.split(':'), val_split = source_split[1].split('|');
+			    field_data.source = source_split[0];
+			    field_data.name = val_split[0];
+			    field_val = val_split[1];
+			}
+			
+			let field = {
+			    field_num: thisID,
+				name: field_data.name,
+				source: field_data.source,
+				field_id: field_data.field_id,
+				value: field_val,
+			}
+			
+			fields.push(field);
+		});
+		$(depID).val(btoa(JSON.stringify(fields)));
+	}
+
+	$(() => {
+		let inputs = createKeyInputs();
+		$(parentDependencyFields).append(inputs);
+		$('.dropdown').dropdown();
+		$(depID).hide();
+
+		$(document).on('change', '.fieldItem, [data-name="field"]', function () {
+			modifyApiKeyVal();
+		});
+
+		$(document).on('input', '.fieldItem', function () {
+			modifyApiKeyVal();
+		});
+
+		$(document).on('click', '[data-action="addNewField"]', function () {
+			dependencyFieldItems++;
+			dependencyFieldCount++;
+			let item = createItem(dependencyFieldItems);
+			$('[name="dependencyFields"]').append(item);
+			modifyApiKeyVal();
+		});
+
+		$(document).on('click', '[data-action="delThisField"]', function () {
+
+			if (dependencyFieldCount > 1) {
+				dependencyFieldCount--;
+
+				$(document).find(this).first().parents('.fieldItem').remove();
+
+				modifyApiKeyVal();
+			} else  $.alert({
+				title: 'Ошибка!',
+				content: 'Нельзя удалять все поля! Хотя-бы одно да должно остаться!',
+			});
+
+		});
+
+		
+	});
+</script>
+HTML;
+

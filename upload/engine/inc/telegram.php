@@ -13,7 +13,7 @@
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 
 $assets = $db->super_query("SELECT count(*) as count FROM " . PREFIX . "_plugins WHERE name LIKE '%MaHarder Assets%' ");
-if($assets['count'] == 0)  die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
+if($assets['count'] === 0)  die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
 
 $codename = "telegram";
 
@@ -42,10 +42,6 @@ switch ($_GET['do']) {
 
     case 'sendMessage':
         include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/sendMessage.php'));
-        break;
-
-    case 'documentation':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/docs.php'));
         break;
 
 	default:
