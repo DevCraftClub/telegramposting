@@ -64,7 +64,7 @@ if(!function_exists('sendMessage')) {
             if($telebot['proxyauth']) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
             $content = curl_exec($ch);
             curl_close($ch);
         }
@@ -73,38 +73,21 @@ if(!function_exists('sendMessage')) {
     }
 }
 
-if(!function_exists('getCategories')) {
-    function getCategories ($news_id, $link = false) {
-        global $db, $config, $PHP_SELF;
+if(!function_exists('load_categories')) {
+    function load_categories () {
+        global $db;
 
         $cat_name = array();
-        $cats = $db->super_query("SELECT category FROM " . PREFIX . "_post WHERE id = '{$news_id}'");
-        $cat = explode(',', $cats['category']);
-        foreach ($cat as $category) {
-            $temp_cat = $db->super_query("SELECT * FROM " . PREFIX . "_category WHERE id = '{$category}'");
-            if($link) {
-                if( $config['allow_alt_url'] ) {
-                    $pid = $temp_cat['parentid'];
-                    $url = "&lt;a href=\"" . $config['http_home_url'];
-                    $parent_list = array();
-                    if(isset($pid) && $pid != 0) {
-                        while($pid != 0){
-                            $par_id = $db->super_query("SELECT * FROM " . PREFIX . "_category WHERE id = '{$pid}'");
-                            $parent_list[] = $par_id['alt_name'];
-                            $pid = $par_id['parentid'];
-                        }
-                    }
-                    rsort($parent_list);
-                    $parent_list[] = $temp_cat['alt_name'];
-                    $url .= implode('/', $parent_list) . "/\" &gt;{$temp_cat['name']}&lt;/a&gt;";
-                    $cat_name[] = $url;
-                } else {
-                    $cat_name[] = "&lt;a href=\"{$PHP_SELF}?do=cat&amp;category={$temp_cat['alt_name']}\"&gt;{$temp_cat['name']}&lt;/a&gt;";
-                }
-            } else $cat_name[] = $temp_cat['name'];
+        $cats = $db->query("SELECT * FROM " . PREFIX . "_category");
+        foreach ($cats as $cat) {
+			$cat_name[] = [
+				'id'=> $cat['id'],
+				'name' => $cat['name'],
+				'alt' => $cat['alt_name']
+			];
         }
 
-        return implode($config['category_separator'] ." ", $cat_name);
+        return $cat_name;
 
     }
 }
