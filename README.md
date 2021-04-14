@@ -6,7 +6,7 @@
 ![DLE-13.x](https://img.shields.io/badge/DLE-13.x-red.svg?style=flat-square)
 ![DLE-14.x](https://img.shields.io/badge/DLE-13.x-green.svg?style=flat-square)
 
-![Версия_релиза](https://img.shields.io/badge/Version-1.3-orange.svg?style=flat-square)
+![Версия_релиза](https://img.shields.io/github/manifest-json/v/Gokujo/telegramposting?filename=manifest.json&style=flat-square)
 
 # Telegram Posting
 Отправка сообщений в телеграм при отправке новостей на сайте
