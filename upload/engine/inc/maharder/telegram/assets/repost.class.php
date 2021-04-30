@@ -1,5 +1,5 @@
 <?php
-namespace MaHarder\RePost;
+
 
 class RePost {
 	private $content, $content_type, $post_id, $post_title;
@@ -37,6 +37,367 @@ class RePost {
 		return (int) $this->post_id;
 	}
 
+	public function if_check($matches){
+		global $config, $row;
+
+		if( count($this->if_array) ) $row = $this->if_array;
+
+		$regex = '/\[if (.+?)\]((?>(?R)|.)*?)\[\/if\]/is';
+
+		if (is_array($matches)) {
+
+		$matches[1] = trim(dle_strtolower($matches[1], $config['charset']));
+		$find_type = true;
+		$match_count = 0;
+
+		if(stripos($matches[1], " or ")) {
+		$find_type = false;
+		$if_array = explode(" or ", $matches[1]);
+		} else $if_array = explode(" and ", $matches[1]);
+
+		foreach ($if_array as $if_str) {
+			$if_str = trim($if_str);
+
+			preg_match("#^(.+?)(!~|~|!=|=|>=|<=|<|>)\s*['\"]?(.*?)['\"]?$#is", $if_str, $m);
+
+			$field = trim($m[1]);
+			$operator = trim($m[2]);
+			$value = trim($m[3]);
+
+			$field = explode("xfield_",$field);
+
+			if($field[1]) $fieldvalue = $row['xfields_array'][$field[1]];
+			elseif( $field[0]=='date' OR $field[0]=='editdate' OR $field[0]=='lastdate' OR $field[0]=='reg_date') {
+
+				$fieldvalue = strtotime( date( "Y-m-d H:i", $row[$field[0]]) );
+
+				if( strtotime($value) !== false ) {
+					$value = strtotime($value);
+				}
+
+			} elseif( $field[0]=='tags' AND is_array($row[$field[0]]) ) {
+
+				$fieldvalue = array();
+
+				foreach ( $row[$field[0]] as $temp_value ) {
+
+					$fieldvalue[] = trim(dle_strtolower($temp_value, $config['charset']));
+
+				}
+
+			} elseif( $field[0]=='category' ) {
+
+				$fieldvalue = $row['cats'];
+
+			} else $fieldvalue = $row[$field[0]];
+
+			if( !is_array($fieldvalue) ) {
+				$fieldvalue = trim(dle_strtolower($fieldvalue, $config['charset']));
+			}
+
+			switch( $operator ){
+				case ">":
+
+					if( is_array($fieldvalue) ) {
+
+						$found_match = false;
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							$temp_value = floatval($temp_value);
+							$value = floatval($value);
+
+							if($temp_value > $value) {
+								$found_match = true;
+							}
+
+						}
+
+						if( $found_match ) $match_count ++;
+
+					} else {
+
+						$fieldvalue = (float)$fieldvalue;
+						$value = (float)$value;
+						if($fieldvalue > $value) $match_count ++;
+
+					}
+
+					break;
+				case "<":
+
+					if( is_array($fieldvalue) ) {
+
+						$found_match = false;
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							$temp_value = (float)$temp_value;
+							$value = (float)$value;
+
+							if($temp_value < $value) {
+								$found_match = true;
+							}
+
+						}
+
+						if( $found_match ) $match_count ++;
+
+					} else {
+
+						$fieldvalue = (float)$fieldvalue;
+						$value = (float)$value;
+						if($fieldvalue < $value) $match_count ++;
+
+					}
+
+					break;
+				case ">=":
+
+					if( is_array($fieldvalue) ) {
+
+						$found_match = false;
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							$temp_value = (float)$temp_value;
+							$value = (float)$value;
+
+							if($temp_value >= $value) {
+								$found_match = true;
+							}
+
+						}
+
+						if( $found_match ) $match_count ++;
+
+					} else {
+
+						$fieldvalue = (float)$fieldvalue;
+						$value = (float)$value;
+						if($fieldvalue >= $value) $match_count ++;
+
+					}
+
+					break;
+				case "<=":
+
+					if( is_array($fieldvalue) ) {
+
+						$found_match = false;
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							$temp_value = (float)$temp_value;
+							$value = (float)$value;
+
+							if($temp_value <= $value) {
+								$found_match = true;
+							}
+
+						}
+
+						if( $found_match ) $match_count ++;
+
+					} else {
+
+						$fieldvalue = (float)$fieldvalue;
+						$value = (float)$value;
+						if($fieldvalue <= $value) $match_count ++;
+
+					}
+
+					break;
+				case "!=":
+
+					if( is_array($fieldvalue) ) {
+
+						if ( !in_array($value, $fieldvalue)) {
+							$match_count ++;
+						}
+
+					} else {
+
+						if($fieldvalue != $value) $match_count ++;
+
+					}
+
+					break;
+
+				case "~":
+
+					if( is_array($fieldvalue) ) {
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							if(dle_strpos($temp_value,$value,$config['charset'])!==false) {
+								$match_count ++;
+								break;
+							}
+
+						}
+
+					} else {
+
+						if(dle_strpos($fieldvalue,$value,$config['charset'])!==false) $match_count ++;
+
+					}
+
+					break;
+				case "!~":
+
+					if( is_array($fieldvalue) ) {
+
+						$found_count = 0;
+
+						foreach ( $fieldvalue as $temp_value ) {
+
+							if(dle_strpos($temp_value,$value,$config['charset'])===false) {
+								$found_count ++;
+							}
+
+						}
+
+						if( $found_count == count($fieldvalue) ) $match_count ++;
+
+					} else {
+
+						if(dle_strpos($fieldvalue,$value,$config['charset'])===false) $match_count ++;
+
+					}
+
+					break;
+				default:
+
+					if( is_array($fieldvalue) ) {
+
+						if ( in_array($value, $fieldvalue)) {
+							$match_count ++;
+						}
+
+					} else {
+
+						if($fieldvalue == $value) $match_count ++;
+
+					}
+			}
+		}
+
+		if($match_count AND $match_count == count($if_array) AND $find_type) {
+			$matches = $matches[2];
+		} elseif ($match_count AND !$find_type) {
+			$matches = $matches[2];
+		} else $matches = '';
+
+		}
+
+		return preg_replace_callback($regex, array( &$this, 'if_check'), $matches);
+
+	}
+
+	private function if_category_rating( $category ) {
+		global $cat_info;
+
+		$category = explode( ',', $category );
+
+		$found = false;
+
+		foreach ( $category as $element ) {
+
+			if( isset( $cat_info[$element]['rating_type'] ) AND $cat_info[$element]['rating_type'] > -1 ) {
+				return $cat_info[$element]['rating_type'];
+			}
+
+		}
+
+		return $found;
+	}
+
+	private function ShowRating($id, $rating, $vote_num, $allow = true) {
+		global $lang, $config, $row, $dle_module;
+
+		if( !$config['rating_type'] ) {
+
+			if( $rating AND $vote_num ) $rating = round( ($rating / $vote_num), 0 );
+			else $rating = 0;
+
+			if ($rating < 0 ) $rating = 0;
+
+			if ($vote_num AND $dle_module == "showfull") {
+
+				$shema_title = " itemprop=\"aggregateRating\" itemscope itemtype=\"https://schema.org/AggregateRating\"";
+				$shema_ratig = $rating;
+				$shema_ratig_title = str_replace("&amp;amp;", "&amp;",  htmlspecialchars( strip_tags( stripslashes( $row['title'] ) ), ENT_QUOTES, $config['charset'] ) );
+				$shema = "<meta itemprop=\"itemReviewed\" content=\"{$shema_ratig_title}\"><meta itemprop=\"worstRating\" content=\"1\"><meta itemprop=\"ratingCount\" content=\"{$vote_num}\"><meta itemprop=\"ratingValue\" content=\"{$shema_ratig}\"><meta itemprop=\"bestRating\" content=\"5\">";
+
+			} else {
+				$shema_title = "";
+				$shema = "";
+			}
+
+			$rating = $rating * 20;
+
+			if( !$allow ) {
+
+				$rated = <<<HTML
+<div class="rating"{$shema_title}>
+		<ul class="unit-rating">
+		<li class="current-rating" style="width:{$rating}%;">{$rating}</li>
+		</ul>{$shema}
+</div>
+HTML;
+
+				return $rated;
+			}
+
+			$rated = <<<HTML
+<div id='ratig-layer-{$id}'>
+	<div class="rating"{$shema_title}>
+		<ul class="unit-rating">
+		<li class="current-rating" style="width:{$rating}%;">{$rating}</li>
+		<li><a href="#" title="{$lang['useless']}" class="r1-unit" onclick="doRate('1', '{$id}'); return false;">1</a></li>
+		<li><a href="#" title="{$lang['poor']}" class="r2-unit" onclick="doRate('2', '{$id}'); return false;">2</a></li>
+		<li><a href="#" title="{$lang['fair']}" class="r3-unit" onclick="doRate('3', '{$id}'); return false;">3</a></li>
+		<li><a href="#" title="{$lang['good']}" class="r4-unit" onclick="doRate('4', '{$id}'); return false;">4</a></li>
+		<li><a href="#" title="{$lang['excellent']}" class="r5-unit" onclick="doRate('5', '{$id}'); return false;">5</a></li>
+		</ul>{$shema}
+	</div>
+</div>
+HTML;
+
+			return $rated;
+
+		} elseif ($config['rating_type'] == "1") {
+
+			if( $rating < 0 ) $rating = 0;
+
+			if( $allow ) $rated = "<span id=\"ratig-layer-{$id}\" class=\"ignore-select\"><span class=\"ratingtypeplus ignore-select\" >{$rating}</span></span>";
+			else $rated = "<span class=\"ratingtypeplus ignore-select\" >{$rating}</span>";
+
+			return $rated;
+
+		} elseif ($config['rating_type'] == "2" OR $config['rating_type'] == "3") {
+
+			$extraclass = "ratingzero";
+
+			if( $rating < 0 ) {
+				$extraclass = "ratingminus";
+			}
+
+			if( $rating > 0 ) {
+				$extraclass = "ratingplus";
+				$rating = "+".$rating;
+			}
+
+			if( $allow ) $rated = "<span id=\"ratig-layer-{$id}\" class=\"ignore-select\"><span class=\"ratingtypeplusminus ignore-select {$extraclass}\" >{$rating}</span></span>";
+			else $rated = "<span class=\"ratingtypeplusminus ignore-select {$extraclass}\" >{$rating}</span>";
+
+			return $rated;
+
+		}
+
+	}
+
 	/**
 	 * @param       $content
 	 * @param array $filter
@@ -46,14 +407,11 @@ class RePost {
 	public function parse_content($content, $filter = array()) {
 		global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $db, $user_group, $member_id, $customlangdate;
 
-		require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/include/functions.inc.php'));
-		require_once (DLEPlugins::Check(ENGINE_DIR . '/modules/functions.php'));
-
 		$where = [
 			'p.id = e.news_id',
 			"p.id = {$this->post_id}"
 		];
-		if ( !empty($filter) ) $where[] = "({$filter['fields']})";
+		if ( !empty($filter['fields']) ) $where[] = "({$filter['fields']})";
 		$where = implode(' AND ', $where);
 
 		$join = '';
@@ -62,6 +420,7 @@ class RePost {
 		$row = $db->super_query('SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}");
 
 		$category_id = (int) $row['category'];
+		$row['date'] = strtotime( $row['date'] );
 
 		$xfields = xfieldsload();
 		$empty_full = false;
@@ -117,7 +476,7 @@ class RePost {
 		} elseif( date( 'Ymd', $row['date'] ) == date( 'Ymd', ($_TIME - 86400) ) ) {
 			$content = str_replace('{date}', $lang['time_gestern'] . langdate( ", H:i", $row['date'] ), $content);
 		} else {
-			$content = str_replace('{date}', langdate( $config['timestamp_active'], $row['date'] ), $content);
+			$content = str_replace('{date}', langdate( $config['timestamp_active'], $row['date']	), $content);
 		}
 
 		$content = preg_replace_callback ( "#\{date=(.+?)\}#i", "formdate", $content );
@@ -261,7 +620,7 @@ class RePost {
 		}
 
 		$temp_rating = $config['rating_type'];
-		$config['rating_type'] = if_category_rating( $row['category'] );
+		$config['rating_type'] = $this->if_category_rating( $row['category'] );
 
 		if ( $config['rating_type'] === false ) {
 			$config['rating_type'] = $temp_rating;
@@ -364,7 +723,8 @@ class RePost {
 			$likes    = $row['vote_num'] - $dislikes;
 			$content  = str_replace(
 				[ '[/rating]', '{rating}', '[rating]', '{vote-num}', '{dislikes}', '{likes}' ],
-				[ '', ShowRating($row['id'], $row['rating'], $row['vote_num'], $user_group[$member_id['user_group']]['allow_rating']), '', $row['vote_num'], $dislikes, $likes ], $content
+				[ '', $this->ShowRating($row['id'], $row['rating'], $row['vote_num'],
+								  $user_group[$member_id['user_group']]['allow_rating']), '', $row['vote_num'], $dislikes, $likes ], $content
 			);
 
 			if( $row['vote_num'] ) $ratingscore = str_replace( ',', '.', round( ($row['rating'] / $row['vote_num']), 1 ) );
@@ -568,7 +928,7 @@ class RePost {
 			$row['xfields_array'] = xfieldsdataload( $row['xfields'] );
 		}
 
-		$content = if_check($content);
+		$content = $this->if_check($content);
 
 		if( count($xfields) ) {
 			$xfieldsdata = $row['xfields_array'];
@@ -888,7 +1248,8 @@ class RePost {
 
 		$content = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $content);
 		$content = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $content);
-		$content = strip_tags($content );
+
+		$content = strip_tags($content, '<b><code><i><a>' );
 
 		return $content;
 	}
@@ -925,16 +1286,21 @@ class RePost {
 	 *
 	 * @return bool|string
 	 */
-	public function send($url, $proxy = null, $type = 'http', $auth = null) {
+	public function send($url, $post =[], $proxy = null, $type = 'http', $auth = null) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		if($type === "socks") curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
 		if($proxy !== null) curl_setopt($ch, CURLOPT_PROXY, $proxy);
 		if($auth !== null) curl_setopt($ch, CURLOPT_PROXYUSERPWD, $auth);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER,  array(
+			"Content-Type:multipart/form-data"
+		));
+//		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
+//		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
 		$content = curl_exec($ch);
 		curl_close($ch);
 
