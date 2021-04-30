@@ -1,10 +1,8 @@
 <?php
 
-
 require_once (DLEPlugins::Check(__DIR__ . '/getid3/getid3.php'));
+require_once (DLEPlugins::Check(__DIR__ . '/repost.class.php'));
 require_once (DLEPlugins::Check(ENGINE_DIR . '/classes/thumb.class.php'));
-
-use MaHarder\RePost\RePost;
 
 class Telegram extends RePost {
 
@@ -16,8 +14,6 @@ class Telegram extends RePost {
 	/**
 	 * Telegram constructor.
 	 *
-	 * @param        $bot
-	 * @param        $ch
 	 * @param        $post_id
 	 * @param string $tc
 	 * @param string $c
@@ -44,7 +40,7 @@ class Telegram extends RePost {
 				$value = (int)$field['value'] ?: "'{$field['value']}'";
 				$filter['fields'][] = "e.{$field['name']} = {$value}";
 			} elseif ($field['source'] == 'xfields') {
-				$filter['fields'][] = "p.xfields LIKE '%{$field['name']}|{$field['value']}%";
+				$filter['fields'][] = "p.xfields LIKE '%{$field['name']}|{$field['value']}%'";
 			} elseif ($field['source'] == 'category') {
 				$filter_cats[] = $field['name'];
 			}
@@ -67,7 +63,7 @@ class Telegram extends RePost {
 			'p.id = e.news_id',
 			"p.id = {$this->getPostId()}"
 		];
-		if ( !empty($filter) ) $where[] = "({$filter['fields']})";
+		if ( !empty($filter['fields']) ) $where[] = "({$filter['fields']})";
 		$where = implode(' AND ', $where);
 
 		$join = '';
@@ -119,7 +115,7 @@ class Telegram extends RePost {
 			$row['xfields_array'] = xfieldsdataload( $row['xfields'] );
 		}
 
-		$content = if_check($content);
+		$content = $this->if_check($content);
 		$temp_files = array();
 		if( count($xfields) ) {
 
@@ -142,6 +138,50 @@ class Telegram extends RePost {
 					$img_url = 	$config['http_home_url'] . "uploads/posts/" . $path_parts['dirname']."/".$path_parts['basename'];
 
 					if(!in_array($img_url, $this->xf_images[$value[0]])) $this->xf_images[$value[0]][] = $img_url;
+
+				}
+
+				if($value[3] == "text" AND $xfieldsdata[$value[0]] ) {
+
+					$images = ['png', 'jpg', 'jpeg', 'gif'];
+					$audio = ['mp3', 'm4a'];
+					$video = ['mp4'];
+
+					$temp_array = explode('|', $xfieldsdata[$value[0]]);
+
+					if (count($temp_array) > 1 ){
+						$temp_value = $temp_array[1];
+					} else {
+						$temp_value = $temp_array[0];
+					}
+
+					$path_parts = @pathinfo($temp_value);
+
+					if(in_array($path_parts['extension'], $images)) {
+						if (!in_array($temp_value, $this->xf_images[$value[0]])) {
+							$this->xf_images[$value[0]][] = $temp_value;
+						}
+						if (!in_array($temp_value, $this->images)) {
+							$this->images[] = $temp_value;
+						}
+					} elseif (in_array($path_parts['extension'], $audio)) {
+						if(!in_array($temp_value, $temp_files)) {
+							$this->xf_audios[$value[0]][] = [
+								'url'      => $temp_value,
+								'size'     => '',
+								'checksum' => '',
+							];
+						}
+					}  elseif (in_array($path_parts['extension'], $video)) {
+						if(!in_array($temp_value, $temp_files)) {
+							$this->xf_videos[$value[0]][] = [
+								'url'      => $temp_value,
+								'size'     => '',
+								'checksum' => '',
+							];
+						}
+					}
+
 
 				}
 
@@ -237,18 +277,20 @@ class Telegram extends RePost {
 	private function cleanUp() {
 		$dir = ROOT_DIR . '/uploads/telegram';
 		$handle = opendir( $dir );
-		$file_list = array();
-		$skip_files = ['.', '..', '.htaccess'];
+		if($handle) {
+			$file_list  = [];
+			$skip_files = [ '.', '..', '.htaccess' ];
 
-		while ( false !== ($file = readdir( $handle )) ) {
-			if( !in_array($file, $skip_files) ) {
-				$file_list[] = $file;
+			while (false !== ($file = readdir($handle))) {
+				if (!in_array($file, $skip_files)) {
+					$file_list[] = $file;
+				}
 			}
+
+			closedir($handle);
+
+			foreach ($file_list as $id => $file) @unlink($file);
 		}
-
-		closedir( $handle );
-
-		foreach($file_list as $id => $file) @unlink($file);
 	}
 
 	private function generateLinks($content) {
@@ -261,9 +303,9 @@ class Telegram extends RePost {
 
 			$link_name = $links_array[1][$id];
 			$link_value = $links_array[2][$id];
-			$temp_links['inline_keyboard'][] = [
+			$temp_links['inline_keyboard'][$id][] = [
 				'text' => $link_value,
-				'callback_data' => $link_name
+				'url' => $link_name
 			];
 
 			$content = str_replace($button, '', $content);
@@ -278,15 +320,15 @@ class Telegram extends RePost {
 	private function generateMedia($content) {
 		preg_match_all('/\[(telegram_media_(image|xfield_(.+?)|allimages|video|audio) (image|max|file|video|audio)=(\d)|telegram_media_(image|xfield_(.+?)|allimages|video|audio))\]/', $content, $media);
 
-		function checkCount() {
-			return (count($this->media) > $this->max_media);
+		function checkCount($arr, $max) {
+			return (count($arr) <= $max);
 		}
 
 		foreach($media[0] as $i => $field) {
 			$type = (!empty($media[2][$i])) ? $media[2][$i] : $media[6][$i];
 			$limit_type = $media[4][$i];
 			$limiter = (empty($media[5][$i])) ? null : (int) $media[5][$i] - 1;
-			if(checkCount() === false) break;
+			if(checkCount($this->media, $this->max_media) == false) break;
 
 			if(preg_grep('/xfield_(.*)/', explode("\n", $type))) {
 				preg_match('/xfield_(.*)/', $type, $type_array);
@@ -297,31 +339,30 @@ class Telegram extends RePost {
 						$this->media[] = $this->mediaPhoto($this->xf_images[$xf_name][$file_id]);
 					} elseif ($limit_type == 'max') {
 						for($f = 0; $f <= $limiter; $f++) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaPhoto($this->xf_images[$xf_name][$f]);
 							}
 						}
 					} else {
 						foreach($this->xf_images[$xf_name] as $id => $file) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaPhoto($file);
 							}
 						}
 					}
-				}
-				elseif(isset($this->xf_audios[$xf_name])) {
+				} elseif(isset($this->xf_audios[$xf_name])) {
 					if($limit_type == 'file' && $limiter !== null) {
 						$file_id = $limiter;
 						$this->media[] = $this->mediaAudio($this->xf_audios[$xf_name][$file_id]);
 					} elseif ($limit_type == 'max') {
 						for($f = 0; $f <= $limiter; $f++) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaAudio($this->xf_audios[$xf_name][$f]);
 							}
 						}
 					} else {
 						foreach($this->xf_audios[$xf_name] as $id => $file) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaAudio($file);
 							}
 						}
@@ -332,13 +373,13 @@ class Telegram extends RePost {
 						$this->media[] = $this->mediaVideo($this->xf_videos[$xf_name][$file_id]);
 					} elseif ($limit_type == 'max') {
 						for($f = 0; $f <= $limiter; $f++) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaVideo($this->xf_videos[$xf_name][$f]);
 							}
 						}
 					} else {
 						foreach($this->xf_videos[$xf_name] as $id => $file) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaVideo($file);
 							}
 						}
@@ -349,13 +390,13 @@ class Telegram extends RePost {
 						$this->media[] = $this->mediaDocument($this->xf_files[$xf_name][$file_id]);
 					} elseif ($limit_type == 'max') {
 						for($f = 0; $f <= $limiter; $f++) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaDocument($this->xf_files[$xf_name][$f]);
 							}
 						}
 					} else {
 						foreach($this->xf_files[$xf_name] as $id => $file) {
-							if(checkCount()) {
+							if(checkCount($this->media, $this->max_media)) {
 								$this->media[] = $this->mediaDocument($file);
 							}
 						}
@@ -367,13 +408,13 @@ class Telegram extends RePost {
 					$this->media[] = $this->mediaPhoto($this->images_post[$file_id]);
 				} elseif ($limit_type == 'max') {
 					for($f = 0; $f <= $limiter; $f++) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($this->images_post[$f]);
 						}
 					}
 				} else {
 					foreach($this->images_post as $id => $file) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($file);
 						}
 					}
@@ -384,13 +425,13 @@ class Telegram extends RePost {
 					$this->media[] = $this->mediaVideo($this->videos[$file_id]);
 				} elseif ($limit_type == 'max') {
 					for($f = 0; $f <= $limiter; $f++) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaVideo($this->videos[$f]);
 						}
 					}
 				} else {
 					foreach($this->videos as $id => $file) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaVideo($file);
 						}
 					}
@@ -401,13 +442,13 @@ class Telegram extends RePost {
 					$this->media[] = $this->mediaAudio($this->audios[$file_id]);
 				} elseif ($limit_type == 'max') {
 					for($f = 0; $f <= $limiter; $f++) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaAudio($this->audios[$f]);
 						}
 					}
 				} else {
 					foreach($this->audios as $id => $file) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaAudio($file);
 						}
 					}
@@ -418,13 +459,13 @@ class Telegram extends RePost {
 					$this->media[] = $this->mediaPhoto($this->images[$file_id]);
 				} elseif ($limit_type == 'max') {
 					for($f = 0; $f <= $limiter; $f++) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($this->images[$f]);
 						}
 					}
 				} else {
 					foreach($this->images as $id => $file) {
-						if(checkCount()) {
+						if(checkCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($file);
 						}
 					}
@@ -464,7 +505,7 @@ class Telegram extends RePost {
 				$thumb_url = "{$config['http_home_url']}/{$thumb_folder}/{$thumb_name}";
 				$thumbnail = new thumbnail($thumb);
 				$thumbnail->jpeg_quality($quality);
-				
+
 				if($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res || $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res ) {
 					$thumbnail->size_auto($max_res);
 				}
@@ -501,10 +542,18 @@ class Telegram extends RePost {
 	}
 
 	private function mediaPhoto($link) {
+		global $config;
+
+		$url_parts = parse_url($link);
+		$config_url = parse_url($config['http_home_url']);
+		if ($url_parts['host'] == $config_url['host'])
+			$image = new CURLFile($link);
+		else
+			$image = $link;
 		return [
 			'type' => 'photo',
 			'media' => [
-				'photo' => new CURLFile($link),
+				'photo' => $image,
 				'caption' => '',
 				'reply_markup' => ''
 			]
@@ -513,10 +562,19 @@ class Telegram extends RePost {
 	}
 
 	private function mediaDocument($file_array) {
+		global $config;
+
+		$url_parts = parse_url($file_array['url']);
+		$config_url = parse_url($config['http_home_url']);
+		if ($url_parts['host'] == $config_url['host'])
+			$file = new CURLFile($file_array['url']);
+		else
+			$file = $file_array['url'];
+
 		return [
 			'type' => 'document',
 			'media' => [
-				'document' => new CURLFile($file_array['url']),
+				'document' => $file,
 				'caption' => '',
 				'reply_markup' => '',
 				'thumb' => $this->thumb
@@ -534,10 +592,17 @@ class Telegram extends RePost {
 		$duration = ((int) $duration_arr[0] * 60) + (int) $duration_arr[1];
 		$tag_selector = (isset($audio['tags']['id3v2'])) ? 'id3v2' : 'id3v1';
 
+		$url_parts = parse_url($file_array['url']);
+		$config_url = parse_url($config['http_home_url']);
+		if ($url_parts['host'] == $config_url['host'])
+			$audio = new CURLFile($file_array['url']);
+		else
+			$audio = $file_array['url'];
+
 		return [
 			'type' => 'audio',
 			'media' => [
-				'audio' => new CURLFile($file_array['url']),
+				'audio' => $audio,
 				'caption' => '',
 				'reply_markup' => '',
 				'duration' => $duration,
@@ -556,6 +621,13 @@ class Telegram extends RePost {
 		$video = $getID3->analyze($file);
 		$duration_arr = explode(':', $video['playtime_string']);
 		$duration = ((int) $duration_arr[0] * 60) + (int) $duration_arr[1];
+
+		$url_parts = parse_url($file_array['url']);
+		$config_url = parse_url($config['http_home_url']);
+		if ($url_parts['host'] == $config_url['host'])
+			$video = new CURLFile($file_array['url']);
+		else
+			$video = $file_array['url'];
 
 		return [
 			'type' => 'video',
@@ -627,11 +699,12 @@ class Telegram extends RePost {
 
 		$this->cleanUp();
 
-		return $this->send($url, $proxy, $type, $auth);
+		return $this->send($url['url'], $url['post'], $proxy, $type, $auth);
 	}
 
 
 	private function telegram_link() {
+
 		$types = [
 			'text' => 'sendMessage',
 			'media' => 'sendMediaGroup',
@@ -669,19 +742,19 @@ class Telegram extends RePost {
 
 			case 'photo':
 				if (isset($this->images[0])) {
-					$send_array = $this->mediaPhoto($this->images[0]);
+					$send_array = $this->mediaPhoto($this->images[0])['media'];
 				}
 				break;
 
 			case 'audio':
 				if (isset($this->audios[0])) {
-					$send_array = $this->mediaAudio($this->audios[0]);
+					$send_array = $this->mediaAudio($this->audios[0])['media'];
 				}
 				break;
 
 			case 'video':
 				if (isset($this->videos[0])) {
-					$send_array = $this->mediaVideo($this->videos[0]);
+					$send_array = $this->mediaVideo($this->videos[0])['media'];
 				}
 				break;
 		}
@@ -691,12 +764,17 @@ class Telegram extends RePost {
 			$send_array['reply_markup'] = $this->links;
 		if (!empty($this->getContent()) && $this->getContent() !== null && isset($send_array['caption']))
 			$send_array['caption'] = $this->getContent();
-		$send_array['chat_id'] = $this->channel;
-		$send_array['parse_mode'] = 'HTML';
 
-		$url_query = http_build_query($send_array);
+		$send_url['chat_id'] = $this->channel;
+		$send_url['parse_mode'] = 'HTML';
 
-		return "https://api.telegram.org/bot" . $this->bot . "/{$types[$this->telegram_config['message_type']]}?{$url_query}";
+		$url_query = http_build_query(array_merge($send_url, $send_array));
+		$url_query = str_replace('chat_id=%40', 'chat_id=@', $url_query);
+
+		return [
+			'url' => "https://api.telegram.org/bot" . $this->bot . "/{$types[$this->telegram_config['message_type']]}?{$url_query}",
+			'post' => $send_array
+		];
 	}
 
 	/**
