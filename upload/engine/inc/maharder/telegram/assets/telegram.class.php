@@ -606,6 +606,9 @@ class Telegram extends RePost {
 				$title = str_replace(' ', '+', $this->getPostTitle());
 				$this->thumb = "https://dummyimage.com/320x320/202328/fff.png&text={$title}";
 			}
+		} else {
+			$title = str_replace(' ', '+', $this->getPostTitle());
+			$this->thumb = "https://dummyimage.com/320x320/202328/fff.png&text={$title}";
 		}
 
 		$content = preg_replace('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', '', $content);
