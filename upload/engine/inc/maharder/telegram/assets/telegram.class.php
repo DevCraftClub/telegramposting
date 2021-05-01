@@ -183,6 +183,25 @@ class Telegram extends RePost {
 					}
 
 
+					if(!in_array($temp_value, $this->audios)) {
+						if (in_array($path_parts['extension'], [ 'mp3', 'm4a' ]))
+							$this->audios[] = [
+								'url'      => $temp_value,
+								'size'     => '',
+								'checksum' => '',
+							];
+					}
+
+					if(!in_array($temp_value, $this->videos)) {
+						if ($path_parts['extension'] == 'mp4')
+							$this->videos[] = [
+								'url'      => $temp_value,
+								'size'     => '',
+								'checksum' => '',
+							];
+					}
+
+
 				}
 
 				if($value[3] == "file" AND $xfieldsdata[$value[0]] ) {
@@ -226,6 +245,24 @@ class Telegram extends RePost {
 								'checksum' => $file['checksum'],
 							];
 					}
+
+					if(!in_array($url, $this->audios)) {
+						if (in_array($path['extension'], [ 'mp3', 'm4a' ]))
+							$this->audios[] = [
+								'url'      => $url,
+								'size'     => $file['size'],
+								'checksum' => $file['checksum'],
+							];
+					}
+
+					if(!in_array($url, $this->videos)) {
+						if (in_array($path['extension'], [ 'mp4' ]))
+							$this->videos[] = [
+								'url'      => $url,
+								'size'     => $file['size'],
+								'checksum' => $file['checksum'],
+							];
+					}
 				}
 
 				if($value[3] == "imagegalery" AND $xfieldsdata[$value[0]]) {
@@ -250,6 +287,7 @@ class Telegram extends RePost {
 						$img_url = 	$config['http_home_url'] . "uploads/posts/" . $path_parts['dirname']."/".$path_parts['basename'];
 
 						if(!in_array($img_url, $this->xf_images[$value[0]])) $this->xf_images[$value[0]][] = $img_url;
+						if(!in_array($img_url, $this->images)) $this->images[] = $img_url;
 
 					}
 
@@ -262,14 +300,14 @@ class Telegram extends RePost {
 				if (!in_array($ims, $im)) $this->images_post[$ii][] = $im;
 		}
 
-		$content = $this->generateMedia($content);
-		$content = $this->generateLinks($content);
-		$content = $this->generateThumb($content);
-
 		if(preg_grep('/\[telegram_title\](.*?)\[\/telegram_title\]/', explode("\n", $content))) {
 			$this->setPostTitle(preg_replace('/\[telegram_title\](.*?)\[\/telegram_title\]/', '$1', $content));
 			$content = preg_replace('/\[telegram_title\](.*?)\[\/telegram_title\]/', '', $content);
 		}
+
+		$content = $this->generateMedia($content);
+		$content = $this->generateLinks($content);
+		$content = $this->generateThumb($content);
 
 		return $this->setContent($content);
 	}
@@ -291,6 +329,28 @@ class Telegram extends RePost {
 
 			foreach ($file_list as $id => $file) @unlink($file);
 		}
+	}
+
+	private function tempFile($file) {
+		$_folder = '/uploads/telegram';
+		if (!mkdir($_dir = ROOT_DIR  . $_folder, 0777, true)
+			&& !is_dir(
+				$_dir
+			)) {
+			$this->generate_log(
+				'telegram',
+				'tempFile',
+				sprintf('Directory "%s" was not created', $_dir)
+			);
+		}
+
+		$_path = pathinfo($file);
+		$_name = "{$_path['filename']}_temp.{$_path['extension']}";
+		$_file_path = "{$_dir}/{$_name}";
+		file_put_contents($_file_path, file_get_contents($file));
+
+		return $_file_path;
+
 	}
 
 	private function generateLinks($content) {
@@ -479,6 +539,7 @@ class Telegram extends RePost {
 	}
 
 	private function generateThumb($content) {
+		global $config;
 
 		function processImage($image, $quality = 90) {
 			global $config;
@@ -489,7 +550,7 @@ class Telegram extends RePost {
 				$max_size = 200000;
 				$max_res = 320;
 				$thumb_folder = '/uploads/telegram';
-				if (!mkdir($thumb_dir = ROOT_DIR . '/' . $thumb_folder, 0777, true)
+				if (!mkdir($thumb_dir = ROOT_DIR . $thumb_folder, 0777, true)
 					&& !is_dir(
 						$thumb_dir
 					)) {
@@ -502,8 +563,8 @@ class Telegram extends RePost {
 				$thumb_path = pathinfo($thumb['filenamepath']);
 				$thumb_name = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
 				$thumb_server = "{$thumb_dir}/{$thumb_name}";
-				$thumb_url = "{$config['http_home_url']}/{$thumb_folder}/{$thumb_name}";
-				$thumbnail = new thumbnail($thumb);
+				$thumb_url = "{$config['http_home_url']}{$thumb_folder}/{$thumb_name}";
+				$thumbnail = new thumbnail($thumb['filenamepath']);
 				$thumbnail->jpeg_quality($quality);
 
 				if($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res || $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res ) {
@@ -533,6 +594,18 @@ class Telegram extends RePost {
 			$thumb = ($thumb !== false) ?: processImage($this->telegram_config['thumb_placeholder']);
 			if($thumb) $this->thumb = new CURLFile($thumb);
 
+		} elseif (!empty($this->telegram_config['thumb_placeholder'])) {
+			$thumb = $this->telegram_config['thumb_placeholder'];
+			$url_parts = parse_url($thumb);
+			$config_url = parse_url($config['http_home_url']);
+			if ($url_parts['host'] != $config_url['host']) $thumb = $this->tempFile($thumb);
+			$thumb = processImage($thumb);
+			if($thumb && !in_array('127.0.0.1', [$_SERVER['SERVER_ADDR'], $_SERVER['REMOTE_ADDR']]))
+				$this->thumb = new CURLFile($thumb);
+			else {
+				$title = str_replace(' ', '+', $this->getPostTitle());
+				$this->thumb = "https://dummyimage.com/320x320/202328/fff.png&text={$title}";
+			}
 		}
 
 		$content = preg_replace('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', '', $content);
@@ -585,29 +658,34 @@ class Telegram extends RePost {
 
 	private function mediaAudio($file_array) {
 		global $config;
+
+		$url_parts = parse_url($file_array['url']);
+		$config_url = parse_url($config['http_home_url']);
 		$getID3 = new getID3();
-		$file = str_replace($config['http_home_url'], ROOT_DIR, $file_array['url']);
+
+		if ($url_parts['host'] == $config_url['host'])
+			$file = str_replace($config['http_home_url'], ROOT_DIR, $file_array['url']);
+		else
+			$file = $this->tempFile($file_array['url']);
 		$audio = $getID3->analyze($file);
 		$duration_arr = explode(':', $audio['playtime_string']);
 		$duration = ((int) $duration_arr[0] * 60) + (int) $duration_arr[1];
 		$tag_selector = (isset($audio['tags']['id3v2'])) ? 'id3v2' : 'id3v1';
 
-		$url_parts = parse_url($file_array['url']);
-		$config_url = parse_url($config['http_home_url']);
 		if ($url_parts['host'] == $config_url['host'])
-			$audio = new CURLFile($file_array['url']);
+			$audio_file = new CURLFile($file_array['url']);
 		else
-			$audio = $file_array['url'];
+			$audio_file = $file_array['url'];
 
 		return [
 			'type' => 'audio',
 			'media' => [
-				'audio' => $audio,
+				'audio' => $audio_file,
 				'caption' => '',
 				'reply_markup' => '',
 				'duration' => $duration,
-				'performer' => $audio['tags'][$tag_selector]['artist'],
-				'title' => $audio['tags'][$tag_selector]['title'],
+				'performer' => implode(', ', $audio['tags'][$tag_selector]['artist']),
+				'title' => implode('; ', $audio['tags'][$tag_selector]['title']),
 				'thumb' => $this->thumb
 			]
 		];
@@ -615,24 +693,29 @@ class Telegram extends RePost {
 
 	private function mediaVideo($file_array) {
 		global $config;
-		require_once (DLEPlugins::Check(__DIR__ . '/getid3/getid3.php'));
+
+		$url_parts = parse_url($file_array['url']);
+		$config_url = parse_url($config['http_home_url']);
 		$getID3 = new getID3();
-		$file = str_replace($config['http_home_url'], ROOT_DIR, $file_array['url']);
+
+		if ($url_parts['host'] == $config_url['host'])
+			$file = str_replace($config['http_home_url'], ROOT_DIR, $file_array['url']);
+		else
+			$file = $this->tempFile($file_array['url']);
+
 		$video = $getID3->analyze($file);
 		$duration_arr = explode(':', $video['playtime_string']);
 		$duration = ((int) $duration_arr[0] * 60) + (int) $duration_arr[1];
 
-		$url_parts = parse_url($file_array['url']);
-		$config_url = parse_url($config['http_home_url']);
 		if ($url_parts['host'] == $config_url['host'])
-			$video = new CURLFile($file_array['url']);
+			$video_file = new CURLFile($file_array['url']);
 		else
-			$video = $file_array['url'];
+			$video_file = $file_array['url'];
 
 		return [
 			'type' => 'video',
 			'media' => [
-				'video' => new CURLFile($file_array['url']),
+				'video' => $video_file,
 				'caption' => '',
 				'reply_markup' => '',
 				'duration' => $duration,
@@ -642,7 +725,6 @@ class Telegram extends RePost {
 			]
 		];
 	}
-
 
 	private function mediaGroup() {
 		$media = array();
@@ -697,9 +779,11 @@ class Telegram extends RePost {
 		}
 		if($this->telegram_config['proxyauth']) $auth = $this->telegram_config['proxyuser'] . ':' . $this->telegram_config['proxypass'];
 
+		$response = $this->send($url['url'], $url['post'], $proxy, $type, $auth);
+
 		$this->cleanUp();
 
-		return $this->send($url['url'], $url['post'], $proxy, $type, $auth);
+		return $response;
 	}
 
 
@@ -723,7 +807,8 @@ class Telegram extends RePost {
 			case 'text':
 
 				$send_array = [
-					'text' => urlencode($this->getContent())
+					'text' => $this->getContent(),
+					'reply_markup' => ''
 				];
 
 				break;

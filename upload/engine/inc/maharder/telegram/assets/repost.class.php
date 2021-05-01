@@ -1304,7 +1304,7 @@ HTML;
 		$content = curl_exec($ch);
 		curl_close($ch);
 
-		$this->generate_log('telegram', 'send', $content, 'info');
+//		$this->generate_log('telegram', 'send', $content, 'info');
 
 		return $content;
 	}
@@ -1316,6 +1316,7 @@ HTML;
 	 * @param string $type
 	 */
 	public function generate_log($service, $function_name, $message, $type = 'error') {
+
 		$root_dir = dirname(__DIR__);
 		if (!mkdir($concurrentDirectory = $root_dir . '/logs/' . $service . '/' . $type, 0777, true)
 			&& !is_dir(
