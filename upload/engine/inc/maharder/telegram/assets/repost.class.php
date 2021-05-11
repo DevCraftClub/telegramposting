@@ -2,7 +2,9 @@
 
 
 class RePost {
-	private $content, $content_type, $post_id, $post_title;
+	private		$content, $content_type, $post_id, $post_title, $logs = 0;
+	protected	$xf_images = [], $files = [], $images_post = array(), $videos = array(), $audios = array(),
+				$xf_videos = array(), $xf_audios = array(), $xf_files = array(), $images = [];
 
 	/**
 	 * RePost constructor.
@@ -415,9 +417,11 @@ HTML;
 		$where = implode(' AND ', $where);
 
 		$join = '';
-		if ($config['allow_multi_category'] && $filter['cats']) $join = "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}') c ON (p.id=c.news_id)";
+		if ($config['allow_multi_category'] && $filter['cats']) $join = "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
 
-		$row = $db->super_query('SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}");
+		$sql = 'SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}";
+
+		$row = $this->load_data('post', ['sql' => $sql, 'where' => ['news_id' => $this->getPostId()]])[0];
 
 		$category_id = (int) $row['category'];
 		$row['date'] = strtotime( $row['date'] );
@@ -1251,7 +1255,143 @@ HTML;
 
 		$content = strip_tags($content, '<b><code><i><a>' );
 
+		$this->getFiles();
+		$this->getImages();
+
 		return $content;
+	}
+
+	/**
+	 * Сбор файлов новости из базы данных
+	 *
+	 * @return array
+	 */
+	public function getFiles() {
+
+		$files = $this->load_data('files', ['table' => 'files', 'where' => ['news_id' => $this->getPostId()]]);
+		foreach($files as $id => $file) {
+			$file_path = ROOT_DIR . "/uploads/posts/{$file['onserver']}";
+
+			$file_in_arr = array_search($file_path, array_column($this->files, 'url'));
+			if($file_in_arr === false) {
+				$this->files[] = [
+					'url'      => $file_path,
+					'size'     => (int)$file['size'],
+					'checksum' => (int)$file['checksum'],
+				];
+			}
+		}
+
+		return $this->files;
+	}
+
+	/**
+	 * Функция создания кеша запросов,
+	 * чтобы сократить кол-во обращений к базе данных
+	 *
+	 * @param       $name	//	Переменная для названия кеша
+	 * @param array $vars 	// 	table	Название таблицы, в противном случае будет браться переменная $name
+	 *                     	//	sql		Запрос полностью, если он заполнен, то будет испольняться именно он,
+	 *                     				другие значения игнорируются
+	 *                      //  where   Массив выборки запроса, прописывается в название файла кеша.
+	 *                      //  		Заполняется так: 'поле' => 'значение', 'news_id' => '1'
+	 *						//	selects	Массив вывод значений, если он пуст, то будут возвращены все значения
+	 *                     				таблицы. Заполняется так: ['Ячейка 1', 'Ячейка 2', ...]
+	 *                     				Прописывается в названии файла кеша
+	 *                     	//	order	Массив сортировки вывода, прописывается в название файла кеша
+	 *                     				Заполняется так: 'поле' => 'Порядок сортировки', 'news_id' => 'ASC'
+	 *                     	//	limit	Ограничение вывода запросов, возможно указывать следующие значения:
+	 *                     				n 	->	просто максимальное кол-во данных
+	 *                                  n,x	->	ограничение вывода,
+	 *                                          n - с какого захода начать сбор данных,
+	 * 											x - до какого значения делать сбор данных
+	 *
+	 * @return array
+	 */
+	public function load_data($name,
+							  $vars = array( 'table' => null,
+											 'sql' => null,
+											 'where' => [],
+											 'selects' => [],
+											 'order' => [],
+											 'limit' => null
+							  )
+	) {
+		global $db;
+
+		$where = [];
+		$order = [];
+		$file_name = $name;
+		foreach($vars['selects'] as $s) {
+			$file_name .= "_s{$s}";
+		}
+		foreach($vars['where'] as $id => $key) {
+			$file_name .= "_{$key}";
+			$where[] = "{$id} = '{$key}'";
+		}
+		foreach($vars['order'] as $n => $sort) {
+			$file_name .= "_o{$n}-{$sort}";
+			$order[] = "{$n} {$sort}";
+		}
+
+		if (!file_exists(ENGINE_DIR . "/cache/system/{$file_name}.php")) {
+			$data = [];
+			$prefix = PREFIX;
+			if (in_array($name, ['users', 'usergroup'])) $prefix = USERPREFIX;
+
+			$order = implode(', ', $order);
+			if(!empty($order)) $order = "ORDER BY {$order}";
+
+			$limit = '';
+			if(!empty($vars['limit'])) $limit = "LIMIT {$vars['limit']}";
+
+			if(count($vars['where']) > 0 && $vars['sql'] === null) {
+				$selects = implode(",", $vars['selects']);
+				if(empty($selects)) $selects = '*';
+				$where = implode(' AND ', $where);
+				if (!empty($where)) $where = "WHERE {$where}";
+
+				if($vars['table'] !== null) $sql = "SELECT {$selects} FROM {$prefix}_{$vars['table']} {$where} {$order} {$limit}";
+				else $sql = "SELECT {$selects} FROM {$prefix}_{$name} {$where} {$order} {$limit}";
+			} else {
+				if($vars['table'] === null && $vars['sql'] === null) $vars['table'] = $name;
+
+				if($vars['table'] !== null) {
+					$selects = implode(",", $vars['selects']);
+					if(empty($selects)) $selects = '*';
+					$sql = "SELECT {$selects} FROM {$prefix}_{$vars['table']} {$order} {$limit}";
+				} elseif ($vars['sql'] !== null) $sql = $vars['sql'];
+			}
+
+			$db->query($sql);
+			while($row = $db->get_row()) {
+				$data[] = $row;
+			}
+
+			$db->close();
+
+			set_vars($file_name, $data);
+		}
+
+		return get_vars($file_name);
+	}
+
+	/**
+	 * Собирает все изображения новости из базы данных,
+	 * если их нет в массиве, то добавляет изображение в него
+	 *
+	 * @return array
+	 */
+	public function getImages() {
+
+		$images = $this->load_data('images', ['table' => 'images', 'where' => ['news_id' => $this->getPostId()]]);
+
+		foreach($images as $id => $image){
+			$file_path = ROOT_DIR . "/uploads/posts/{$image['onserver']}";
+			if(!in_array($file_path, $this->images)) $this->images[] = $file_path;
+		}
+
+		return $this->images;
 	}
 
 	/**
@@ -1296,15 +1436,13 @@ HTML;
 		curl_setopt($ch, CURLOPT_HTTPHEADER,  array(
 			"Content-Type:multipart/form-data"
 		));
-//		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, true);
 		$content = curl_exec($ch);
 		curl_close($ch);
 
-//		$this->generate_log('telegram', 'send', $content, 'info');
+		$this->generate_log('telegram', 'send', $content);
 
 		return $content;
 	}
@@ -1316,18 +1454,19 @@ HTML;
 	 * @param string $type
 	 */
 	public function generate_log($service, $function_name, $message, $type = 'error') {
-
-		$root_dir = dirname(__DIR__);
-		if (!mkdir($concurrentDirectory = $root_dir . '/logs/' . $service . '/' . $type, 0777, true)
-			&& !is_dir(
-				$concurrentDirectory
-			)) {
-			throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+		if($this->logs) {
+			$root_dir = dirname(__DIR__);
+			if (!mkdir($concurrentDirectory = $root_dir . '/logs/' . $service . '/' . $type, 0777, true)
+				&& !is_dir(
+					$concurrentDirectory
+				)) {
+				throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+			}
+			$file    = "{$concurrentDirectory}/{$function_name}.txt";
+			$date    = date('[Y-m-d] d.m.Y, H:i');
+			$message = serialize($message);
+			file_put_contents($file, "{$date}\n{$message}\n=====================================\n", FILE_APPEND);
 		}
-		$file = "{$concurrentDirectory}/{$function_name}.txt";
-		$date = date('[Y-m-d] d.m.Y, H:i');
-		$message = serialize($message);
-		file_put_contents($file, "{$date}\n{$message}\n=====================================\n", FILE_APPEND);
 	}
 
 	public function getContentType() {
