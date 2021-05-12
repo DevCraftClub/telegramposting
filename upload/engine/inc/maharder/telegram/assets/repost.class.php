@@ -593,8 +593,9 @@ HTML;
 				$tags_no_link[] = $url_tag;
 				$tags_hashtag[] = "#{$url_tag}";
 
-				if( $config['allow_alt_url'] ) $tags[] = "<a href=\"" . $config['http_home_url'] . "tags/" .
-														 rawurlencode( $url_tag ) . "/\">" . $value . "</a>";
+				if( $config['allow_alt_url'] )
+					$tags[] = "<a href=\"" . $config['http_home_url'] . "tags/" . rawurlencode( $url_tag ) . "/\">" .
+							  $value . "</a>";
 				else $tags[] = "<a href=\"$PHP_SELF?do=tags&amp;tag=" . rawurlencode( $url_tag ) . "\">" . $value . "</a>";
 
 			}
@@ -1273,7 +1274,7 @@ HTML;
 
 		$files = $this->load_data('files', ['table' => 'files', 'where' => ['news_id' => $this->getPostId()]]);
 		foreach($files as $id => $file) {
-			$file_path = ROOT_DIR . "/uploads/posts/{$file['onserver']}";
+			$file_path = ROOT_DIR . "/uploads/files/{$file['onserver']}";
 
 			$file_in_arr = array_search($file_path, array_column($this->files, 'url'));
 			if($file_in_arr === false) {
@@ -1329,7 +1330,7 @@ HTML;
 			$file_name .= "_s{$s}";
 		}
 		foreach($vars['where'] as $id => $key) {
-			$file_name .= "_{$key}";
+			$file_name .= "_{$id}-{$key}";
 			$where[] = "{$id} = '{$key}'";
 		}
 		foreach($vars['order'] as $n => $sort) {
@@ -1475,7 +1476,19 @@ HTML;
 			}
 			$file    = "{$concurrentDirectory}/{$function_name}.txt";
 			$date    = date('[Y-m-d] d.m.Y, H:i');
-			$message = serialize($message);
+			try {
+				$message = serialize($message);
+			} catch (Exception $e) {
+
+				echo "<b>Уведомление</b>:{$type}<br>";
+				echo "<b>Модуль</b>:{$service}<br>";
+				echo "<b>Функция</b>:{$function_name}<br>";
+				echo "<b>Дата и время</b>:{$date}<br>";
+				echo "<b>Ошибка</b>:<br>";
+				echo "<pre>";
+				print_r($message);
+				echo "</pre>";
+			}
 			file_put_contents($file, "{$date}\n{$message}\n=====================================\n", FILE_APPEND);
 		}
 	}
