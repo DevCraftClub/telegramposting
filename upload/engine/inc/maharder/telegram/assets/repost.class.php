@@ -4,7 +4,8 @@
 class RePost {
 	private		$content, $content_type, $post_id, $post_title, $logs = 0;
 	protected	$xf_images = [], $files = [], $images_post = array(), $videos = array(), $audios = array(),
-				$xf_videos = array(), $xf_audios = array(), $xf_files = array(), $images = [];
+				$xf_videos = array(), $xf_audios = array(), $xf_files = array(), $images = [],
+				$max_len = 0;
 
 	/**
 	 * RePost constructor.
@@ -25,7 +26,9 @@ class RePost {
 	 * @return mixed
 	 */
 	public function setContent( $content, $parse = false, $parse_filter = array() ) {
-		$this->content = $parse ? $this->parse_content($content, $parse_filter): $content;
+		$len = $this->max_len - 3;
+		$this->content = mb_substr( $parse ? $this->parse_content($content, $parse_filter): $content, 0, $this->max_len, "utf-8");
+		if(strlen($content) >= $this->max_len) $this->content = mb_substr( $this->content, 0, $len) . '...';
 		return $this->content;
 	}
 
@@ -1387,8 +1390,16 @@ HTML;
 		$images = $this->load_data('images', ['table' => 'images', 'where' => ['news_id' => $this->getPostId()]]);
 
 		foreach($images as $id => $image){
-			$file_path = ROOT_DIR . "/uploads/posts/{$image['onserver']}";
-			if(!in_array($file_path, $this->images)) $this->images[] = $file_path;
+			$file_path = ROOT_DIR . "/uploads/posts/";
+			$imgs = explode("||", $image['images']);
+			foreach($imgs as $img) {
+				$im = explode("|", $img);
+				$img_src = $im[0];
+				$img_info = pathinfo($img_src);
+				if (!isset($img_info['extension'])) $img_src = $im[1];
+				$img_file = "{$file_path}{$img_src}";
+				if (!in_array($img_file, $this->images)) $this->images[] = $img_file;
+			}
 		}
 
 		return $this->images;
