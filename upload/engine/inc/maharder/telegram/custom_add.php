@@ -1,7 +1,6 @@
 <?php
-
 //	===============================
-//	Скрипт отправки при редактировании новости
+//	Скрипт отправки при добавлении новости
 //	===============================
 //	Автор: Maxim Harder
 //	Сайт: https://maxim-harder.de
@@ -11,24 +10,21 @@
 //	===============================
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
-global $db, $item_db;
+global $db, $tg_post_id, $tg_post_type;
 $codename = "telegram";
 
-if(!file_exists((DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/assets/functions.php')))) {
-    die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
-}
-
-$news_id = (int)$item_db[0];
+$news_id = (int) $tg_post_id;
 if(!$news_id) return;
+if (!in_array($tg_post_type, ['addnews', 'editnews'])) return;
 
 @include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
 require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/assets/telegram.class.php'));
 
 if($telebot['onof']) {
 
-    if($telebot['cron']) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type) VALUES ('{$news_id}', 'editnews')");
-    else {
-		$telegram = new Telegram($news_id, $telebot, 'editnews');
+	if($telebot['cron']) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type) VALUES ('{$news_id}', '{$tg_post_type}')");
+	else {
+		$telegram = new Telegram($news_id, $telebot, $tg_post_type);
 		$telegram->sendMessage();
-    }
+	}
 }

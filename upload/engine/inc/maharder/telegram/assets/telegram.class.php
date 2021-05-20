@@ -440,8 +440,10 @@ class Telegram extends RePost {
 	private function generateMedia($content) {
 		preg_match_all('/\[(telegram_media_(image|xfield_(.+?)|allimages|video|audio) (image|max|file|video|audio)=(\d)|telegram_media_(image|xfield_(.+?)|allimages|video|audio))\]/', $content, $media);
 
-		function checkCount($arr, $max) {
-			return (count($arr) <= $max);
+		if(!function_exists('checkCount')) {
+			function checkCount( $arr, $max ) {
+				return (count($arr) <= $max);
+			}
 		}
 
 		foreach($media[0] as $i => $field) {
@@ -609,58 +611,63 @@ class Telegram extends RePost {
 	private function generateThumb($content) {
 		global $config;
 
-		function processImage($image, $quality = 90) {
-			global $config;
-			$getID3 = new getID3();
+		if(!function_exists('processImage')) {
+			function processImage( $image, $quality = 90 ) {
+				global $config;
+				$getID3 = new getID3();
 
-			$thumb = $getID3->analyze($image);
-			if(!isset($thumb['error'])) {
-				$max_size = 200000;
-				$max_res = 320;
-				$thumb_folder = 'uploads/telegram';
-				if (!mkdir($thumb_dir = ROOT_DIR . DIRECTORY_SEPARATOR . $thumb_folder, 0777, true)
-					&& !is_dir(
-						$thumb_dir
-					)) {
-					$this->generate_log(
-						'telegram',
-						'processImage',
-						sprintf('Directory "%s" was not created', $thumb_dir)
-					);
+				$thumb = $getID3->analyze($image);
+				if (!isset($thumb['error'])) {
+					$max_size     = 200000;
+					$max_res      = 320;
+					$thumb_folder = 'uploads/telegram';
+					if (!mkdir($thumb_dir = ROOT_DIR . DIRECTORY_SEPARATOR . $thumb_folder, 0777, true)
+						&& !is_dir(
+							$thumb_dir
+						)) {
+						$this->generate_log(
+							'telegram',
+							'processImage',
+							sprintf('Directory "%s" was not created', $thumb_dir)
+						);
+					}
+					$thumb_path   = pathinfo($thumb['filenamepath']);
+					$thumb_name   = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
+					$thumb_server = "{$thumb_dir}/{$thumb_name}";
+					$thumb_url    = "{$config['http_home_url']}{$thumb_folder}/{$thumb_name}";
+					$thumbnail    = new thumbnail($thumb['filenamepath']);
+					$thumbnail->jpeg_quality($quality);
+
+					if ($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res
+						|| $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res) {
+						$thumbnail->size_auto($max_res);
+					}
+
+					$thumbnail->save($thumb_server);
+
+					$new_thumb = $getID3->analyze($thumb_server);
+					if ($new_thumb['jpg']['exif']['FILE']['FileSize'] > $max_size) {
+						$thumb_url = processImage($thumb_url, ($quality - 1));
+
+					}
+
+					return $thumb_url;
+
 				}
-				$thumb_path = pathinfo($thumb['filenamepath']);
-				$thumb_name = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
-				$thumb_server = "{$thumb_dir}/{$thumb_name}";
-				$thumb_url = "{$config['http_home_url']}{$thumb_folder}/{$thumb_name}";
-				$thumbnail = new thumbnail($thumb['filenamepath']);
-				$thumbnail->jpeg_quality($quality);
 
-				if($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res || $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res ) {
-					$thumbnail->size_auto($max_res);
-				}
-
-				$thumbnail->save($thumb_server);
-
-				$new_thumb = $getID3->analyze($thumb_server);
-				if($new_thumb['jpg']['exif']['FILE']['FileSize'] > $max_size) {
-					$thumb_url = processImage($thumb_url, ($quality -1));
-
-				}
-
-				return $thumb_url;
+				return false;
 
 			}
-
-			return false;
-
 		}
 
-		function serverLink($link) {
-			global $config;
-			$_link = str_replace($config['http_home_url'], ROOT_DIR . DIRECTORY_SEPARATOR, $link);
-			if (file_exists($_link)) return new CURLFile($_link);
+		if(!function_exists('serverLink')) {
+			function serverLink( $link ) {
+				global $config;
+				$_link = str_replace($config['http_home_url'], ROOT_DIR . DIRECTORY_SEPARATOR, $link);
+				if (file_exists($_link)) return new CURLFile($_link);
 
-			return $link;
+				return $link;
+			}
 		}
 
 		if (preg_grep('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', explode("\n", $content))) {
@@ -888,7 +895,7 @@ class Telegram extends RePost {
 			if (!empty($this->links) && $this->links !== null && isset($media[0]['reply_markup']))
 				$media[0]['reply_markup'] = $this->links;
 			if (!empty($this->getContent()) && $this->getContent() !== null && isset($media[0]['caption']))
-				$media[0]['caption'] = $this->getContent();
+				$media[0]['caption'] = $this->finalContent();
 		} else {
 			foreach ($this->media as $i => $iValue) {
 				$media_arr = $iValue;
@@ -902,7 +909,7 @@ class Telegram extends RePost {
 					if (!empty($this->links) && $this->links !== null && isset($media_tmp['reply_markup']))
 						$media_tmp['reply_markup'] = $this->links;
 					if (!empty($this->getContent()) && $this->getContent() !== null && isset($media_tmp['caption']))
-						$media_tmp['caption'] = $this->getContent();
+						$media_tmp['caption'] = $this->finalContent();
 					$media_tmp['parse_mode'] = 'HTML';
 				}
 				if (!empty($this->thumb) && $this->thumb !== null && isset($media_tmp['thumb'])) {
@@ -964,7 +971,7 @@ class Telegram extends RePost {
 			case 'text':
 
 				$send_array = [
-					'text' => $this->getContent(),
+					'text' => $this->finalContent(),
 					'reply_markup' => ''
 				];
 
@@ -1067,7 +1074,7 @@ class Telegram extends RePost {
 		if (!empty($this->links) && $this->links !== null && isset($send_array['reply_markup']))
 			$send_array['reply_markup'] = $this->links;
 		if (!empty($this->getContent()) && $this->getContent() !== null && isset($send_array['caption']))
-			$send_array['caption'] = $this->getContent();
+			$send_array['caption'] = $this->finalContent();
 
 		$send_array['chat_id'] = str_replace('%40', '@', $this->channel);
 		$send_url['parse_mode'] = 'HTML';
