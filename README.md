@@ -12,6 +12,18 @@
 Отправка сообщений в телеграм при отправке новостей на сайте
 Полная совместимость проверенна на DLE-версиях 14.х
 
+# Подключение в сторонние разработки
+**Полезно для парсеров**
+
+После того, как новость будет сохранена в базу данных, добавьте этот код:
+
+```PHP
+$tg_post_id = $news_id; #идентификатор ID новости
+$tg_post_type = 'addnews'; #тип добавления, addnews или editnews
+@include DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/custom_add.php');
+```
+
+
 
 Для установки достаточно скачать [релиз](https://github.com/Gokujo/telegramposting/releases).
 
@@ -34,4 +46,5 @@
 
 Залейте папку engine в корень сайта и установите плагин через менеджер плагинов.
 
-2. Для дополнительных инструкций проследуйте www.ваш_сайт.ru/admin.php?mod=telegram&do=documentation
+
+2. Для дополнительных инструкций проследуйте https://devcraft.club/articles/telegram-posting.7/
