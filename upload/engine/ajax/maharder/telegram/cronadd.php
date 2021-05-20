@@ -14,9 +14,11 @@
 @ini_set ( 'error_reporting', E_ALL ^ E_WARNING ^ E_NOTICE );
 
 define( 'DATALIFEENGINE', true );
-define( 'ROOT_DIR', dirname( dirname( dirname( dirname( dirname(  __FILE__ ) ) ) ) ) );
+define( 'ROOT_DIR', dirname( dirname( dirname( dirname(__DIR__) ) ) ) );
 define( 'ENGINE_DIR', ROOT_DIR . '/engine' );
 
+require_once (ENGINE_DIR . '/classes/plugins.class.php');
+include_once (DLEPlugins::Check(ENGINE_DIR . '/inc/include/functions.inc.php'));
 include (DLEPlugins::Check(ENGINE_DIR . "/data/telegram.php"));
 include (DLEPlugins::Check(ENGINE_DIR . '/data/config.php'));
 date_default_timezone_set ( $config['date_adjust'] );
@@ -42,25 +44,25 @@ if($telebot['onof'] && $telebot['cron']) {
     else {
         while ($row = $db->get_row($cron)) {
             $news_id = (int) $row['news_id'];
-            $news = $db->super_query("SELECT * FROM " . PREFIX . "_post LEFT JOIN " . PREFIX . "_post_extras ON " . PREFIX . "_post.id = " . PREFIX . "_post_extras.news_id  WHERE id = '{$news_id}'");
-            $news_time = $row['time'];
-            if(!isset($telebot['cron_time']) || empty($telebot['cron_time'])) $telebot['cron_time'] = 0;
+            $news_time = strtotime(stripslashes($row['time']));
+			$telebot['cron_time'] = (isset($telebot['cron_time']) || !empty($telebot['cron_time'])) ? $telebot['cron_time'] : 0;
             $cron_time = $telebot['cron_time'];
-            $cron_time = $cron_time * 60;
+            $cron_time = $cron_time * 60 * 60;
             $news_time = $news_time+$cron_time;
             $now_time = time();
 
             if($now_time >= $news_time) {
 
-				$type = $row['type'] == 'addnews' ? 'cron_addnews' : 'cron_editnews';
+				$type = $row['type'] === 'addnews' ? 'cron_addnews' : 'cron_editnews';
 
 				$telegram = new Telegram($news_id, $telebot, $type);
 				$telegram->sendMessage();
 
                 $cron_id = (int)$row['cron_id'];
                 $db->query("DELETE FROM " . PREFIX . "_telegram_cron WHERE cron_id = {$cron_id}");
-            } else continue;
-        }
+            }
+            sleep(5);
+		}
     }
 
 } else return;
