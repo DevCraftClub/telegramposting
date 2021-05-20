@@ -26,7 +26,7 @@ require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/assets
 
 if($telebot['onof']) {
 
-    if($telebot['cron']) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type, time) VALUES ('{$news_id}', 'addnews', '{$added_time}')");
+    if($telebot['cron']) $db->query("INSERT INTO " . PREFIX . "_telegram_cron (news_id, type) VALUES ('{$news_id}', 'addnews')");
     else {
 		$telegram = new Telegram($news_id, $telebot, 'addnews');
 		$telegram->sendMessage();

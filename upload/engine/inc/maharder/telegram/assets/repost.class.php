@@ -42,6 +42,20 @@ class RePost {
 		return (int) $this->post_id;
 	}
 
+	protected function finalContent(){
+		$len = $this->max_len - 3;
+		try {
+			$new_line = PHP_EOL;
+		} catch (Exception $e) {
+			$new_line = '%0A';
+		}
+		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', $new_line, $this->content);
+		if(strlen($content) >= $this->max_len) $content = mb_substr( $this->content, 0, $len, "utf-8") . '...';
+
+		return $content;
+
+	}
+
 	public function if_check($matches){
 		global $config, $row;
 
@@ -1020,6 +1034,9 @@ HTML;
 					$content = str_replace(["[xfvalue_tagvalue_{$value[0]}]", "[xfvalue_tagvalue_url_{$value[0]}]"], '', $content);
 				}
 
+				$xfieldsdata["{$value[0]}_text"] = '';
+				$xfieldsdata["{$value[0]}_hashtag"] = '';
+
 				if ( $value[6] AND !empty( $xfieldsdata[$value[0]] ) ) {
 					$temp_array = explode( ",", $xfieldsdata[$value[0]] );
 					$value3 = array();
@@ -1042,7 +1059,7 @@ HTML;
 							if( $config['allow_alt_url'] ) $value3[] = "<a href=\"" . $config['http_home_url'] . "xfsearch/" .$value[0]."/". rawurlencode( $value4 ) . "/\">" . $value2 . "</a>";
 							else $value3[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=".$value[0]."&amp;xf=" . rawurlencode( $value4 ) . "\">" . $value2 . "</a>";
 							$value3_no_link[] = $value2;
-							$value3_hashtag[] = "#{$value2}";
+							$value3_hashtag[] = '#' . str_replace(' ','_', $value2);
 						}
 					}
 
@@ -1169,7 +1186,11 @@ HTML;
 					$xfieldsdata[$value[0]] = implode($gallery_image);
 
 				}
-				$content = str_replace("[xfvalue_{$value[0]}]", $xfieldsdata[$value[0]], $content);
+				$content = str_replace(
+					[ "[xfvalue_{$value[0]}]", "[xfvalue_{$value[0]}_text]", "[xfvalue_{$value[0]}_hashtag]" ],
+					[ $xfieldsdata[$value[0]], $xfieldsdata["{$value[0]}_text"], $xfieldsdata["{$value[0]}_hashtag"] ],
+					$content
+				);
 
 				$all_xf_content[] = $xfieldsdata[$value[0]];
 
@@ -1360,11 +1381,12 @@ HTML;
 			} else {
 				if($vars['table'] === null && $vars['sql'] === null) $vars['table'] = $name;
 
-				if($vars['table'] !== null) {
+				if ($vars['table'] !== NULL) {
 					$selects = implode(",", $vars['selects']);
-					if(empty($selects)) $selects = '*';
+					if (empty($selects)) $selects = '*';
 					$sql = "SELECT {$selects} FROM {$prefix}_{$vars['table']} {$order} {$limit}";
-				} elseif ($vars['sql'] !== null) $sql = $vars['sql'];
+				}
+				if ($vars['sql'] !== NULL) $sql = $vars['sql'];
 			}
 
 			$db->query($sql);

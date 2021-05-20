@@ -44,6 +44,10 @@ switch ($_GET['do']) {
         include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/sendMessage.php'));
         break;
 
+    case 'cron':
+        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/crontab.php'));
+        break;
+
 	default:
         include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/default.php'));
 		break;

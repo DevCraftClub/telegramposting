@@ -30,6 +30,11 @@ echo <<<JS
     	            name: 'Доп. поля',
     	            type: 'xfields',
     	            values: []
+    	        },
+    	        others: {
+    	            name: 'Прочее',
+    	            type: 'other',
+    	            values: []
     	        }
     	    }, html = '';
     	    $.each(fields, function (key, value) {
@@ -49,6 +54,9 @@ echo <<<JS
 				else if (val.source === 'post_extras') groups.post_extras.values.push(val);
 				else if (val.source === 'category') groups.categories.values.push(val);
 				else if (val.source === 'xfields') groups.xfields.values.push(val);
+				else {
+				    if(val.name !== '' || val.source !=='') groups.others.values.push(val);
+				}
     	        
     	    });
     	    $.each(groups, function(k, v) {
