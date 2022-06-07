@@ -1,57 +1,65 @@
 <?php
 
-//	===============================
-//	Настройки модуля
-//	===============================
-//	Автор: Maxim Harder
-//	Сайт: https://maxim-harder.de
-//	Телеграм: http://t.me/MaHarder
-//	===============================
-//	Ничего не менять
-//	===============================
+//===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===
+// Mod: Telegram Posting
+// File: main.php
+// Path: D:\OpenServer\domains\dle150.local/engine/inc/telegram.php
+// ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  =
+// Author: Maxim Harder <dev@devcraft.club> (c) 2022
+// Website: https://devcraft.club
+// Telegram: http://t.me/MaHarder
+// ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  =
+// Do not change anything!
+//===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===
 
-if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
+$modInfo = [
+	'module_name' => 'Telegram Posting',
+	'module_version' => '1.6.8',
+	'module_description' => 'Отправка сообщений в телеграм канал или группу',
+	'module_code' => 'telegram',
+	'module_icon' => 'fa-brands fa-telegram',
+	'site_link' => 'https://devcraft.club/downloads/telegram-posting.11/',
+	'docs_link' => 'https://readme.devcraft.club/latest/dev/telegramposting/install/',
+	'dle_config' => $config,
+	'dle_login_hash' => $dle_login_hash,
+	'_get' => filter_input_array(INPUT_GET),
+    '_post' => filter_input_array(INPUT_POST)
+];
 
-$assets = $db->super_query("SELECT count(*) as count FROM " . PREFIX . "_plugins WHERE name LIKE '%MaHarder Assets%' ");
-if($assets['count'] === 0)  die("Неустановлен модуль MaHarder Assets. Последняя версия: <a href=\"https://github.com/Gokujo/myAssetsDLE\">https://github.com/Gokujo/myAssetsDLE</a>");
+require_once DLEPlugins::Check(__DIR__.'/maharder/admin/index.php');
 
-$codename = "telegram";
+$links['cron'] = [
+	'name' => _('Отложенный постинг'),
+	'href' => THIS_SELF.'?mod='.$modInfo['module_code'].'&sites=cron',
+	'type' => 'link',
+	'children' => [],
+];
 
-@include (DLEPlugins::Check(ENGINE_DIR . '/data/'.$codename.'.php'));
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/assets/functions.php'));
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/version.php'));
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/functions.php'));
+$mh = new Admin();
 
-impFiles('css', $cssfiles);
-
-$adminlink = "?mod=".$codename;
-
-switch ($_GET['do']) {
-
-    case 'save':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/save.php'));
-        break;
-
-    case 'crontab':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/cron.php'));
-        break;
-
-	case 'chat_id':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/getChat.php'));
-		break;
-
-    case 'sendMessage':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/sendMessage.php'));
-        break;
-
-    case 'cron':
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/crontab.php'));
-        break;
-
+switch ($_GET['sites']) {
 	default:
-        include (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/'.$codename.'/default.php'));
+		require_once DLEPlugins::Check(MH_ADMIN."/modules/{$modInfo['module_code']}/main.php");
+		break;
+	case 'cron':
+		require_once DLEPlugins::Check(MH_ADMIN."/modules/{$modInfo['module_code']}/cron_data.php");
+		break;
+	case 'changelog':
+		require_once DLEPlugins::Check(MH_ADMIN."/modules/{$modInfo['module_code']}/changelog.php");
 		break;
 }
 
-impFiles('js', $jsfiles);
-echofooter();
+$xtraVariable = [
+	'links' => $links,
+	'breadcrumbs' => $breadcrumbs,
+	'settings' => $mh->getConfig($modInfo['module_code']),
+];
+
+$mh->setVars($modInfo);
+$mh->setLinks($links);
+$mh->setVars($xtraVariable);
+$mh->setVars($modVars);
+
+$template = $mh_template->load($htmlTemplate);
+
+echo $template->render($mh->getVariables());
