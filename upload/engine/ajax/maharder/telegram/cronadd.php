@@ -52,7 +52,9 @@ if($tg_config['onof'] && $tg_config['cron']) {
 		$now_time = time();
 
 		if($now_time >= $news_time) {
-			$telegram = new Telegram($c['news_id'], "cron_{$c['type']}");
+			if(in_array($c['type'], ['addnews', 'editnews'])) $c['type'] = "cron_{$c['type']}";
+			if(!in_array($c['type'], ['addnews', 'editnews', 'cron_addnews', 'cron_editnews'])) $c['type'] = "addnews";
+			$telegram = new Telegram($c['news_id'], $c['type']);
 			$message = json_decode($telegram->sendMessage(), true);
 
 			if($message['ok']) {
