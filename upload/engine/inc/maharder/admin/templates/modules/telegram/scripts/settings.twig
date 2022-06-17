@@ -137,23 +137,6 @@
         function modifyFieldVal() {
             let fields = [];
 
-// $('.aksDd').dropdown({
-// 	onChange: function(value, text, sel) {
-// 	    let x
-// 	    	field_data = $(this).find('.selected').data(),
-// 	    	field = $('#field-' + field_data.field_num)
-// 	    ;
-//
-// 		$(field).data('source', field_data.source).data('name', field_data.name).data('field_id', value);
-// 		$(field).attr('data-source', field_data.source).attr('data-name', field_data.name).attr('data-field_id', value);
-//
-// 		console.log(field_data);
-// 	},
-// 	onLabelSelect: function(selectedLabels) {
-// 	    console.log(selectedLabels);
-// 	}
-// });
-
             $('[name="dependencyFields"] .aksDd').each(function () {
                 let
                     thisID = $(this).data('id'),
@@ -184,6 +167,30 @@
             $('.dropdown').dropdown();
             $(depID).hide();
 
+            $(document).on('click', '.save', function () {
+                startLoading();
+                $.ajax({
+                    url: 'engine/ajax/controller.php?mod=maharder',
+                    data: {
+                        user_hash: '{{dle_login_hash}}',
+                        module: '{{module_code}}',
+                        file: 'master',
+                        method: 'settings',
+                        data: $('.form').serialize()
+                    },
+                    type: 'POST',
+                    success: function (data) {
+                        hideLoading('');
+                        $('body').toast({
+                            class: 'success',
+                            title: `Всё отлично!`,
+                            message: `Данные были сохранены!`,
+                            showProgress: 'bottom'
+                        });
+
+                    }
+                });
+            });
             $(document).on('click', '.send_tg_msg', function () {
                 let
                     $token = $('#token'),
@@ -356,15 +363,12 @@
 
                 }
             });
-
             $(document).on('change', '.fieldItem, [data-name="field"]', function () {
                 modifyFieldVal();
             });
-
             $(document).on('input', '.fieldItem', function () {
                 modifyFieldVal();
             });
-
             $(document).on('click', '[data-action="addNewField"]', function () {
                 dependencyFieldItems++;
                 dependencyFieldCount++;
@@ -372,7 +376,6 @@
                 $('[name="dependencyFields"]').append(item);
                 modifyFieldVal();
             });
-
             $(document).on('click', '[data-action="delThisField"]', function () {
 
                 if (dependencyFieldCount > 1) {
@@ -388,8 +391,17 @@
                 });
 
             });
+            $(document).on('click', '[data-editor-action="copy_data"]', function () {
+                let $el = $(this),
+                    data = $el.data(),
+                    source_id = '#' + data.copy + '_editor',
+                    output_id = '#' + data.output + '_editor',
+                    source_data = $(source_id).val()
+                ;
 
+                $(output_id).val(source_data);
 
+            })
         });
 	</script>
 {% endautoescape %}
