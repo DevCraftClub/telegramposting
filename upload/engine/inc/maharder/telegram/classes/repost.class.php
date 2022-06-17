@@ -7,12 +7,13 @@ class RePost {
 	use LogGenerator;
 	use DataLoader;
 
-	private ?string $content_type;
-	private ?string $post_title;
-	private int     $post_id;
-	private ?string $content;
-	protected array $xf_images = [], $files = [], $images_post = [], $videos = [], $audios = [], $xf_videos = [], $xf_audios = [], $xf_files = [], $images = [];
-	protected int   $max_len   = 0;
+	private ?string  $content_type = null;
+	private ?string  $post_title   = null;
+	private int      $post_id;
+	private ?string  $content      = null;
+	private array    $xf_images    = [], $files = [], $images_post = [], $videos = [], $audios = [], $xf_videos = [], $xf_audios = [], $xf_files = [], $images = [];
+	private int      $max_len      = 0;
+	protected string $allowed_html = '<b><code><i><a><u><s>';
 
 	/**
 	 * RePost constructor.
@@ -26,21 +27,36 @@ class RePost {
 	}
 
 	/**
+	 * @param int $max_len
+	 */
+	public function setMaxLen(int $max_len)
+	: void {
+		$this->max_len = $max_len;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getMaxLen()
+	: int {
+		return $this->max_len;
+	}
+
+
+
+	/**
 	 * Обработка содержимого
 	 *
 	 * @param mixed $content      Содержимое
-	 * @param bool  $parse        Параметр для повторной обработки содержимоего, по умолчанию: false
-	 * @param array $parse_filter Параметры фильтрации содержимоего
+	 * @param bool  $parse        Параметр для повторной обработки содержимого, по умолчанию: false
+	 * @param array $parse_filter Параметры фильтрации содержимого
 	 *
 	 * @return mixed
+	 * @throws \JsonException
 	 */
 	public function setContent($content, bool $parse = false, array $parse_filter = []) {
 		if($content !== null) {
-			$len = $this->max_len - 3;
-			$this->content = mb_substr(
-				$parse ? $this->parse_content($content, $parse_filter) : $content, 0, $this->max_len, "utf-8"
-			);
-			if(strlen($content) >= $this->max_len) $this->content = mb_substr($this->content, 0, $len) . '...';
+			$this->content = $parse ? $this->parse_content($content, $parse_filter) : $content;
 		} else {
 			$this->content = null;
 		}
@@ -68,16 +84,25 @@ class RePost {
 	 * @return mixed
 	 */
 	protected function finalContent() {
-		$len = $this->max_len - 3;
+		$len = $this->getMaxLen() - 3;
 		try {
 			$new_line = PHP_EOL;
 		} catch(Exception $e) {
 			$new_line = '%0A';
 		}
-		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', $new_line, $this->content);
-		if(strlen($content) >= $this->max_len) $content = mb_substr($this->content, 0, $len, "utf-8") . '...';
 
-		return $content;
+		$content = $this->getContent();
+		$content = preg_replace('/\[[^\]]+\]/', '', $content);
+		preg_match_all('/\[[^\]]+\]/', $content, $content_arr);
+		foreach($content_arr[0] as $bb) {
+			$content = str_replace($bb, '', $content);
+		}
+		$content = mb_substr($content, 0, $len, "utf-8");
+		$content = strip_tags($content, $this->getAllowedHtml());
+
+		if(strlen($content) >= $this->max_len) $content .= '...';
+
+		return preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', $new_line, $content);
 
 	}
 
@@ -456,19 +481,7 @@ HTML;
 	: string {
 		global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $db, $user_group, $member_id, $customlangdate;
 
-		$where = [
-			'p.id = e.news_id', "p.id = {$this->post_id}"
-		];
-		if(!empty($filter['fields'])) $where[] = "({$filter['fields']})";
-		$where = implode(' AND ', $where);
-
-		$join = '';
-		if($config['allow_multi_category'] && $filter['cats']) $join = "INNER JOIN (SELECT DISTINCT(" . PREFIX
-		                                                               . "_post_extras_cats.news_id) FROM " . PREFIX
-		                                                               . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
-
-		$sql = 'SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX
-		       . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}";
+		$sql = $this->sqlBuilder($filter);
 
 		$row = $this->load_data('post', ['sql' => $sql, 'where' => ['news_id' => $this->getPostId()]])[0];
 
@@ -680,6 +693,66 @@ HTML;
 			$content = str_replace(
 				['{tags}', '{tags_no_link}', '{hashtags}'], '', $content
 			);
+		}
+
+		if(!$row['category']) {
+
+			$my_cat = "---";
+			$my_cat_link = "---";
+
+			$content = str_replace('[not-has-category]', "", $content);
+			$content = str_replace('[/not-has-category]', "", $content);
+			preg_match_all("'\\[has-category\\](.*?)\\[/has-category\\]'si", $content, $content_array);
+			foreach($content_array[0] as $id => $arr) {
+				$content = str_replace($arr, '', $content);
+			}
+
+		} else {
+
+			$my_cat = [];
+			$my_cat_link = [];
+			$cat_list = $row['cats'] = explode(',', $row['category']);
+
+			$content = str_replace('[has-category]', "", $content);
+			$content = str_replace('[/has-category]', "", $content);
+			preg_match_all("'\\[not-has-category\\](.*?)\\[/not-has-category\\]'si", $content, $content_array);
+			foreach($content_array[0] as $id => $arr) {
+				$content = str_replace($arr, '', $content);
+			}
+
+			if(count($cat_list) == 1) {
+
+				if($cat_info[$cat_list[0]]['id']) {
+
+					$my_cat[] = $cat_info[$cat_list[0]]['name'];
+					$my_cat_link = get_categories($cat_list[0], $config['category_separator']);
+
+				} else $my_cat_link = "---";
+
+			} else {
+
+				foreach($cat_list as $element) {
+
+					if($element and $cat_info[$element]['id']) {
+						$my_cat[] = $cat_info[$element]['name'];
+						if($config['allow_alt_url']) $my_cat_link[] = "<a href=\"" . $config['http_home_url'] . get_url(
+								$element
+							)
+						                                              . "/\">{$cat_info[$element]['name']}</a>"; else $my_cat_link[] = "<a href=\"$PHP_SELF?do=cat&category={$cat_info[$element]['alt_name']}\">{$cat_info[$element]['name']}</a>";
+					}
+
+				}
+
+				if(count($my_cat_link)) {
+					$my_cat_link = implode($config['category_separator'], $my_cat_link);
+				} else $my_cat_link = "---";
+
+			}
+
+			if(count($my_cat)) {
+				$my_cat = implode($config['category_separator'], $my_cat);
+			} else $my_cat = "---";
+
 		}
 
 		$url_cat = $category_id;
@@ -921,6 +994,14 @@ HTML;
 		foreach($content_array[0] as $id => $arr) {
 			$content = str_replace($arr, '', $content);
 		}
+
+		preg_match_all('/\\[complaint\\](.*?)\\[\\/complaint\\]/', $content, $content_array);
+		foreach($content_array[0] as $id => $arr) {
+			$content = str_replace($arr, '', $content);
+		}
+		$content = str_replace(
+			['[/complaint]', '[complaint]'], "", $content
+		);
 
 		$content = str_replace(['{favorites}', '{poll}'], "", $content);
 
@@ -1319,7 +1400,7 @@ HTML;
 
 				$all_xf_content[] = $xfieldsdata[$value[0]];
 
-				if(preg_match("#\\[xfvalue_{$preg_safe_name} limit=['\"](.+?)['\"]\\]#i", $content, $matches)) {
+				if(preg_match("#\\[xfvalue_{$preg_safe_name} limit=['\"]?(\d+)['\"]?\\]#i", $content, $matches)) {
 					$count = (int)$matches[1];
 
 					$xfieldsdata[$value[0]] = str_replace("><", "> <", $xfieldsdata[$value[0]]);
@@ -1355,7 +1436,7 @@ HTML;
 
 		$content = str_replace(['{short-story}', '{full-story}'], [$row['short_story'], $row['full_story']], $content);
 
-		if(preg_match("#\\{full-story limit=['\"](.+?)['\"]\\}#i", $content, $matches)) {
+		if(preg_match("#\\{full-story limit=['\"]?(\d+)['\"]?\\}#i", $content, $matches)) {
 			$count = (int)$matches[1];
 
 			if($count and dle_strlen($row['full_story'], $config['charset']) > $count) {
@@ -1371,7 +1452,7 @@ HTML;
 
 		}
 
-		if(preg_match("#\\{short-story limit=['\"](.+?)['\"]\\}#i", $content, $matches)) {
+		if(preg_match("#\\{short-story limit=['\"]?(\d+)['\"]?\\}#i", $content, $matches)) {
 			$count = (int)$matches[1];
 
 			if($count and dle_strlen($row['short_story'], $config['charset']) > $count) {
@@ -1399,7 +1480,7 @@ HTML;
 			str_replace("&amp;amp;", "&amp;", htmlspecialchars($row['title'], ENT_QUOTES, $config['charset']))
 		);
 
-		if(preg_match("#\\{title limit=['\"](.+?)['\"]\\}#i", $content, $matches)) {
+		if(preg_match("#\\{title limit=['\"]?(\d+)['\"]?\\}#i", $content, $matches)) {
 			$count = (int)$matches[1];
 			$row['title'] = strip_tags($row['title']);
 
@@ -1422,6 +1503,8 @@ HTML;
 
 		}
 
+		$content = preg_replace("#\\{THEME\\}#i", "{$config['http_home_url']}/templates/{$config['skin']}", $content);
+
 		$content = str_replace(
 			["&lt;", "&gt;", "<p>", "</p>", "[b]", "[/b]", "[/code]", "[code]", "[/i]", "[i]"],
 			["<", ">", "", "<br>", "<b>", "</b>", "</code>", "<code>", "</i>", "<i>"], $content
@@ -1429,8 +1512,6 @@ HTML;
 
 		$content = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $content);
 		$content = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $content);
-
-		$content = strip_tags($content, '<b><code><i><a>');
 
 		$this->getFiles();
 		$this->getImages();
@@ -1442,6 +1523,7 @@ HTML;
 	 * Сбор файлов новости из базы данных
 	 *
 	 * @return array
+	 * @throws \JsonException
 	 */
 	public function getFiles() {
 
@@ -1465,6 +1547,7 @@ HTML;
 	 * если их нет в массиве, то добавляет изображение в него
 	 *
 	 * @return array
+	 * @throws \JsonException
 	 */
 	public function getImages() {
 
@@ -1512,13 +1595,15 @@ HTML;
 
 	/**
 	 * @param        $url
+	 * @param array  $post
 	 * @param null   $proxy
 	 * @param string $type
 	 * @param null   $auth
 	 *
 	 * @return bool|string
+	 * @throws \Monolog\Handler\MissingExtensionException
 	 */
-	public function send($url, $post = [], $proxy = null, $type = 'http', $auth = null) {
+	public function send($url, array $post = [], $proxy = null, string $type = 'http', $auth = null) {
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -1553,16 +1638,239 @@ HTML;
 		return $content;
 	}
 
-	public function getContentType() {
+	public function getContentType()
+	: ?string {
 		return $this->content_type;
 	}
 
-	public function setContentType($type) {
+	public function setContentType($type)
+	: ?string {
 		$this->content_type = $type;
 		return $this->content_type;
 	}
 
-	public function getPostId() {
+	public function getPostId()
+	: int {
 		return $this->post_id;
 	}
+
+	/**
+	 * @param array|string $xf_images
+	 * @param string|null  $param
+	 *
+	 * @return array
+	 */
+	public function setXfImages($xf_images, string $param = null)
+	: array {
+		if(is_array($xf_images)) $this->xf_images = array_merge($this->getXfImages(), $xf_images);
+		else {
+			if($param !== null)	$this->xf_images[$param][] = $xf_images;
+			else $this->xf_images[] = $xf_images;
+		}
+
+		return $this->getXfImages();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getXfImages()
+	: array {
+		return $this->xf_images;
+	}
+
+	/**
+	 * @param array|string $images_post
+	 *
+	 * @return array
+	 */
+	public function setImagesPost($images_post)
+	: array {
+
+		$this->images_post[] = $images_post;
+
+		return $this->getImagesPost();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getImagesPost()
+	: array {
+		return $this->images_post;
+	}
+
+	/**
+	 * @param array|string $videos
+	 *
+	 * @return array
+	 */
+	public function setVideos($videos)
+	: array {
+
+		$this->videos[] = $videos;
+
+		return $this->getVideos();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getVideos()
+	: array {
+		return $this->videos;
+	}
+
+	/**
+	 * @param array|string $audios
+	 *
+	 * @return array
+	 */
+	public function setAudios($audios)
+	: array {
+
+		$this->audios[] = $audios;
+
+		return $this->getAudios();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAudios()
+	: array {
+		return $this->audios;
+	}
+
+	/**
+	 * @param array|string $xf_videos
+	 *
+	 * @return array
+	 */
+	public function setXfVideos($xf_videos, string $param = null)
+	: array {
+
+		if(is_array($xf_videos)) $this->xf_videos = array_merge($this->getXfVideos(), $xf_videos);
+		else {
+			if($param !== null)	$this->xf_videos[$param][] = $xf_videos;
+			else $this->xf_videos[] = $xf_videos;
+		}
+
+		return $this->getXfVideos();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getXfVideos()
+	: array {
+		return $this->xf_videos;
+	}
+
+	/**
+	 * @param array|string $xf_audios
+	 *
+	 * @return array
+	 */
+	public function setXfAudios($xf_audios, string $param = null)
+	: array {
+
+		if(is_array($xf_audios)) $this->xf_audios = array_merge($this->getXfAudios(), $xf_audios);
+		else {
+			if($param !== null)	$this->xf_audios[$param][] = $xf_audios;
+			else $this->xf_audios[] = $xf_audios;
+		}
+
+		return $this->getXfAudios();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getXfAudios()
+	: array {
+		return $this->xf_audios;
+	}
+
+	/**
+	 * @param array|string $xf_files
+	 *
+	 * @return array
+	 */
+	public function setXfFiles($xf_files, string $param = null)
+	: array {
+
+		if(is_array($xf_files)) $this->xf_files = array_merge($this->getXfFiles(), $xf_files);
+		else {
+			if($param !== null)	$this->xf_files[$param][] = $xf_files;
+			else $this->xf_files[] = $xf_files;
+		}
+
+		return $this->getXfFiles();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getXfFiles()
+	: array {
+		return $this->xf_files;
+	}
+
+	/**
+	 * @param string $allowed_html
+	 *
+	 * @return RePost
+	 */
+	public function setAllowedHtml(string $allowed_html)
+	: RePost {
+		$this->allowed_html = $allowed_html;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAllowedHtml()
+	: string {
+		return $this->allowed_html;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getAllImages() {
+		return $this->images;
+	}
+
+	/**
+	 * @param array|string $image
+	 *
+	 * @return array
+	 */
+	public function setAllImages($image) {
+		if(is_array($image)) $this->images = array_merge($this->getAllImages(), $image);
+		else $this->image[] = $image;
+
+		return $this->getAllImages();
+	}
+
+
+	protected function sqlBuilder($filter = []) {
+		global $config;
+
+		$where = [
+			'p.id = e.news_id', "p.id = {$this->getPostId()}"
+		];
+		if(!empty($filter['fields'])) $where[] = "({$filter['fields']})";
+		$where = implode(' AND ', $where);
+
+		$join = '';
+		if($config['allow_multi_category'] && $filter['cats'])
+			$join = "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
+
+		return 'SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}";
+	}
+
+
 }
