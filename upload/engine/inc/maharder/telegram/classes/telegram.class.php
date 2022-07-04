@@ -3,11 +3,13 @@
 require_once(DLEPlugins::Check(__DIR__ . '/getid3/getid3.php'));
 require_once(DLEPlugins::Check(__DIR__ . '/repost.class.php'));
 require_once(DLEPlugins::Check(__DIR__ . '/thumbs.php'));
+require_once(DLEPlugins::Check(__DIR__ . '/ImageConverter.php'));
 
 class Telegram extends RePost {
 
 	private $bot, $channel, $telegram_config, $max_media = 10, $links, $thumb;
 	protected                                                          $media = [];
+	private string $tg_temp_dir = ROOT_DIR . '/uploads/telegram';
 
 	/**
 	 * Telegram constructor.
@@ -359,7 +361,7 @@ class Telegram extends RePost {
 	}
 
 	private function cleanUp() {
-		$dir = ROOT_DIR . '/uploads/telegram';
+		$dir = $this->tg_temp_dir;
 		$handle = opendir($dir);
 		if($handle) {
 			$file_list = [];
@@ -378,8 +380,7 @@ class Telegram extends RePost {
 	}
 
 	private function tempFile($file) {
-		$_folder = '/uploads/telegram';
-		if(!mkdir($_dir = ROOT_DIR . $_folder, 0777, true)
+		if(!mkdir($_dir = $this->tg_temp_dir, 0777, true)
 		   && !is_dir(
 				$_dir
 			)) {
@@ -645,8 +646,7 @@ class Telegram extends RePost {
 		$thumb = $getID3->analyze($image);
 		if(!isset($thumb['error'])) {
 			$max_size = 200000;
-			$thumb_folder = 'uploads/telegram';
-			if(!mkdir($thumb_dir = ROOT_DIR . DIRECTORY_SEPARATOR . $thumb_folder, 0777, true)
+			if(!mkdir($thumb_dir = $this->tg_temp_dir, 0777, true)
 			   && !is_dir(
 					$thumb_dir
 				)) {
@@ -678,7 +678,7 @@ class Telegram extends RePost {
 				);
 			}
 
-			return $thumb_url;
+			return $this->convertWebp($thumb_url, $quality);
 
 		}
 
@@ -752,11 +752,17 @@ class Telegram extends RePost {
 
 	}
 
+	/**
+	 * @param $link
+	 * @return array
+	 * @throws \Monolog\Handler\MissingExtensionException
+	 * @version 1.7.2
+	 */
 	private function mediaPhoto($link)
 	: array {
 		global $config;
 
-		$url_parts = parse_url($link);
+		$url_parts = parse_url($this->convertWebp($link));
 		$config_url = parse_url($config['http_home_url']);
 		if($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) {
 			if(!isset($url_parts['host'])) {
@@ -1173,11 +1179,91 @@ class Telegram extends RePost {
 	/**
 	 * @return array
 	 */
-	public function setTelegramConfig()
-	: array {
+	public function setTelegramConfig()	: array {
 		$this->telegram_config = $this->getConfig('telegram');
 		$this->setBot($this->telegram_config['token']);
 		$this->setChannel($this->telegram_config['chat']);
 		return $this->telegram_config;
+	}
+
+	/**
+	 * Функция конвертации изображений для отправки
+	 *
+	 * Так-же идёт проверка параметров для ТГ, чтобы изображение соответствовало требованиям
+	 *
+	 * @param string $img
+	 * @param int    $q
+	 * @return false|string
+	 * @throws \Monolog\Handler\MissingExtensionException
+	 * @version 1.7.2
+	 */
+	private function convertWebp(string $img, int $q = 100) {
+		global $config;
+
+		$max_file_size = 10485760;
+		$max_pixel = 10000;
+		$max_ratio = 20;
+
+		if (!is_file($img)) {
+			$this->generate_log('telegram', 'convertWebp', [
+				'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
+				'img' => $img
+			], );
+			return false;
+		}
+
+		$img_data = pathinfo($img);
+		$exif = exif_read_data($img);
+
+		if((int)$exif['FileSize'] > $max_file_size) {
+			$this->generate_log('telegram', 'convertWebp[FileSize]', [
+				'message' => _('Файл изображения весит больше допустимого'),
+				'file' => $exif['FileSize'],
+				'max_size' => $max_file_size
+			], );
+			return false;
+		}
+
+		$pixels = (int)$exif['COMPUTED']['Height'] + (int)$exif['COMPUTED']['Width'];
+
+		if($pixels > $max_pixel) {
+			$this->generate_log('telegram', 'convertWebp[Pixels]', [
+				'message' => _('Размеры изображения больше допустимого! '),
+				'file' => $pixels,
+				'max_size' => $max_pixel
+			], );
+			return false;
+		}
+
+		$ratio = (int)$exif['COMPUTED']['Width'] / (int)$exif['COMPUTED']['Height'];
+
+		if($ratio > $max_ratio) {
+			$this->generate_log('telegram', 'convertWebp[Ratio]', [
+				'message' => _('Размеры изображения больше допустимого! '),
+				'file' => $ratio,
+				'max_ratio' => $max_ratio
+			], );
+			return false;
+		}
+
+		if(strtolower($img_data['extension']) != 'webp' && $config['force_webp']) {
+			$new_file = $this->tg_temp_dir . $img_data['filename'] . '.webp';
+		} else {
+			$new_file = $this->tg_temp_dir . $img_data['filename'] . '.jpg';
+		}
+
+
+		if (!is_file($new_file)) {
+			if(!\ImageConverter\convert($img, $new_file, $q)) {
+				$this->generate_log('telegram', 'convertWebp[ImageConverter]', [
+					'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
+					'img' => $img,
+					'new_file' => $new_file
+				], 'warning');
+				return false;
+			}
+		}
+
+		return $new_file;
 	}
 }

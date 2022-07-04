@@ -81,9 +81,10 @@ class RePost {
 	 * - Обрабатывает перенос строк
 	 * - Обрабатывает макс. длину
 	 *
-	 * @return mixed
+	 * @version 1.7.2
+	 * @return string
 	 */
-	protected function finalContent() {
+	protected function finalContent(): string {
 		$len = $this->getMaxLen() - 3;
 		try {
 			$new_line = PHP_EOL;
@@ -101,8 +102,11 @@ class RePost {
 		$content = strip_tags($content, $this->getAllowedHtml());
 
 		if(strlen($content) >= $this->max_len) $content .= '...';
+//		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', $new_line, $content);
+//		$content = preg_replace('#(\A[\s]*<br[^>]*>[\s]*|<br[^>]*>[\s]*\Z)#is', $new_line, $content);
+//		$content = str_replace(array("\r\n","\r","\n","\\r","\\n","\\r\\n"), $new_line, $content);
 
-		return preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', $new_line, $content);
+		return $content;
 
 	}
 
@@ -534,14 +538,22 @@ HTML;
 
 		$row['full_story'] = str_replace("><", "> <", $row['full_story']);
 		$row['full_story'] = strip_tags($row['full_story'], "<br>");
-		$row['full_story'] = trim(
-			str_replace(
-				"<br>", " ",
-				str_replace("<br />", " ", str_replace("\n", " ", str_replace("\r", "", $row['full_story'])))
-			)
-		);
+		$row['full_story'] = trim($row['full_story']);
 		$row['full_story'] = preg_replace('/\s+/u', ' ', $row['full_story']);
 		$row['full_story'] = preg_replace('#(\A[\s]*<br[^>]*>[\s]*|<br[^>]*>[\s]*\Z)#is', '', $row['full_story']);
+
+		$row['shor_story'] = preg_replace("#<!--dle_spoiler(.+?)<!--spoiler_text-->#is", "", $row['shor_story']);
+		$row['shor_story'] = preg_replace(
+			"#<!--spoiler_text_end-->(.+?)<!--/dle_spoiler-->#is", "", $row['full_story']
+		);
+		$row['shor_story'] = preg_replace("'\[attachment=(.*?)\]'si", "", $row['shor_story']);
+		$row['shor_story'] = preg_replace("#\[hide(.*?)\](.+?)\[/hide\]#is", "", $row['shor_story']);
+
+		$row['shor_story'] = str_replace("><", "> <", $row['full_story']);
+		$row['shor_story'] = strip_tags($row['shor_story'], "<br>");
+		$row['shor_story'] = trim($row['shor_story']);
+		$row['shor_story'] = preg_replace('/\s+/u', ' ', $row['shor_story']);
+		$row['shor_story'] = preg_replace('#(\A[\s]*<br[^>]*>[\s]*|<br[^>]*>[\s]*\Z)#is', '', $row['shor_story']);
 		$row['title'] = stripslashes($row['title']);
 		$comments_num = $row['comm_num'];
 
@@ -725,7 +737,7 @@ HTML;
 				if($cat_info[$cat_list[0]]['id']) {
 
 					$my_cat[] = $cat_info[$cat_list[0]]['name'];
-					$my_cat_link = get_categories($cat_list[0], $config['category_separator']);
+					$my_cat_link = self::get_categories($cat_list[0], $config['category_separator']);
 
 				} else $my_cat_link = "---";
 
@@ -735,10 +747,12 @@ HTML;
 
 					if($element and $cat_info[$element]['id']) {
 						$my_cat[] = $cat_info[$element]['name'];
-						if($config['allow_alt_url']) $my_cat_link[] = "<a href=\"" . $config['http_home_url'] . get_url(
+						if($config['allow_alt_url'])
+							$my_cat_link[] = "<a href=\"" . $config['http_home_url'] . get_url(
 								$element
-							)
-						                                              . "/\">{$cat_info[$element]['name']}</a>"; else $my_cat_link[] = "<a href=\"$PHP_SELF?do=cat&category={$cat_info[$element]['alt_name']}\">{$cat_info[$element]['name']}</a>";
+							)  . "/\">{$cat_info[$element]['name']}</a>";
+						else
+							$my_cat_link[] = "<a href=\"$PHP_SELF?do=cat&category={$cat_info[$element]['alt_name']}\">{$cat_info[$element]['name']}</a>";
 					}
 
 				}
@@ -810,6 +824,16 @@ HTML;
 				);
 
 		} else $content = str_replace('{category-url}', "#", $content);
+
+		$cat_hashtags = [];
+		foreach($my_cat as $c) $cat_hashtags[] = "#{$c}";
+
+		$content = str_replace('{comments-num}', number_format($row['comm_num'], 0, ',', ' '), $content);
+		$content = str_replace('{views}', number_format($row['news_read'], 0, ',', ' '), $content);
+		$content = str_replace('{category-hashtag}', implode($config['tags_separator'], $cat_hashtags), $content);
+		$content = str_replace('{category}', implode($config['category_separator'], $my_cat), $content);
+		$content = str_replace('{link-category}', implode($config['category_separator'], $my_cat_link), $content);
+		$content = str_replace('{news-id}', $row['id'], $content);
 
 		if($config['rating_type'] == "1") {
 			$content = str_replace(['[rating-type-2]', '[/rating-type-2]'], '', $content);
@@ -1030,11 +1054,6 @@ HTML;
 		$row['full_story'] = stripslashes($row['full_story']);
 		$row['xfields'] = stripslashes($row['xfields']);
 
-		if($config['allow_links'] and function_exists('replace_links') and isset($replace_links['news'])) {
-			$row['short_story'] = replace_links($row['short_story'], $replace_links['news']);
-			$row['full_story'] = replace_links($row['full_story'], $replace_links['news']);
-		}
-
 		if(stripos($content, "{image-") !== false) {
 
 			$images = [];
@@ -1044,15 +1063,14 @@ HTML;
 			foreach($data as $url) {
 				$info = pathinfo($url);
 				if(isset($info['extension'])) {
-					if($info['filename'] == "spoiler-plus" or $info['filename'] == "spoiler-minus" or strpos(
-						                                                                                  $info['dirname'],
-						                                                                                  'engine/data/emoticons'
-					                                                                                  )
-					                                                                                  !== false) continue;
+					if($info['filename'] == "spoiler-plus" or $info['filename'] == "spoiler-minus" or
+						strpos($info['dirname'], 'engine/data/emoticons')  !== false) continue;
 					$info['extension'] = strtolower($info['extension']);
-					if(($info['extension'] == 'jpg') || ($info['extension'] == 'jpeg') || ($info['extension'] == 'gif')
+					if(($info['extension'] == 'jpg')
+						|| ($info['extension'] == 'jpeg')
+						|| ($info['extension'] == 'gif')
 					   || ($info['extension'] == 'png')
-					   || ($info['extension'] == 'webp')) array_push($images, $url);
+					   || ($info['extension'] == 'webp')) $images[] = $url;
 				}
 			}
 
@@ -1082,15 +1100,14 @@ HTML;
 			foreach($data as $url) {
 				$info = pathinfo($url);
 				if(isset($info['extension'])) {
-					if($info['filename'] == "spoiler-plus" or $info['filename'] == "spoiler-minus" or strpos(
-						                                                                                  $info['dirname'],
-						                                                                                  'engine/data/emoticons'
-					                                                                                  )
-					                                                                                  !== false) continue;
+					if($info['filename'] == "spoiler-plus" or $info['filename'] == "spoiler-minus" or
+						strpos($info['dirname'],'engine/data/emoticons') !== false) continue;
 					$info['extension'] = strtolower($info['extension']);
-					if(($info['extension'] == 'jpg') || ($info['extension'] == 'jpeg') || ($info['extension'] == 'gif')
+					if(($info['extension'] == 'jpg')
+						|| ($info['extension'] == 'jpeg')
+						|| ($info['extension'] == 'gif')
 					   || ($info['extension'] == 'png')
-					   || ($info['extension'] == 'webp')) array_push($images, $url);
+					   || ($info['extension'] == 'webp')) $images[] = $url;
 				}
 			}
 
@@ -1182,17 +1199,12 @@ HTML;
 
 									$xf_val[] = $tag_val;
 									if($value[6]) {
-										$value4 = str_replace(['&#039;', '&quot;', '&amp;', '&#123;', '&#91;', '&#58;'],
-										                      ["'", '"', '&', '{', '[', ':'], $tag_name);
+										$value4 = str_replace(['&#039;', '&quot;', '&amp;', '&#123;', '&#91;', '&#58;'], ["'", '"', '&', '{', '[', ':'], $tag_name);
 
 										if($config['allow_alt_url']) {
-											$xf_val_url[] = "<a href=\"" . $config['http_home_url'] . "xfsearch/"
-											                . $value[0] . "/" . rawurlencode($value4) . "/\">"
-											                . $tag_val . '</a>';
+											$xf_val_url[] = "<a href=\"" . $config['http_home_url'] . "xfsearch/" . $value[0] . "/" . rawurlencode($value4) . "/\">" . $tag_val . '</a>';
 										} else {
-											$xf_val_url[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=" . $value[0]
-											                . "&amp;xf=" . rawurlencode($value4) . "\">" . $tag_val
-											                . '</a>';
+											$xf_val_url[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=" . $value[0] . "&amp;xf=" . rawurlencode($value4) . "\">" . $tag_val . '</a>';
 										}
 									} else {
 										$xf_val_url[] = $tag_val;
@@ -1208,8 +1220,7 @@ HTML;
 						);
 					}
 				} else {
-					$content = str_replace(["[xfvalue_tagvalue_{$value[0]}]", "[xfvalue_tagvalue_url_{$value[0]}]"], '',
-					                       $content);
+					$content = str_replace(["[xfvalue_tagvalue_{$value[0]}]", "[xfvalue_tagvalue_url_{$value[0]}]"], '', $content);
 				}
 
 				$xfieldsdata["{$value[0]}_text"] = '';
@@ -1224,8 +1235,7 @@ HTML;
 					foreach($temp_array as $value2) {
 						$value2 = trim($value2);
 						if($value2) {
-							$value4 = str_replace(["&#039;", "&quot;", "&amp;", "&#123;", "&#91;", "&#58;"],
-							                      ["'", '"', "&", "{", "[", ":"], $value2);
+							$value4 = str_replace(["&#039;", "&quot;", "&amp;", "&#123;", "&#91;", "&#58;"], ["'", '"', "&", "{", "[", ":"], $value2);
 							if($value[3] == "datetime") {
 								$value2 = strtotime($value4);
 								if(!trim($value[24])) $value[24] = $config['timestamp_active'];
@@ -1236,15 +1246,10 @@ HTML;
 								} else $value2 = date($value[24], $value2);
 							}
 
-							if($config['allow_alt_url']) $value3[] = "<a href=\"" . $config['http_home_url']
-							                                         . "xfsearch/" . $value[0] . "/" . rawurlencode(
-								                                         $value4
-							                                         ) . "/\">" . $value2
-							                                         . "</a>"; else $value3[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname="
-							                                                                    . $value[0] . "&amp;xf="
-							                                                                    . rawurlencode($value4)
-							                                                                    . "\">" . $value2
-							                                                                    . "</a>";
+							if($config['allow_alt_url'])
+								$value3[] = "<a href=\"" . $config['http_home_url'] . "xfsearch/" . $value[0] . "/" . rawurlencode($value4) . "/\">" . $value2. "</a>";
+							else
+								$value3[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname="  . $value[0] . "&amp;xf=" . rawurlencode($value4) . "\">" . $value2  . "</a>";
 							$value3_no_link[] = $value2;
 							$value3_hashtag[] = '#' . str_replace(' ', '_', $value2);
 						}
@@ -1278,12 +1283,7 @@ HTML;
 
 					} else $xfieldsdata[$value[0]] = date($value[24], $xfieldsdata[$value[0]]);
 
-
 				}
-
-				if($config['allow_links'] and $value[3] == "textarea" and function_exists(
-						'replace_links'
-					)) $xfieldsdata[$value[0]] = replace_links($xfieldsdata[$value[0]], $replace_links['news']);
 
 				if($value[3] == "image" and $xfieldsdata[$value[0]]) {
 
@@ -1405,14 +1405,7 @@ HTML;
 
 					$xfieldsdata[$value[0]] = str_replace("><", "> <", $xfieldsdata[$value[0]]);
 					$xfieldsdata[$value[0]] = strip_tags($xfieldsdata[$value[0]], "<br>");
-					$xfieldsdata[$value[0]] = trim(
-						str_replace(
-							"<br>", " ", str_replace(
-								      "<br />", " ",
-								      str_replace("\n", " ", str_replace("\r", "", $xfieldsdata[$value[0]]))
-							      )
-						)
-					);
+					$xfieldsdata[$value[0]] = trim($xfieldsdata[$value[0]]);
 					$xfieldsdata[$value[0]] = preg_replace('/\s+/u', ' ', $xfieldsdata[$value[0]]);
 
 					if($count and dle_strlen($xfieldsdata[$value[0]], $config['charset']) > $count) {
@@ -1469,11 +1462,7 @@ HTML;
 		}
 
 		$content = str_replace(
-			'{title}', str_replace(
-			"&amp;amp;", "&amp;", htmlspecialchars(
-				           $row['title'], ENT_QUOTES, $config['charset']
-			           )
-		),  $content
+			'{title}', str_replace("&amp;amp;", "&amp;", htmlspecialchars( $row['title'], ENT_QUOTES, $config['charset'])),  $content
 		);
 
 		$this->setPostTitle(
@@ -1512,6 +1501,11 @@ HTML;
 
 		$content = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $content);
 		$content = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $content);
+
+		$content = str_replace('{now}', date( 'd.m.y, H:i', $_TIME ), $content);
+		$content = preg_replace_callback ( "#\{now=(.+?)\}#i", function( $matches=array() ) use ($_TIME) {
+			return date($matches[1], $_TIME);
+		}, $content);
 
 		$this->getFiles();
 		$this->getImages();
@@ -1870,6 +1864,44 @@ HTML;
 			$join = "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
 
 		return 'SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}";
+	}
+
+	/**
+	 * Функция DLE
+	 *
+	 * @param $id
+	 * @param $separator
+	 * @return string|void
+	 */
+	protected function get_categories($id, $separator=" &raquo;") {
+
+		global $cat_info, $config, $PHP_SELF;
+
+		if( ! $id ) return;
+
+		$parent_id = $cat_info[$id]['parentid'];
+
+		if( $config['allow_alt_url'] ) $list = "<a href=\"" . $config['http_home_url'] . get_url( $id ) . "/\">{$cat_info[$id]['name']}</a>";
+		else $list = "<a href=\"$PHP_SELF?do=cat&amp;category={$cat_info[$id]['alt_name']}\">{$cat_info[$id]['name']}</a>";
+
+		while ( $parent_id ) {
+
+			if( $config['allow_alt_url'] ) $list = "<a href=\"" . $config['http_home_url'] . get_url( $parent_id ) . "/\">{$cat_info[$parent_id]['name']}</a>" . $separator . $list;
+			else $list = "<a href=\"$PHP_SELF?do=cat&amp;category={$cat_info[$parent_id]['alt_name']}\">{$cat_info[$parent_id]['name']}</a>" . $separator . $list;
+
+			$parent_id = $cat_info[$parent_id]['parentid'];
+
+			if( !isset($cat_info[$parent_id]['id']) OR ( isset($cat_info[$parent_id]['id']) AND !$cat_info[$parent_id]['id']) ) {
+				break;
+			}
+
+			if($parent_id) {
+				if( $cat_info[$parent_id]['parentid'] == $cat_info[$parent_id]['id'] ) break;
+			}
+
+		}
+
+		return $list;
 	}
 
 
