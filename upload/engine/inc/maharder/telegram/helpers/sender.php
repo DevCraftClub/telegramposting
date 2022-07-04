@@ -27,7 +27,7 @@ function sendTelegram($id, $type = 'addnews') {
 				              'time' => date( 'Y-m-d', $_TIME )
 			              ]);
 		} else {
-			$telegram = new Telegram($news_id, 'addnews');
+			$telegram = new Telegram($news_id, $type);
 			$telegram->sendMessage();
 		}
 	}
