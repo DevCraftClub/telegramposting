@@ -826,7 +826,7 @@ HTML;
 		} else $content = str_replace('{category-url}', "#", $content);
 
 		$cat_hashtags = [];
-		foreach($my_cat as $c) $cat_hashtags[] = '#' . str_replace(' ', '_', $c);
+		foreach($cat_list as $c) $cat_hashtags[] = '#' . str_replace(' ', '_', $cat_info[$c]['name']);
 
 		$content = str_replace('{comments-num}', number_format($row['comm_num'], 0, ',', ' '), $content);
 		$content = str_replace('{views}', number_format($row['news_read'], 0, ',', ' '), $content);
