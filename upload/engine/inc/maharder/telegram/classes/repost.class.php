@@ -831,8 +831,8 @@ HTML;
 		$content = str_replace('{comments-num}', number_format($row['comm_num'], 0, ',', ' '), $content);
 		$content = str_replace('{views}', number_format($row['news_read'], 0, ',', ' '), $content);
 		$content = str_replace('{category-hashtag}', implode($config['tags_separator'], $cat_hashtags), $content);
-		$content = str_replace('{category}', implode($config['category_separator'], $my_cat), $content);
-		$content = str_replace('{link-category}', implode($config['category_separator'], $my_cat_link), $content);
+		$content = str_replace('{category}', $my_cat, $content);
+		$content = str_replace('{link-category}', $my_cat_link, $content);
 		$content = str_replace('{news-id}', $row['id'], $content);
 
 		if($config['rating_type'] == "1") {
@@ -898,10 +898,8 @@ HTML;
 			$dislikes = ($row['vote_num'] - $row['rating']) / 2;
 			$likes = $row['vote_num'] - $dislikes;
 			$content = str_replace(
-				[
-					'[/rating]', '{rating}', '[rating]', '{vote-num}', '{dislikes}', '{likes}'
-				], [
-					'', $this->ShowRating(
+				['[/rating]', '{rating}', '[rating]', '{vote-num}', '{dislikes}', '{likes}'],
+				['', $this->ShowRating(
 					$row['id'], $row['rating'], $row['vote_num'], $user_group[$member_id['user_group']]['allow_rating']
 				), '', $row['vote_num'], $dislikes, $likes
 				], $content
