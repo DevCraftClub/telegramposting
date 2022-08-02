@@ -180,7 +180,7 @@ HTML;
 		   && !is_dir(
 				$concurrentDirectory
 			)) {
-			$mh_admin->generate_log(
+			LogGenerator::generate_log(
 				'telegram', 'settings[Сохранение настроек]', sprintf('Папка "%s" не была создана', $concurrentDirectory)
 			);
 		}

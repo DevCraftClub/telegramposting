@@ -9,7 +9,10 @@ class Telegram extends RePost {
 
 	private $bot, $channel, $telegram_config, $max_media = 10, $links, $thumb;
 	protected                                                          $media = [];
-	private string $tg_temp_dir = ROOT_DIR . '/uploads/telegram';
+	/**
+	 * @var string
+	 */
+	private $tg_temp_dir = ROOT_DIR . '/uploads/telegram';
 
 	/**
 	 * Telegram constructor.
@@ -24,7 +27,7 @@ class Telegram extends RePost {
 		parent::__construct($c, $post_id);
 		$this->setTelegramConfig();
 		$mh_config = $this->getConfig('maharder');
-		$this->setLogs($mh_config['logs']);
+		LogGenerator::setLogs($mh_config['logs']);
 		$this->setMaxLen(1024);
 
 		$content = $this->telegram_config['addnews'];
@@ -304,7 +307,7 @@ class Telegram extends RePost {
 							$img_url = $config['http_home_url'] . "uploads/posts/" . $path_parts['dirname'] . "/"
 							           . $path_parts['basename'];
 
-							if(!isset($path_parts['extension'])) $this->generate_log('telegram', 'processContent', ['Массив изображений либо сменил структуру, либо не верен.', $temp_array], 'warning');
+							if(!isset($path_parts['extension'])) LogGenerator::generate_log('telegram', 'processContent', ['Массив изображений либо сменил структуру, либо не верен.', $temp_array], 'warning');
 
 
 							if(!in_array(
@@ -384,7 +387,7 @@ class Telegram extends RePost {
 		   && !is_dir(
 				$_dir
 			)) {
-			$this->generate_log(
+			LogGenerator::generate_log(
 				'telegram', 'tempFile', sprintf('Directory "%s" was not created', $_dir)
 			);
 		}
@@ -650,14 +653,14 @@ class Telegram extends RePost {
 			   && !is_dir(
 					$thumb_dir
 				)) {
-				$this->generate_log(
+				LogGenerator::generate_log(
 					'telegram', 'processImage', sprintf('Directory "%s" was not created', $thumb_dir)
 				);
 			}
 			$thumb_path = pathinfo($thumb['filenamepath']);
 			$thumb_name = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
 			$thumb_server = "{$thumb_dir}/{$thumb_name}";
-			$thumb_url = "{$config['http_home_url']}{$thumb_folder}/{$thumb_name}";
+			$thumb_url = "{$config['http_home_url']}{$thumb_dir}/{$thumb_name}";
 			$thumbnail = new Thumbs($thumb['filenamepath']);
 
 			if($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res
@@ -713,7 +716,7 @@ class Telegram extends RePost {
 		if(preg_grep('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', explode("\n", $content))) {
 			preg_match('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', $content, $thumb_arr);
 			if($thumb_arr[1] === null || !is_file($thumb_arr[1])) {
-				$this->generate_log('telegram', 'processImage', ['Изображения пусты', $thumb_arr], 'crit');
+				LogGenerator::generate_log('telegram', 'processImage', ['Изображения пусты', $thumb_arr], 'crit');
 				$this->generateThumb('');
 			} else {
 				$thumb = ($this->processImage(serverLink($thumb_arr[1], false)) !== false)
@@ -1002,7 +1005,7 @@ class Telegram extends RePost {
 			if($this->telegram_config['proxyauth']) $auth = $this->telegram_config['proxyuser'] . ':'
 			                                                . $this->telegram_config['proxypass'];
 
-			$this->generate_log('telegram', 'sendMessage', $url, 'info');
+			LogGenerator::generate_log('telegram', 'sendMessage', $url, 'info');
 
 			$response = $this->send($url['url'], $url['post'], $proxy, $type, $auth);
 
@@ -1011,7 +1014,7 @@ class Telegram extends RePost {
 			$response = json_encode([
 				'ok' => false,
 				'message' => _('Новость не соответствует требованиям!')
-			], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+			], JSON_UNESCAPED_UNICODE);
 		}
 
 		return $response;
@@ -1145,7 +1148,7 @@ class Telegram extends RePost {
 		$send_array['chat_id'] = str_replace('%40', '@', $this->channel);
 		$send_url['parse_mode'] = 'HTML';
 
-		$this->generate_log('telegram', 'telegram_link', ['url' => $send_url, 'arr' => $send_array], 'info');
+		LogGenerator::generate_log('telegram', 'telegram_link', ['url' => $send_url, 'arr' => $send_array], 'info');
 
 		$url_query = http_build_query($send_url);
 		$url_query = str_replace('chat_id=%40', 'chat_id=@', $url_query);
@@ -1205,10 +1208,10 @@ class Telegram extends RePost {
 		$max_ratio = 20;
 
 		if (!is_file($img)) {
-			$this->generate_log('telegram', 'convertWebp', [
+			LogGenerator::generate_log('telegram', 'convertWebp', [
 				'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
 				'img' => $img
-			], );
+			] );
 			return false;
 		}
 
@@ -1216,33 +1219,33 @@ class Telegram extends RePost {
 		$exif = exif_read_data($img);
 
 		if((int)$exif['FileSize'] > $max_file_size) {
-			$this->generate_log('telegram', 'convertWebp[FileSize]', [
+			LogGenerator::generate_log('telegram', 'convertWebp[FileSize]', [
 				'message' => _('Файл изображения весит больше допустимого'),
 				'file' => $exif['FileSize'],
 				'max_size' => $max_file_size
-			], );
+			] );
 			return false;
 		}
 
 		$pixels = (int)$exif['COMPUTED']['Height'] + (int)$exif['COMPUTED']['Width'];
 
 		if($pixels > $max_pixel) {
-			$this->generate_log('telegram', 'convertWebp[Pixels]', [
+			LogGenerator::generate_log('telegram', 'convertWebp[Pixels]', [
 				'message' => _('Размеры изображения больше допустимого! '),
 				'file' => $pixels,
 				'max_size' => $max_pixel
-			], );
+			] );
 			return false;
 		}
 
 		$ratio = (int)$exif['COMPUTED']['Width'] / (int)$exif['COMPUTED']['Height'];
 
 		if($ratio > $max_ratio) {
-			$this->generate_log('telegram', 'convertWebp[Ratio]', [
+			LogGenerator::generate_log('telegram', 'convertWebp[Ratio]', [
 				'message' => _('Размеры изображения больше допустимого! '),
 				'file' => $ratio,
 				'max_ratio' => $max_ratio
-			], );
+			] );
 			return false;
 		}
 
@@ -1255,7 +1258,7 @@ class Telegram extends RePost {
 
 		if (!is_file($new_file)) {
 			if(!\ImageConverter\convert($img, $new_file, $q)) {
-				$this->generate_log('telegram', 'convertWebp[ImageConverter]', [
+				LogGenerator::generate_log('telegram', 'convertWebp[ImageConverter]', [
 					'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
 					'img' => $img,
 					'new_file' => $new_file
