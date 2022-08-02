@@ -4,16 +4,36 @@ require_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/traits/LogG
 require_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/traits/DataLoader.php'));
 
 class RePost {
-	use LogGenerator;
 	use DataLoader;
 
-	private ?string  $content_type = null;
-	private ?string  $post_title   = null;
-	private int      $post_id;
-	private ?string  $content      = null;
-	private array    $xf_images    = [], $files = [], $images_post = [], $videos = [], $audios = [], $xf_videos = [], $xf_audios = [], $xf_files = [], $images = [];
-	private int      $max_len      = 0;
-	protected string $allowed_html = '<b><code><i><a><u><s>';
+	/**
+	 * @var string|null
+	 */
+	private   $content_type = null;
+	/**
+	 * @var string|null
+	 */
+	private   $post_title   = null;
+	/**
+	 * @var int
+	 */
+	private       $post_id;
+	/**
+	 * @var string|null
+	 */
+	private   $content      = null;
+	/**
+	 * @var array
+	 */
+	private     $xf_images    = [], $files = [], $images_post = [], $videos = [], $audios = [], $xf_videos = [], $xf_audios = [], $xf_files = [], $images = [];
+	/**
+	 * @var int
+	 */
+	private       $max_len      = 0;
+	/**
+	 * @var string
+	 */
+	protected  $allowed_html = '<b><code><i><a><u><s>';
 
 	/**
 	 * RePost constructor.
@@ -1612,14 +1632,14 @@ HTML;
 		curl_close($ch);
 
 		try {
-			$this->generate_log(
+			LogGenerator::generate_log(
 				'telegram', 'send', [
 				'content' => $content, 'url' => $url, 'post' => $post, 'proxy' => $proxy, 'type' => $type,
 				'auth'    => $auth
 			],  'info'
 			);
 		} catch(Exception $e) {
-			$this->generate_log(
+			LogGenerator::generate_log(
 				'telegram', 'send', [
 					          'content' => $content, 'url' => $url, 'post' => $post, 'proxy' => $proxy, 'type' => $type,
 					          'auth'    => $auth, 'error' => $e->getMessage(),
