@@ -14,7 +14,8 @@
 
 $modInfo = [
 	'module_name' => 'Telegram Posting',
-	'module_version' => '1.7.32',
+	'module_version' => '1.7.3',
+	'module_id' => 11,
 	'module_description' => 'Отправка сообщений в телеграм канал или группу',
 	'module_code' => 'telegram',
 	'module_icon' => 'fa-brands fa-telegram',

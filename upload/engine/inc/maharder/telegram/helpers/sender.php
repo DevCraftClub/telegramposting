@@ -24,7 +24,7 @@ function sendTelegram($id, $type = 'addnews') {
 			$cron->create([
 				              'news_id' => $news_id,
 				              'type' => $type,
-				              'time' => date( 'Y-m-d', $_TIME )
+				              'time' => date( 'Y-m-d H:i:s', $_TIME )
 			              ]);
 		} else {
 			$telegram = new Telegram($news_id, $type);
