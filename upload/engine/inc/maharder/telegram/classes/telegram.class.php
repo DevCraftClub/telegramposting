@@ -9,37 +9,39 @@ class Telegram extends RePost {
 
 	private $bot, $channel, $telegram_config, $max_media = 10, $links, $thumb;
 	protected                                                          $media = [];
-	/**
-	 * @var string
-	 */
 	private $tg_temp_dir = ROOT_DIR . '/uploads/telegram';
 
 	/**
 	 * Telegram constructor.
+	 *
+	 * @version 1.7.3
 	 *
 	 * @param        $post_id
 	 * @param string $c
 	 *
 	 * @throws \JsonException
 	 */
-	public function __construct($post_id, string $c = 'addnews') {
+	public function __construct($post_id, $c = 'addnews') {
 		global $config;
 		parent::__construct($c, $post_id);
-		$this->setTelegramConfig();
+		$tg_config = $this->setTelegramConfig();
 		$mh_config = $this->getConfig('maharder');
 		LogGenerator::setLogs($mh_config['logs']);
 		$this->setMaxLen(1024);
+		$this->setCategorySeparator($tg_config['category_separator']);
+		$this->setHashtagSeparator($tg_config['hashtag_separator']);
+		$this->setTagSeparator($tg_config['tag_separator']);
 
-		$content = $this->telegram_config['addnews'];
+		$content = $tg_config['addnews'];
 		$content_type = $this->getContentType();
-		if($content_type == 'editnews') $content = $this->telegram_config['editnews']; elseif($content_type
-		                                                                                      == 'cron_addnews') $content = $this->telegram_config['cron_addnews'];
-		elseif($content_type == 'cron_editnews') $content = $this->telegram_config['cron_editnews'];
+		if($content_type == 'editnews') $content = $tg_config['editnews'];
+		elseif($content_type == 'cron_addnews') $content = $tg_config['cron_addnews'];
+		elseif($content_type == 'cron_editnews') $content = $tg_config['cron_editnews'];
 
 		$filter = [];
 		$filter_cats = [];
-		$search_fields = json_decode(base64_decode($this->telegram_config['field']), true);
-		foreach($search_fields as $id => $field) {
+		$search_fields = json_decode(base64_decode($tg_config['field']), true);
+		foreach($search_fields as $field) {
 			if($field['source'] == 'post') {
 				$value = (int)$field['value'] ?: "'{$field['value']}'";
 				$filter['fields'][] = "p.{$field['name']} = {$value}";
@@ -58,7 +60,7 @@ class Telegram extends RePost {
 		if(!isset($config['allow_multi_category'])) {
 			$filter['fields'][] = "p.category in ('{$filter['cats']}')";
 		}
-		$filter['fields'] = implode(" {$this->telegram_config['field_relation']} ", $filter['fields']);
+		$filter['fields'] = implode(" {$tg_config['field_relation']} ", $filter['fields']);
 
 		$this->processContent($content, $filter);
 	}
@@ -76,22 +78,27 @@ class Telegram extends RePost {
 		)[0];
 
 		if($row !== null) {
-			$allcontent = $row['full_story'] . $row['short_story'] . $row['xfields'];
-			preg_match_all('/(img|src)=("|\')[^"\'>]+/i', $allcontent, $media);
-			$data = preg_replace('/(img|src)("|\'|="|=\')(.*)/i', "$3", $media[0]);
+			$allcontent = stripcslashes($row['full_story'] . $row['short_story'] . $row['xfields']);
+			preg_match_all('/<img[^>]* src=\"([^\"]*)\"[^>]*>/i', $allcontent, $media);
 
-			foreach($data as $url) {
+			foreach($media[1] as $url) {
 				$info = pathinfo($url);
 				if(isset($info['extension'])) {
-					if($info['filename'] == "spoiler-plus" or $info['filename'] == "spoiler-minus" or strpos(
-						                                                                                  $info['dirname'],
-						                                                                                  'engine/data/emoticons'
-					                                                                                  )
-					                                                                                  !== false) continue;
+					if($info['filename'] == "spoiler-plus" ||
+					   $info['filename'] == "spoiler-minus" ||
+					   strpos($info['dirname'], 'engine/data/emoticons') !== false)
+						continue;
 					$info['extension'] = strtolower($info['extension']);
-					if(($info['extension'] == 'jpg' || $info['extension'] == 'jpeg' || $info['extension'] == 'gif'
+
+					if($info['extension'] == 'jpg'
+					    || $info['extension'] == 'jpeg'
+					    || $info['extension'] == 'gif'
 					    || $info['extension'] == 'png'
-					    || $info['extension'] == 'webp') and !in_array($url, $this->getAllImages())) $this->setAllImages($url);
+					    || $info['extension'] == 'webp'
+					) {
+						if(!in_array($url, $this->getAllImages())) $this->setAllImages($url);
+						if(!in_array($url, $this->getImagesPost())) $this->setImagesPost($url);
+					}
 				}
 			}
 
@@ -321,7 +328,7 @@ class Telegram extends RePost {
 				}
 			}
 
-			foreach($this->getAllImages() as $id => $ims) {
+			foreach($this->getAllImages() as $ims) {
 				foreach($this->getXfImages() as $ii => $im) {
 					if(!in_array($ims, $im)) $this->getImagesPost()[$ii][] = $im;
 				}
@@ -515,12 +522,13 @@ class Telegram extends RePost {
 		if($type == 'image') {
 			if($limit_type == 'image' && $limiter !== null) {
 				$file_id = $limiter;
-				if($this->checkMediaCount($this->media, $this->max_media)) $this->media[] = $this->mediaPhoto(
-					$this->getImagesPost()[$file_id]
-				);
+				if($this->checkMediaCount($this->media, $this->max_media))
+					$this->media[] = $this->mediaPhoto($this->getImagesPost()[$file_id]);
 			} elseif($limit_type == 'max') {
-				for($f = 0; $f <= $limiter; $f++) {
-					if($this->checkMediaCount($this->media, $this->max_media)) {
+				if($limiter === null) $limiter = $this->max_media;
+
+				for ($f = 0; $f <= $limiter; $f++) {
+					if ($this->checkMediaCount($this->media, $this->max_media)) {
 						$this->media[] = $this->mediaPhoto($this->getImagesPost()[$f]);
 					}
 				}
@@ -544,7 +552,7 @@ class Telegram extends RePost {
 					}
 				}
 			} else {
-				foreach($this->getVideos() as $id => $file) {
+				foreach($this->getVideos() as $file) {
 					if($this->checkMediaCount($this->media, $this->max_media)) {
 						$this->media[] = $this->mediaVideo($file);
 					}
@@ -591,8 +599,7 @@ class Telegram extends RePost {
 		}
 	}
 
-	private function checkMediaCount($arr, $max)
-	: bool {
+	private function checkMediaCount($arr, $max) {
 		return (count($arr) <= $max);
 	}
 
@@ -631,11 +638,13 @@ class Telegram extends RePost {
 	/**
 	 * Обработка изображения под нужные стандарты
 	 *
+	 * @version 1.7.3
+	 *
 	 * @param string $image       Путь до изображения
-	 * @param int    $quality     Качество изображения, по умолчинию: 90
-	 * @param int    $min_quality Минимальное качество изображения, по умолчинию: 75
-	 * @param int    $max_res     Максимальное количество пискелей для изображений, по умолчинию: 320
-	 * @param int    $min_res     Максимальное количество пискелей для изображений, по умолчинию: 240
+	 * @param int    $quality     Качество изображения, по умолчанию: 90
+	 * @param int    $min_quality Минимальное качество изображения, по умолчанию: 75
+	 * @param int    $max_res     Максимальное количество пискелей для изображений, по умолчанию: 320
+	 * @param int    $min_res     Максимальное количество пискелей для изображений, по умолчанию: 240
 	 *
 	 * @return false|string
 	 * @throws \Exception
@@ -643,7 +652,6 @@ class Telegram extends RePost {
 	private function processImage(
 		string $image, int $quality = 90, int $min_quality = 75, int $max_res = 320, int $min_res = 240
 	) {
-		global $config;
 		$getID3 = new getID3();
 
 		$thumb = $getID3->analyze($image);
@@ -660,7 +668,6 @@ class Telegram extends RePost {
 			$thumb_path = pathinfo($thumb['filenamepath']);
 			$thumb_name = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
 			$thumb_server = "{$thumb_dir}/{$thumb_name}";
-			$thumb_url = "{$config['http_home_url']}{$thumb_dir}/{$thumb_name}";
 			$thumbnail = new Thumbs($thumb['filenamepath']);
 
 			if($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res
@@ -674,14 +681,14 @@ class Telegram extends RePost {
 
 			$new_thumb = $getID3->analyze($thumb_server);
 			if($new_thumb['jpg']['exif']['FILE']['FileSize'] > $max_size) {
-				if($quality >= $min_quality) $thumb_url = $this->processImage(
-					$thumb_url, ($quality - 1)
-				); elseif($max_res > $min_res) $thumb_url = $this->processImage(
-					$thumb_url, $quality, $min_quality, ($max_res - 1)
+				if($quality >= $min_quality) $thumb_server = $this->processImage(
+					$thumb_server, ($quality - 1)
+				); elseif($max_res > $min_res) $thumb_server = $this->processImage(
+					$thumb_server, $quality, $min_quality, ($max_res - 1)
 				);
 			}
 
-			return $this->convertWebp($thumb_url, $quality);
+			return $this->convertWebp($thumb_server, $quality);
 
 		}
 
@@ -740,8 +747,8 @@ class Telegram extends RePost {
 			$config_url = parse_url($config['http_home_url']);
 			if($url_parts['host'] != $config_url['host']) $thumb = $this->tempFile($thumb);
 			$thumb = $this->processImage($thumb);
-			if($thumb && !in_array('127.0.0.1', [$_SERVER['SERVER_ADDR'], $_SERVER['REMOTE_ADDR']]))
-				$this->thumb = serverLink($thumb);
+//			if($thumb && !in_array('127.0.0.1', [$_SERVER['SERVER_ADDR'], $_SERVER['REMOTE_ADDR']]))
+			if($thumb) $this->thumb = serverLink($thumb);
 			else {
 				$title = str_replace(' ', '+', $this->getPostTitle());
 				$this->thumb =  $this->tempFile("https://dummyimage.com/320x320/202328/fff.png?text={$title}");
@@ -761,13 +768,12 @@ class Telegram extends RePost {
 	 * @throws \Monolog\Handler\MissingExtensionException
 	 * @version 1.7.2
 	 */
-	private function mediaPhoto($link)
-	: array {
+	private function mediaPhoto($link) {
 		global $config;
 
 		$url_parts = parse_url($this->convertWebp($link));
 		$config_url = parse_url($config['http_home_url']);
-		if($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) {
+		if(($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) && ($link instanceof CURLFile) === false) {
 			if(!isset($url_parts['host'])) {
 				$trenner = ($link[0] === '/') ? DIRECTORY_SEPARATOR : '';
 				$link_info = pathinfo($link);
@@ -784,8 +790,7 @@ class Telegram extends RePost {
 
 	}
 
-	private function mediaDocument($file_array)
-	: array {
+	private function mediaDocument($file_array) {
 		global $config;
 
 		$file_array['url'] = str_replace([ROOT_DIR . DIRECTORY_SEPARATOR, ROOT_DIR . '/'], $config['http_home_url'],
@@ -1014,7 +1019,7 @@ class Telegram extends RePost {
 			$response = json_encode([
 				'ok' => false,
 				'message' => _('Новость не соответствует требованиям!')
-			], JSON_UNESCAPED_UNICODE);
+			],  JSON_UNESCAPED_UNICODE);
 		}
 
 		return $response;
@@ -1113,6 +1118,10 @@ class Telegram extends RePost {
 			case 'photo':
 				if(isset($this->getImages()[0])) {
 					$send_array = $this->mediaPhoto($this->getImages()[0])['media'];
+				} elseif(isset($this->getMedia()[0])) {
+					$send_array = $this->mediaPhoto($this->getMedia()[0])['media'];
+				} elseif(!empty($this->thumb)) {
+					$send_array = $this->mediaPhoto($this->thumb)['media'];
 				}
 				break;
 
@@ -1198,61 +1207,68 @@ class Telegram extends RePost {
 	 * @param int    $q
 	 * @return false|string
 	 * @throws \Monolog\Handler\MissingExtensionException
-	 * @version 1.7.2
+	 * @version 1.7.3
 	 */
-	private function convertWebp(string $img, int $q = 100) {
+	private function convertWebp($img, $q = 100) {
 		global $config;
 
 		$max_file_size = 10485760;
 		$max_pixel = 10000;
 		$max_ratio = 20;
 
+		if ($img instanceof CURLFile) $img = $img->name;
+
+		$img = str_replace($config['http_home_url'], ROOT_DIR . '/', $img);
+
 		if (!is_file($img)) {
 			LogGenerator::generate_log('telegram', 'convertWebp', [
 				'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
 				'img' => $img
-			] );
+			], 'warning' );
 			return false;
 		}
 
 		$img_data = pathinfo($img);
-		$exif = exif_read_data($img);
+		$img_info = getimagesize($img);
+		$img_data['width'] = $img_info[0];
+		$img_data['height'] = $img_info[1];
+		$img_data['file_size'] = filesize($img);
 
-		if((int)$exif['FileSize'] > $max_file_size) {
+		if((int)$img_data['file_size'] > $max_file_size) {
 			LogGenerator::generate_log('telegram', 'convertWebp[FileSize]', [
 				'message' => _('Файл изображения весит больше допустимого'),
-				'file' => $exif['FileSize'],
+				'file' => $img_data['file_size'],
 				'max_size' => $max_file_size
-			] );
+			], 'warning' );
 			return false;
 		}
 
-		$pixels = (int)$exif['COMPUTED']['Height'] + (int)$exif['COMPUTED']['Width'];
+		$pixels = (int)$img_data['height'] + (int)$img_data['width'];
 
 		if($pixels > $max_pixel) {
 			LogGenerator::generate_log('telegram', 'convertWebp[Pixels]', [
 				'message' => _('Размеры изображения больше допустимого! '),
-				'file' => $pixels,
+				'pixels' => $pixels,
 				'max_size' => $max_pixel
-			] );
+			], 'warning');
 			return false;
 		}
 
-		$ratio = (int)$exif['COMPUTED']['Width'] / (int)$exif['COMPUTED']['Height'];
+		$ratio = (int)$img_data['width'] / (int)$img_data['height'];
 
 		if($ratio > $max_ratio) {
 			LogGenerator::generate_log('telegram', 'convertWebp[Ratio]', [
 				'message' => _('Размеры изображения больше допустимого! '),
-				'file' => $ratio,
+				'ratio' => $ratio,
 				'max_ratio' => $max_ratio
-			] );
+			], 'warning' );
 			return false;
 		}
 
 		if(strtolower($img_data['extension']) != 'webp' && $config['force_webp']) {
-			$new_file = $this->tg_temp_dir . $img_data['filename'] . '.webp';
+			$new_file = $this->tg_temp_dir  . '/' . $img_data['filename'] . '.webp';
 		} else {
-			$new_file = $this->tg_temp_dir . $img_data['filename'] . '.jpg';
+			$new_file = $this->tg_temp_dir . '/' . $img_data['filename'] . '.jpg';
 		}
 
 
@@ -1267,6 +1283,15 @@ class Telegram extends RePost {
 			}
 		}
 
-		return $new_file;
+		return str_replace(ROOT_DIR . '/', $config['http_home_url'], $new_file);
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getMedia() {
+		return $this->media;
+	}
+
+
 }

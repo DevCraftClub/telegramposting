@@ -4,7 +4,7 @@
 	<description>Модуль будет отправлять сообщения в выбранный чат при помощи бота. Гибкие настройки позволят модулю отправлять лишь то, что вы хотите.</description>
 	<icon>engine/inc/maharder/admin/assets/img/telegram/icon.png</icon>
 	<version>1.7.3</version>
-	<dleversion>15.1</dleversion>
+	<dleversion>15.0</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
 	<filedelete>1</filedelete>
@@ -64,6 +64,14 @@ sendTelegram($row['id']);]]></replacecode>
 		<operation action="after">
 			<searchcode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_subscribe WHERE news_id='{$id}'");]]></searchcode>
 			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_cron WHERE news_id='{$id}'");]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/inc/maharder/_includes/extras/paths.php">
+		<operation action="after">
+			<searchcode><![CDATA[// Custom paths //]]></searchcode>
+			<replacecode><![CDATA[			MH_ROOT . '/telegram/classes',
+			MH_ROOT . '/telegram/models',]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
 	</file>
