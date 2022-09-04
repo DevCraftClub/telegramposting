@@ -18,6 +18,8 @@ if(!defined('DATALIFEENGINE')) {
 	exit('Hacking attempt!');
 }
 
+global $is_logged, $dle_login_hash, $config, $mh_admin;
+
 if(!$is_logged) {
 	exit('error');
 }
@@ -68,12 +70,12 @@ switch($method) {
 
 		include_once DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/classes/telegram.class.php');
 
-		$telegram = new Telegram($_data['news_id'], $_data['type']);
+		$telegram = new Telegram($_data['news_id'], "cron_{$_data['type']}");
 		$message = json_decode($telegram->sendMessage(), true);
 		$cron = new Cron();
 
 		if($message['ok']) {
-			echo json_encode($cron->delete($_data['cron_id']), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+			echo json_encode($cron->delete($_data['cron_id']), JSON_UNESCAPED_UNICODE);
 		} else {
 			echo json_encode(['success' => false, 'message' => $message['message']]);
 		}
@@ -88,7 +90,7 @@ switch($method) {
 
 		$mh_admin->clear_cache();
 
-		echo json_encode($cron->delete($_data['cron_id']), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+		echo json_encode($cron->delete($_data['cron_id']), JSON_UNESCAPED_UNICODE);
 
 		break;
 
@@ -108,7 +110,7 @@ switch($method) {
 
 		$mh_admin->clear_cache($cron->getTableName());
 
-		echo json_encode($update_cron, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+		echo json_encode($update_cron, JSON_UNESCAPED_UNICODE);
 
 		break;
 
@@ -129,7 +131,7 @@ switch($method) {
 
 		$mh_admin->clear_cache($cron->getTableName());
 
-		echo json_encode($new_cron, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+		echo json_encode($new_cron, JSON_UNESCAPED_UNICODE);
 
 		break;
 
@@ -140,7 +142,7 @@ switch($method) {
 				                 'success' => true, 'news' => $mh_admin->load_data('Post', [
 					'table' => 'post'
 				])
-			                 ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+			                 ], JSON_UNESCAPED_UNICODE);
 		} catch(JsonException $e) {
 			echo json_encode([
 				                 'success' => false, 'news' => []
@@ -153,7 +155,7 @@ switch($method) {
 		$answer = sendMessage("https://api.telegram.org/bot" . $_data['bot'] . "/getUpdates");
 		$answer = json_decode($answer, true);
 
-		echo json_encode($answer, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+		echo json_encode($answer, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 		break;
 
 	case 'send_message':
@@ -171,7 +173,7 @@ HTML;
 
 		$antwort = json_decode(trim(sendMessage($turl)), true);
 
-		echo json_encode($antwort, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+		echo json_encode($antwort, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
 		break;
 
@@ -180,7 +182,7 @@ HTML;
 		   && !is_dir(
 				$concurrentDirectory
 			)) {
-			LogGenerator::generate_log(
+			$mh_admin->generate_log(
 				'telegram', 'settings[Сохранение настроек]', sprintf('Папка "%s" не была создана', $concurrentDirectory)
 			);
 		}
@@ -189,6 +191,18 @@ HTML;
 
 		if(empty($_data['list_count']) || !isset($_data['list_count'])) {
 			$_data['list_count'] = $config['news_number'];
+		}
+		
+		if(empty($_data['tag_separator']) || !isset($_data['tag_separator'])) {
+			$_data['tag_separator'] = $config['tags_separator'];
+		}
+
+		if(empty($_data['hashtag_separator']) || !isset($_data['hashtag_separator'])) {
+			$_data['hashtag_separator'] = $config['tags_separator'];
+		}
+		
+		if(empty($_data['category_separator']) || !isset($_data['category_separator'])) {
+			$_data['category_separator'] = $config['category_separator'];
 		}
 
 		if(isset($_data['logs_telegram_type'])) {
@@ -205,7 +219,7 @@ HTML;
 		   || !isset($_data["logs_telegram_channel"])) unset($_data["logs_telegram"]);
 
 
-			$_data = json_encode($_data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+			$_data = json_encode($_data, JSON_UNESCAPED_UNICODE);
 		file_put_contents($file, $_data);
 		clear_cache();
 
