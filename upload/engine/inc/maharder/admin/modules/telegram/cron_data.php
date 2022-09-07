@@ -18,7 +18,7 @@ include_once DLEPlugins::Check(MH_ROOT . '/telegram/models/Cron.php');
 
 $mh_config = $mh->getConfig('maharder');
 
-$cron_post = new Cron();
+$cron_post = new TgCron();
 
 $cur_page = $modInfo['_get']['page'] ?? 1;
 $total_pages = @ceil($cron_post->count() / $mh_config['list_count']);
