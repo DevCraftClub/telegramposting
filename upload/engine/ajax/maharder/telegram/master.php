@@ -3,7 +3,7 @@
 //===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===
 // Mod: Telegram Posting
 // File: main.php
-// Path: D:\OpenServer\domains\dle150.local/engine/ajax/maharder/telegram/master.php
+// Path: /engine/ajax/maharder/telegram/master.php
 // ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  =
 // Author: Maxim Harder <dev@devcraft.club> (c) 2022
 // Website: https://devcraft.club
@@ -72,7 +72,7 @@ switch($method) {
 
 		$telegram = new Telegram($_data['news_id'], "cron_{$_data['type']}");
 		$message = json_decode($telegram->sendMessage(), true);
-		$cron = new Cron();
+		$cron = new TgCron();
 
 		if($message['ok']) {
 			echo json_encode($cron->delete($_data['cron_id']), JSON_UNESCAPED_UNICODE);
@@ -86,7 +86,7 @@ switch($method) {
 
 	case 'delete_cron_data':
 
-		$cron = new Cron();
+		$cron = new TgCron();
 
 		$mh_admin->clear_cache();
 
@@ -96,7 +96,7 @@ switch($method) {
 
 	case 'save_cron_data':
 
-		$cron = new Cron();
+		$cron = new TgCron();
 		$update_cron = $cron->update($_data['cron_id'], [
 			'news_id' => $_data['news_id'], 'time' => $_data['time'], 'type' => $_data['type'],
 		]);
@@ -116,7 +116,7 @@ switch($method) {
 
 	case 'cron_new_entry':
 
-		$cron = new Cron();
+		$cron = new TgCron();
 		$new_cron = $cron->create([
 			                          'news_id' => $_data['news_id'], 'time' => $_data['time'],
 			                          'type'    => $_data['type'],
