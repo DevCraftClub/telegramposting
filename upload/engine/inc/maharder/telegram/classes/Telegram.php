@@ -2,6 +2,7 @@
 
 require_once(DLEPlugins::Check(__DIR__ . '/getid3/getid3.php'));
 require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php'));
+require_once (DLEPlugins::Check(__DIR__ . '/ImageConverter.php'));
 
 class Telegram extends RePost {
 
@@ -368,35 +369,25 @@ class Telegram extends RePost {
 		}
 	}
 
+	/**
+	 * Скрипт по очистке временных файлов после отправки в телеграм
+	 * 
+	 * @version 1.7.5
+	 *
+	 * @return void
+	 */
 	private function cleanUp() {
-		$dir = $this->tg_temp_dir;
-		$handle = opendir($dir);
-		if($handle) {
-			$file_list = [];
-			$skip_files = ['.', '..', '.htaccess'];
-
-			while(false !== ($file = readdir($handle))) {
-				if(!in_array($file, $skip_files)) {
-					$file_list[] = $file;
-				}
-			}
-
-			closedir($handle);
-
-			foreach($file_list as $id => $file) @unlink($file);
-		}
+		$file_list = self::dirToArray($this->tg_temp_dir);
+		foreach($file_list as $id => $file) @unlink($this->tg_temp_dir . DIRECTORY_SEPARATOR . $file);
 	}
 
 	private function tempFile($file) {
 		if(!mkdir($_dir = $this->tg_temp_dir, 0777, true)
-		   && !is_dir(
-				$_dir
-			)) {
+		   && !is_dir($_dir)) {
 			LogGenerator::generate_log(
 				'telegram', 'tempFile', sprintf('Directory "%s" was not created', $_dir)
 			);
 		}
-
 
 		if(is_file($file)) {
 			$_path = pathinfo($file);
@@ -999,8 +990,8 @@ class Telegram extends RePost {
 			$type = 'http';
 			$auth = null;
 			$url = $this->telegram_link();
-			if($this->telegram_config['proxy']) $proxy = $this->telegram_config['proxyip'] . ':'
-			                                             . $this->telegram_config['proxyport'];
+			if($this->telegram_config['proxy'])
+				$proxy = $this->telegram_config['proxyip'] . ':' . $this->telegram_config['proxyport'];
 			if($this->telegram_config['proxytype'] == "socks") {
 				$proxy = "socks5://{$proxy}";
 				$type = $this->telegram_config['proxytype'];
