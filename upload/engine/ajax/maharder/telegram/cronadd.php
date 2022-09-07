@@ -38,7 +38,7 @@ if($tg_config['onof'] && $tg_config['cron']) {
 	if(empty($tg_config['cron_news'])) $tg_config['cron_news'] = 0;
 	if(empty($tg_config['cron_waittime']) || !(int)$tg_config['cron_waittime']) $tg_config['cron_waittime'] = 5;
 
-	$cron = new Cron();
+	$cron = new TgCron();
 	if($cron->count() <= 0) return;
 
 	$cron_all = $cron->getAll();

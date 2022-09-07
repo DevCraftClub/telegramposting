@@ -1,8 +1,8 @@
 <?php
 
-require_once DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/classes/Model.php');
+require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php'));
 
-class Cron extends Model {
+class TgCron extends Model {
 
 	public function __construct() {
 		parent::__construct(

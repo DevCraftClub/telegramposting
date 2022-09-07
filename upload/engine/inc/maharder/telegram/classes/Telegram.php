@@ -1,9 +1,7 @@
 <?php
 
 require_once(DLEPlugins::Check(__DIR__ . '/getid3/getid3.php'));
-require_once(DLEPlugins::Check(__DIR__ . '/repost.class.php'));
-require_once(DLEPlugins::Check(__DIR__ . '/thumbs.php'));
-require_once(DLEPlugins::Check(__DIR__ . '/ImageConverter.php'));
+require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php'));
 
 class Telegram extends RePost {
 
