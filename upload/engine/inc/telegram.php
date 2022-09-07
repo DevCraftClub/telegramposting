@@ -3,7 +3,7 @@
 //===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===
 // Mod: Telegram Posting
 // File: main.php
-// Path: D:\OpenServer\domains\dle150.local/engine/inc/telegram.php
+// Path: /engine/inc/telegram.php
 // ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  =
 // Author: Maxim Harder <dev@devcraft.club> (c) 2022
 // Website: https://devcraft.club
@@ -14,7 +14,7 @@
 
 $modInfo = [
 	'module_name' => 'Telegram Posting',
-	'module_version' => '1.7.3.1',
+	'module_version' => '1.7.4',
 	'module_id' => 11,
 	'module_description' => 'Отправка сообщений в телеграм канал или группу',
 	'module_code' => 'telegram',

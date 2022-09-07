@@ -2,11 +2,9 @@
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/classes/telegram.class.php'));
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/classes/Ajax.php'));
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/models/Cron.php'));
+require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php'));
 
-$mh_data = new Ajax();
+$mh_data = new MhAjax();
 $tg_config = $mh_data->getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
 
 function sendTelegram($id, $type = 'addnews') {
@@ -20,7 +18,7 @@ function sendTelegram($id, $type = 'addnews') {
 	if($tg_config['onof']) {
 
 		if($tg_config['cron']) {
-			$cron = new Cron();
+			$cron = new TgCron();
 			$cron->create([
 				              'news_id' => $news_id,
 				              'type' => $type,
