@@ -3,6 +3,7 @@
 	require_once(DLEPlugins::Check(__DIR__.'/getid3/getid3.php'));
 	require_once(DLEPlugins::Check(ENGINE_DIR.'/inc/maharder/_includes/extras/paths.php'));
 	require_once(DLEPlugins::Check(__DIR__.'/ImageConverter.php'));
+	if (!class_exists('Thumbs')) require_once(DLEPlugins::Check(__DIR__.'/Thumbs.php'));
 
 	/**
 	 * Класс обработки данных для отправки в телеграм
