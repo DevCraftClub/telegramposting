@@ -61,6 +61,7 @@ sendTelegram($row['id']);]]></replacecode>
 		<operation action="after">
 			<searchcode><![CDATA[// Custom paths //]]></searchcode>
 			<replacecode><![CDATA[			MH_ROOT . '/telegram/classes',
+			MH_ROOT . '/telegram/classes/getid3',
 			MH_ROOT . '/telegram/models',]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
