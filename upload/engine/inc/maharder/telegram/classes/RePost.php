@@ -189,7 +189,7 @@
 			$content = preg_replace('/\[[^\]]+\]/', '', $content);
 			preg_match_all('/\[[^\]]+\]/', $content, $content_arr);
 			foreach ($content_arr[0] as $bb) {
-				$this->setContentTags($bb, '', $content);
+				$content = str_replace($bb, '', $content);
 			}
 			$content = strip_tags($content, $this->getAllowedHtml());
 
@@ -241,28 +241,17 @@
 
 					if ($field[1]) {
 						$fieldvalue = $row['xfields_array'][$field[1]];
-					} elseif ($field[0] == 'date' or $field[0]
-						== 'editdate'
-						or $field[0] == 'lastdate'
-						or $field[0] == 'reg_date'
-					) {
-						$fieldvalue = strtotime(date("Y-m-d H:i",
-								$row[$field[0]]
-							)
-						);
+					} elseif ($field[0] == 'date' || $field[0] == 'editdate' || $field[0] == 'lastdate' || $field[0] == 'reg_date') {
+						$fieldvalue = strtotime(date("Y-m-d H:i", $row[$field[0]]));
 
 						if (strtotime($value) !== false) {
 							$value = strtotime($value);
 						}
-					} elseif ($field[0] == 'tags' and
-						is_array($row[$field[0]])) {
+					} elseif ($field[0] == 'tags' && is_array($row[$field[0]])) {
 						$fieldvalue = [];
 
 						foreach ($row[$field[0]] as $temp_value) {
-							$fieldvalue[] = trim(dle_strtolower($temp_value,
-									$config['charset']
-								)
-							);
+							$fieldvalue[] = trim(dle_strtolower($temp_value, $config['charset']));
 						}
 					} elseif ($field[0] == 'category') {
 						$fieldvalue = $row['cats'];
@@ -271,10 +260,7 @@
 					}
 
 					if (!is_array($fieldvalue)) {
-						$fieldvalue = trim(dle_strtolower($fieldvalue,
-								$config['charset']
-							)
-						);
+						$fieldvalue = trim(dle_strtolower($fieldvalue, $config['charset']));
 					}
 
 					switch ($operator) {
@@ -400,19 +386,13 @@
 
 							if (is_array($fieldvalue)) {
 								foreach ($fieldvalue as $temp_value) {
-									if (dle_strpos($temp_value,
-											$value,
-											$config['charset']
-										) !== false) {
+									if (dle_strpos($temp_value, $value, $config['charset']) !== false) {
 										$match_count++;
 										break;
 									}
 								}
 							} else {
-								if (dle_strpos($fieldvalue,
-										$value,
-										$config['charset']
-									) !== false) {
+								if (dle_strpos($fieldvalue, $value, $config['charset']) !== false) {
 									$match_count++;
 								}
 							}
@@ -424,10 +404,7 @@
 								$found_count = 0;
 
 								foreach ($fieldvalue as $temp_value) {
-									if (dle_strpos($temp_value,
-											$value,
-											$config['charset']
-										) === false) {
+									if (dle_strpos($temp_value, $value, $config['charset']) === false) {
 										$found_count++;
 									}
 								}
@@ -436,10 +413,7 @@
 									$match_count++;
 								}
 							} else {
-								if (dle_strpos($fieldvalue,
-										$value,
-										$config['charset']
-									) === false) {
+								if (dle_strpos($fieldvalue, $value, $config['charset']) === false) {
 									$match_count++;
 								}
 							}
@@ -470,10 +444,7 @@
 				}
 			}
 
-			return preg_replace_callback($regex,
-				[&$this, 'if_check'],
-				$matches
-			);
+			return preg_replace_callback($regex, [&$this, 'if_check'], $matches);
 		}
 
 		private function if_category_rating($category) {
@@ -484,8 +455,7 @@
 			$found = false;
 
 			foreach ($category as $element) {
-				if (isset($cat_info[$element]['rating_type']) and
-					$cat_info[$element]['rating_type'] > -1) {
+				if (isset($cat_info[$element]['rating_type']) && $cat_info[$element]['rating_type'] > -1) {
 					return $cat_info[$element]['rating_type'];
 				}
 			}
@@ -537,9 +507,9 @@
 		public function parse_content($content, array $filter = []) {
 			global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $user_group, $member_id, $customlangdate;
 
-			$content = htmlspecialchars_decode($content);
-
 			if (count($this->getContentTags()) === 0) {
+
+				$content = htmlspecialchars_decode($content);
 
 				$sql = $this->sqlBuilder($filter);
 
