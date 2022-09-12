@@ -124,7 +124,7 @@
 						$media[1] = explode("|", $media[1][0]);
 					}
 
-					if ( ! in_array($media[1][0], $this->getVideos())) {
+					if ( !in_array($media[1][0], $this->getVideos())) {
 						$this->setVideos($media[1][0]);
 					}
 				}
@@ -172,6 +172,7 @@
 				}
 
 				$xfields = xfieldsload();
+				
 				if (count($xfields)) {
 					$row['xfields_array'] = xfieldsdataload($row['xfields']);
 				}
