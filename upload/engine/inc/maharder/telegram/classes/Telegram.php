@@ -104,10 +104,10 @@
 						    || $info['extension'] == 'png'
 						    || $info['extension'] == 'webp'
 						) {
-							if ( ! in_array($url, $this->getAllImages())) {
+							if ( !in_array($url, $this->getAllImages())) {
 								$this->setAllImages($url);
 							}
-							if ( ! in_array($url, $this->getImagesPost())) {
+							if ( !in_array($url, $this->getImagesPost())) {
 								$this->setImagesPost($url);
 							}
 						}
@@ -139,7 +139,7 @@
 					} else {
 						$media[1] = explode("|", $media[1][0]);
 					}
-					if ( ! in_array($media[1][0], $this->getAudios())) {
+					if ( !in_array($media[1][0], $this->getAudios())) {
 						$this->setAudios($media[1][0]);
 					}
 				}
@@ -159,16 +159,12 @@
 							if (in_array($path['extension'], $audio)) {
 								$file_in_arr = array_search($url, array_column($this->getAudios(), 'url'), true);
 								if ($file_in_arr === false) {
-									$this->setAudios([
-										                 'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-									                 ]);
+									$this->setAudios(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
 							} else {
 								$file_in_arr = array_search($url, array_column($this->getVideos(), 'url'), true);
 								if ($file_in_arr === false) {
-									$this->setVideos([
-										                 'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-									                 ]);
+									$this->setVideos(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
 							}
 						}
@@ -197,11 +193,13 @@
 
 							$path_parts = @pathinfo($temp_value);
 
-							$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/"
-							           .$path_parts['basename'];
+							$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/" .$path_parts['basename'];
 
-							if ( ! in_array($img_url, $this->getXfImages()[$value[0]])) {
+							if ( !in_array($img_url, $this->getXfImages()[$value[0]])) {
 								$this->setXfImages($img_url, $value[0]);
+							}
+							if ( !in_array($img_url, $this->getAllImages()[$value[0]])) {
+								$this->setImagesPost($img_url);
 							}
 						}
 
@@ -229,31 +227,23 @@
 								}
 							} elseif (in_array($path_parts['extension'], $audio)) {
 								if ( ! in_array($temp_value, $temp_files)) {
-									$this->setXfAudios([
-										                   'url' => $temp_value, 'size' => '', 'checksum' => '',
-									                   ], $value[0]);
+									$this->setXfAudios(['url' => $temp_value, 'size' => '', 'checksum' => ''], $value[0]);
 								}
 							} elseif (in_array($path_parts['extension'], $video)) {
 								if ( ! in_array($temp_value, $temp_files)) {
-									$this->setVideos([
-										                 'url' => $temp_value, 'size' => '', 'checksum' => '',
-									                 ], $value[0]);
+									$this->setVideos(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
 							}
 
 							if ( ! in_array($temp_value, $this->getAudios())) {
 								if (in_array($path_parts['extension'], ['mp3', 'm4a'])) {
-									$this->setAudios([
-										                 'url' => $temp_value, 'size' => '', 'checksum' => '',
-									                 ]);
+									$this->setAudios(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
 							}
 
 							if ( ! in_array($temp_value, $this->getVideos())) {
 								if ($path_parts['extension'] == 'mp4') {
-									$this->setVideos([
-										                 'url' => $temp_value, 'size' => '', 'checksum' => '',
-									                 ]);
+									$this->setVideos(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
 							}
 						}
@@ -284,34 +274,24 @@
 								$temp_files[] = $url;
 								if (isset($path['extension']) && in_array($path['extension'], $allowed_media)) {
 									if (in_array($path['extension'], ['mp3', 'm4a'])) {
-										$this->setXfAudios([
-											                   'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-										                   ], $value[0]);
+										$this->setXfAudios(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],], $value[0]);
 									} else {
-										$this->setXfVideos([
-											                   'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-										                   ], $value[0]);
+										$this->setXfVideos(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],], $value[0]);
 									}
 								} else {
-									$this->setXfFiles([
-										                  'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-									                  ], $value[0]);
+									$this->setXfFiles(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],], $value[0]);
 								}
 							}
 
 							if ( ! in_array($url, $this->getAudios())) {
 								if (in_array($path['extension'], ['mp3', 'm4a'])) {
-									$this->setAudios([
-										                 'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-									                 ]);
+									$this->setAudios(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
 							}
 
 							if ( ! in_array($url, $this->getVideos())) {
 								if (in_array($path['extension'], ['mp4'])) {
-									$this->setVideos([
-										                 'url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],
-									                 ]);
+									$this->setVideos(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
 							}
 						}
@@ -338,22 +318,19 @@
 								if ($temp_value === null || (int)$temp_value === 0) {
 									$path_parts = @pathinfo($temp_array[0]);
 								}
-								$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/"
-								           .$path_parts['basename'];
+								$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/" .$path_parts['basename'];
 
-								if ( ! isset($path_parts['extension'])) {
+								if ( !isset($path_parts['extension'])) {
 									LogGenerator::generate_log(
 										'telegram', 'processContent', ['Массив изображений либо сменил структуру, либо не верен.', $temp_array],
 										'warning'
 									);
 								}
 
-								if ( ! in_array(
-									$img_url, $this->getXfImages()[$value[0]]
-								)) {
+								if ( !in_array($img_url, $this->getXfImages()[$value[0]])) {
 									$this->setXfImages($img_url, $value[0]);
 								}
-								if ( ! in_array($img_url, $this->getAllImages())) {
+								if ( !in_array($img_url, $this->getAllImages())) {
 									$this->setAllImages($img_url);
 								}
 							}
@@ -403,6 +380,14 @@
 							$this->setVideos($file);
 						}
 					}
+				}
+			}
+
+			foreach ($this->getAllImages() as $id => $img) {
+				if (file_get_contents($img)) {
+
+				} else {
+					$this->unsetAllImages($id);
 				}
 			}
 		}
