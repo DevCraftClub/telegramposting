@@ -1432,7 +1432,7 @@
 								[$thumb_url, $img_url]
 
 							);
-							$this->setXfImages($img_url);
+							$this->setXfImages($img_url, $value[0]);
 							$xfieldsdata[$value[0]] = "<a href=\"$img_url\">$temp_alt</a>";
 						}
 
