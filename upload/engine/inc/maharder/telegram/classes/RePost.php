@@ -1991,6 +1991,27 @@
 		}
 
 		/**
+		 * @param int $id
+		 *
+		 * @version 1.7.7
+		 * @return void
+		 */
+		public function unsetAllImages($id) {
+			unset($this->images[$id]);
+		}
+
+		/**
+		 * @param int $id
+		 * @param string $img
+		 *
+		 * @version 1.7.7
+		 * @return void
+		 */
+		public function setAllImagesById($id, $img) {
+			$this->images[$id] = $img;
+		}
+
+		/**
 		 * @param array|string $image
 		 *
 		 * @return array
