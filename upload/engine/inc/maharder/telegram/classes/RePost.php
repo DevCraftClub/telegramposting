@@ -67,48 +67,51 @@
 		}
 
 		/**
-		 * @param string $tag_separator
 		 * @version 1.7.3
+		 *
+		 * @param string $tag_separator
 		 */
 		public function setTagSeparator(?string $tag_separator) {
 			$this->tag_separator = $tag_separator;
 		}
 
 		/**
-		 * @return string
 		 * @version 1.7.3
+		 * @return string
 		 */
 		public function getTagSeparator() {
 			return $this->tag_separator;
 		}
 
 		/**
-		 * @param string $hashtag_separator
 		 * @version 1.7.3
+		 *
+		 * @param string $hashtag_separator
 		 */
 		public function setHashtagSeparator($hashtag_separator) {
 			$this->hashtag_separator = $hashtag_separator;
 		}
 
 		/**
-		 * @return string
 		 * @version 1.7.3
+		 * @return string
 		 */
 		public function getHashtagSeparator() {
 			return $this->hashtag_separator;
 		}
 
 		/**
-		 * @param string $category_separator
 		 * @version 1.7.3
+		 *
+		 * @param string $category_separator
 		 */
 		public function setCategorySeparator($category_separator) {
 			$this->category_separator = $category_separator;
 		}
 
 		/**
-		 * @return string
 		 * @version 1.7.3
+		 * @return string
 		 */
 		public function getCategorySeparator() {
 			return $this->category_separator;
@@ -133,10 +136,10 @@
 		/**
 		 * Обработка содержимого
 		 *
-		 * @param mixed $content Содержимое
-		 * @param bool $parse Параметр для повторной обработки
+		 * @param mixed $content          Содержимое
+		 * @param bool  $parse            Параметр для повторной обработки
 		 *                                содержимого, по умолчанию: false
-		 * @param array $parse_filter Параметры фильтрации содержимого
+		 * @param array $parse_filter     Параметры фильтрации содержимого
 		 *
 		 * @return mixed
 		 * @throws \JsonException
@@ -170,12 +173,11 @@
 
 		/**
 		 * Возвращает обработанное содержимое
-		 *
 		 * - Обрабатывает перенос строк
 		 * - Обрабатывает макс. длину
 		 *
-		 * @return string
 		 * @version 1.7.7
+		 * @return string
 		 */
 		protected function finalContent() {
 			$len = $this->getMaxLen() - 3;
@@ -499,7 +501,7 @@
 
 		/**
 		 * @param          $content
-		 * @param array $filter
+		 * @param array    $filter
 		 *
 		 * @return string
 		 * @throws \JsonException
@@ -707,7 +709,7 @@
 
 					foreach ($row['tags'] as $value) {
 						$value          = trim($value);
-						$url_tag        = str_replace(["&#039;",  "&quot;", "&amp;"], ["'", '"', "&"], $value);
+						$url_tag        = str_replace(["&#039;", "&quot;", "&amp;"], ["'", '"', "&"], $value);
 						$tags_no_link[] = $url_tag;
 						$tags_hashtag[] = "#{$url_tag}";
 
@@ -1136,7 +1138,8 @@
 								|| ($info['extension'] == 'gif')
 								|| ($info['extension'] == 'png')
 								|| ($info['extension'] == 'webp')
-							) $images[] = $url;
+							)
+								$images[] = $url;
 
 						}
 					}
@@ -1184,7 +1187,8 @@
 								|| ($info['extension'] == 'gif')
 								|| ($info['extension'] == 'png')
 								|| ($info['extension'] == 'webp')
-							) $images[] = $url;
+							)
+								$images[] = $url;
 
 						}
 					}
@@ -1304,7 +1308,8 @@
 													$xf_val_url[] = "<a href=\"" .
 														$config['http_home_url'] . "xfsearch/" . $value[0] . "/" . rawurlencode($value4) . "/\">" . $tag_val . '</a>';
 												} else {
-													$xf_val_url[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=" . $value[0] . "&amp;xf=" . rawurlencode($value4) . "\">" . $tag_val . '</a>';
+													$xf_val_url[]
+														= "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=" . $value[0] . "&amp;xf=" . rawurlencode($value4) . "\">" . $tag_val . '</a>';
 												}
 											} else {
 												$xf_val_url[] = $tag_val;
@@ -1366,7 +1371,8 @@
 									}
 
 									if ($config['allow_alt_url']) {
-										$value3[] = "<a href=\"" . $config['http_home_url'] . "xfsearch/" . $value[0] . "/" . rawurlencode($value4) . "/\">" . $value2 . "</a>";
+										$value3[]
+											= "<a href=\"" . $config['http_home_url'] . "xfsearch/" . $value[0] . "/" . rawurlencode($value4) . "/\">" . $value2 . "</a>";
 									} else {
 										$value3[] = "<a href=\"$PHP_SELF?do=xfsearch&amp;xfname=" . $value[0] . "&amp;xf=" . rawurlencode($value4) . "\">" . $value2 . "</a>";
 									}
@@ -1378,8 +1384,8 @@
 							if (empty($value[21])) {
 								$value[21] = $this->getTagSeparator();
 							}
-							$xfieldsdata[$value[0]]          = implode($value[21], $value3);
-							$xfieldsdata["{$value[0]}_text"] = implode($value[21], $value3_no_link);
+							$xfieldsdata[$value[0]]             = implode($value[21], $value3);
+							$xfieldsdata["{$value[0]}_text"]    = implode($value[21], $value3_no_link);
 							$xfieldsdata["{$value[0]}_hashtag"] = implode($this->getTagSeparator(), $value3_hashtag);
 
 							unset($temp_array);
@@ -1455,7 +1461,8 @@
 							$xf_image_count       = 0;
 							$single_need          = false;
 
-							if (stripos($content, "[xfvalue_{$value[0]} image=") !== false) $single_need = true;
+							if (stripos($content, "[xfvalue_{$value[0]} image=") !== false)
+								$single_need = true;
 
 							foreach ($fieldvalue_arr as $temp_value) {
 								$xf_image_count++;
@@ -1476,11 +1483,11 @@
 
 								$path_parts = @pathinfo($temp_value);
 
-								$img_url   = $config['http_home_url'] . "uploads/posts/" . $path_parts['dirname'] . "/" . $path_parts['basename'];
+								$img_url = $config['http_home_url'] . "uploads/posts/" . $path_parts['dirname'] . "/" . $path_parts['basename'];
 
 								// Gallery links
 								// @version 1.7.7
-								$gallery_image[] = $img_url;
+								$gallery_image[]                                                                     = $img_url;
 								$gallery_single_image['[xfvalue_' . $value[0] . ' image="' . $xf_image_count . '"]'] = $img_url;
 							}
 
@@ -1518,7 +1525,8 @@
 							if ($count && dle_strlen($xfieldsdata[$value[0]], $config['charset']) > $count) {
 								$xfieldsdata[$value[0]] = dle_substr($xfieldsdata[$value[0]], 0, $count, $config['charset']);
 
-								if (($temp_dmax = dle_strrpos($xfieldsdata[$value[0]], ' ', $config['charset']))) {
+								if ((
+								$temp_dmax = dle_strrpos($xfieldsdata[$value[0]], ' ', $config['charset']))) {
 									$xfieldsdata[$value[0]] = dle_substr($xfieldsdata[$value[0]], 0, $temp_dmax, $config['charset']);
 								}
 							}
@@ -1539,7 +1547,8 @@
 					if ($count && dle_strlen($row['full_story'], $config['charset']) > $count) {
 						$row['full_story'] = dle_substr($row['full_story'], 0, $count, $config['charset']);
 
-						if (($temp_dmax = dle_strrpos($row['full_story'], ' ', $config['charset']))) {
+						if ((
+						$temp_dmax = dle_strrpos($row['full_story'], ' ', $config['charset']))) {
 							$row['full_story'] = dle_substr($row['full_story'], 0, $temp_dmax, $config['charset']);
 						}
 					}
@@ -1552,7 +1561,8 @@
 					if ($count && dle_strlen($row['short_story'], $config['charset']) > $count) {
 						$row['short_story'] = dle_substr($row['short_story'], 0, $count, $config['charset']);
 
-						if (($temp_dmax = dle_strrpos($row['short_story'], ' ', $config['charset']))) {
+						if ((
+						$temp_dmax = dle_strrpos($row['short_story'], ' ', $config['charset']))) {
 							$row['short_story'] = dle_substr($row['short_story'], 0, $temp_dmax, $config['charset']);
 						}
 					}
@@ -1570,7 +1580,9 @@
 					if ($count && dle_strlen($row['title'], $config['charset']) > $count) {
 						$row['title'] = dle_substr($row['title'], 0, $count, $config['charset']);
 
-						if (($temp_dmax = dle_strrpos($row['title'], ' ', $config['charset']))) $row['title'] = dle_substr($row['title'], 0, $temp_dmax, $config['charset']);
+						if ((
+						$temp_dmax = dle_strrpos($row['title'], ' ', $config['charset'])))
+							$row['title'] = dle_substr($row['title'], 0, $temp_dmax, $config['charset']);
 					}
 					$this->setContentTags($matches[0], str_replace("&amp;amp;", "&amp;", htmlspecialchars($row['title'], ENT_QUOTES, $config['charset'])));
 				}
@@ -1580,7 +1592,8 @@
 
 			$this->setContentTags('{now}', date('d.m.y, H:i', $_TIME));
 
-			foreach ($this->getContentTags() as $tag => $value) $content = str_replace($tag, $value, $content);
+			foreach ($this->getContentTags() as $tag => $value)
+				$content = str_replace($tag, $value, $content);
 
 			$content = preg_replace(
 				[
@@ -1613,7 +1626,7 @@
 			$content = preg_replace("/\[url=(.*)\](.*)\[\/url\]/", "<a href=\"$1\">$2</a>", $content);
 			$content = preg_replace("/\[url\](.*)\[\/url\]/", "<a href=\"$1\">$1</a>", $content);
 
-			$content = preg_replace_callback("#\{now=(.+?)\}#i", function ($matches = []) use ($_TIME) {return date($matches[1], $_TIME);}, $content);
+			$content = preg_replace_callback("#\{now=(.+?)\}#i", function ($matches = []) use ($_TIME) { return date($matches[1], $_TIME); }, $content);
 
 			$this->getFiles();
 			$this->getImages();
@@ -1650,6 +1663,18 @@
 			}
 
 			return $this->files;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetFileById($id) {
+			unset($this->files[$id]);
 		}
 
 		/**
@@ -1714,10 +1739,10 @@
 
 		/**
 		 * @param           $url
-		 * @param array $post
-		 * @param null $proxy
-		 * @param string $type
-		 * @param null $auth
+		 * @param array     $post
+		 * @param null      $proxy
+		 * @param string    $type
+		 * @param null      $auth
 		 *
 		 * @return bool|string
 		 * @throws \Monolog\Handler\MissingExtensionException
@@ -1727,7 +1752,8 @@
 			array $post = [],
 			$proxy = null,
 			string $type = 'http',
-			$auth = null) {
+			$auth = null
+		) {
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
@@ -1795,7 +1821,7 @@
 
 		/**
 		 * @param array|string $xf_images
-		 * @param string|null $param
+		 * @param string|null  $param
 		 *
 		 * @return array
 		 */
@@ -1811,6 +1837,31 @@
 			}
 
 			return $this->getXfImages();
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param int $id
+		 *
+		 * @return void
+		 */
+		public function unsetXfImages($id) {
+			unset($this->xf_images[$id]);
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param int    $id
+		 * @param string $img
+		 *
+		 * @return void
+		 */
+		public function setXfImagesById($id, $img) {
+			$this->xf_images[$id] = $img;
 		}
 
 		/**
@@ -1843,6 +1894,31 @@
 		}
 
 		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param int $id
+		 *
+		 * @return void
+		 */
+		public function unsetPostImages($id) {
+			unset($this->images_post[$id]);
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param int    $id
+		 * @param string $img
+		 *
+		 * @return void
+		 */
+		public function setPostImagesById($id, $img) {
+			$this->images_post[$id] = $img;
+		}
+
+		/**
 		 * @param array|string $videos
 		 *
 		 * @return array
@@ -1865,6 +1941,31 @@
 		}
 
 		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 * @param $video
+		 *
+		 * @return void
+		 */
+		public function setVideoById($id, $video) {
+			$this->videos[$id] = $video;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetVideoById($id) {
+			unset($this->videos[$id]);
+		}
+
+		/**
 		 * @param array|string $audios
 		 *
 		 * @return array
@@ -1873,10 +1974,35 @@
 			if (is_array($audios)) {
 				$this->audios = array_merge($this->getAudios(), $audios);
 			} else {
-				$this->videos[] = $audios;
+				$this->audios[] = $audios;
 			}
 
 			return $this->getAudios();
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 * @param $audio
+		 *
+		 * @return void
+		 */
+		public function setAudioById($id, $audio) {
+			$this->audios[$id] = $audio;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetAudioById($id) {
+			unset($this->audios[$id]);
 		}
 
 		/**
@@ -1915,6 +2041,32 @@
 		}
 
 		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 * @param $video
+		 *
+		 * @return void
+		 */
+		public function setXfVideoById($id, $video) {
+			$this->xf_videos[$id] = $video;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetXfVideoById($id) {
+			unset($this->xf_videos[$id]);
+		}
+
+
+		/**
 		 * @param array|string $xf_audios
 		 *
 		 * @return array
@@ -1940,6 +2092,31 @@
 		 */
 		public function getXfAudios() {
 			return $this->xf_audios;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 * @param $audio
+		 *
+		 * @return void
+		 */
+		public function setXfAudioById($id, $audio) {
+			$this->audios[$id] = $audio;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetXfAudioById($id) {
+			unset($this->audios[$id]);
 		}
 
 		/**
@@ -1969,8 +2146,32 @@
 		}
 
 		/**
-		 * @param string $allowed_html
+		 * @version 1.7.7
+		 * @since   1.7.7
 		 *
+		 * @param $id
+		 * @param $file
+		 *
+		 * @return void
+		 */
+		public function setXfFileById($id, $file) {
+			$this->xf_files[$id] = $file;
+		}
+
+		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param $id
+		 *
+		 * @return void
+		 */
+		public function unsetXfFileById($id) {
+			unset($this->xf_files[$id]);
+		}
+
+		/**
+		 * @param string $allowed_html
 		 */
 		public function setAllowedHtml($allowed_html) {
 			$this->allowed_html = $allowed_html;
@@ -1991,9 +2192,11 @@
 		}
 
 		/**
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
 		 * @param int $id
 		 *
-		 * @version 1.7.7
 		 * @return void
 		 */
 		public function unsetAllImages($id) {
@@ -2001,10 +2204,12 @@
 		}
 
 		/**
-		 * @param int $id
+		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param int    $id
 		 * @param string $img
 		 *
-		 * @version 1.7.7
 		 * @return void
 		 */
 		public function setAllImagesById($id, $img) {
@@ -2012,11 +2217,11 @@
 		}
 
 		/**
+		 * @version 1.7.3
+		 *
 		 * @param array|string $image
 		 *
 		 * @return array
-		 * @version 1.7.3
-		 *
 		 */
 		public function setAllImages($image) {
 			if (is_array($image)) {
@@ -2028,7 +2233,11 @@
 			return $this->getAllImages();
 		}
 
-
+		/**
+		 * @param $filter
+		 *
+		 * @return string
+		 */
 		protected function sqlBuilder($filter = []) {
 			global $config;
 
@@ -2043,7 +2252,8 @@
 
 			$join = '';
 			if ($config['allow_multi_category'] && $filter['cats']) {
-				$join = "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
+				$join
+					= "INNER JOIN (SELECT DISTINCT(" . PREFIX . "_post_extras_cats.news_id) FROM " . PREFIX . "_post_extras_cats WHERE cat_id IN ('{$filter['cats']}')) c ON (p.id=c.news_id)";
 			}
 
 			return 'SELECT * FROM ' . PREFIX . '_post p LEFT JOIN ' . PREFIX . "_post_extras e on (p.id = e.news_id) {$join} WHERE {$where}";
@@ -2093,6 +2303,7 @@
 
 		/**
 		 * @version 1.7.7
+		 * @since   1.7.7
 		 * @return array
 		 */
 		public function getContentTags($type = null) {
@@ -2102,23 +2313,26 @@
 		}
 
 		/**
-		 * @param array|string $tag
-		 * @param null|string|array  $value
-		 *
 		 * @version 1.7.7
+		 * @since   1.7.7
+		 *
+		 * @param array|string      $tag
+		 * @param null|string|array $value
 		 */
 		public function setContentTags($tag, $value = null) {
 			if (is_array($tag)) {
-				if($value !== null) {
-					for ($i = 0, $m = count($tag); $i < $m; $i++) {
+				if ($value !== null) {
+					for (
+						$i = 0,
+						$m = count($tag); $i < $m; $i++) {
 						$this->setContentTags($tag[$i], is_array($value) ? $value[$i] : $value);
 					}
 				} else {
 					foreach ($tag as $t => $v) $this->setContentTags($t, $v);
 				}
-			} else $this->content_tags[$tag] = $value;
+			} else
+				$this->content_tags[$tag] = $value;
 		}
-
 
 
 	}
