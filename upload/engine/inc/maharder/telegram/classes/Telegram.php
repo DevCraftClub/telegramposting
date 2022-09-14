@@ -6,21 +6,22 @@
 
 	/**
 	 * Класс обработки данных для отправки в телеграм
+	 *
 	 * @version 1.7.6
 	 */
 	class Telegram extends RePost {
 
 		private $bot, $channel, $telegram_config, $max_media = 10, $links, $thumb;
 		protected                                                          $media       = [];
-		private                                                            $tg_temp_dir = ROOT_DIR.'/uploads/telegram';
+		private                                                            $tg_temp_dir = ROOT_DIR . '/uploads/telegram';
 
 		/**
 		 * Telegram constructor.
 		 *
 		 * @version 1.7.3
 		 *
-		 * @param   int     $post_id
-		 * @param   string  $c
+		 * @param string $c
+		 * @param int    $post_id
 		 *
 		 * @throws \JsonException
 		 */
@@ -35,7 +36,7 @@
 			$this->setHashtagSeparator($tg_config['hashtag_separator']);
 			$this->setTagSeparator($tg_config['tag_separator']);
 
-			$content = $tg_config['addnews'];
+			$content      = $tg_config['addnews'];
 			$content_type = $this->getContentType();
 			if ($content_type == 'editnews') {
 				$content = $tg_config['editnews'];
@@ -45,15 +46,15 @@
 				$content = $tg_config['cron_editnews'];
 			}
 
-			$filter = [];
-			$filter_cats = [];
+			$filter        = [];
+			$filter_cats   = [];
 			$search_fields = json_decode(base64_decode($tg_config['field']), true);
 			foreach ($search_fields as $field) {
 				if ($field['source'] == 'post') {
-					$value = (int)$field['value'] ?: "'{$field['value']}'";
+					$value              = (int)$field['value'] ?: "'{$field['value']}'";
 					$filter['fields'][] = "p.{$field['name']} = {$value}";
 				} elseif ($field['source'] == 'post_extras') {
-					$value = (int)$field['value'] ?: "'{$field['value']}'";
+					$value              = (int)$field['value'] ?: "'{$field['value']}'";
 					$filter['fields'][] = "e.{$field['name']} = {$value}";
 				} elseif ($field['source'] == 'xfields') {
 					$filter['fields'][] = "p.xfields LIKE '%{$field['name']}|{$field['value']}%'";
@@ -64,7 +65,7 @@
 
 			$filter['cats'] = implode(',', $filter_cats);
 
-			if ( ! isset($config['allow_multi_category'])) {
+			if (!isset($config['allow_multi_category'])) {
 				$filter['fields'][] = "p.category in ('{$filter['cats']}')";
 			}
 			$filter['fields'] = implode(" {$tg_config['field_relation']} ", $filter['fields']);
@@ -85,29 +86,29 @@
 			)[0];
 
 			if ($row !== null) {
-				$allcontent = stripcslashes($row['full_story'].$row['short_story'].$row['xfields']);
+				$allcontent = stripcslashes($row['full_story'] . $row['short_story'] . $row['xfields']);
 				preg_match_all('/<img[^>]* src=\"([^\"]*)\"[^>]*>/i', $allcontent, $media);
 
 				foreach ($media[1] as $url) {
 					$info = pathinfo($url);
 					if (isset($info['extension'])) {
 						if ($info['filename'] == "spoiler-plus" ||
-						    $info['filename'] == "spoiler-minus" ||
-						    strpos($info['dirname'], 'engine/data/emoticons') !== false) {
+							$info['filename'] == "spoiler-minus" ||
+							strpos($info['dirname'], 'engine/data/emoticons') !== false) {
 							continue;
 						}
 						$info['extension'] = strtolower($info['extension']);
 
 						if ($info['extension'] == 'jpg'
-						    || $info['extension'] == 'jpeg'
-						    || $info['extension'] == 'gif'
-						    || $info['extension'] == 'png'
-						    || $info['extension'] == 'webp'
+							|| $info['extension'] == 'jpeg'
+							|| $info['extension'] == 'gif'
+							|| $info['extension'] == 'png'
+							|| $info['extension'] == 'webp'
 						) {
-							if ( !in_array($url, $this->getAllImages())) {
+							if (!in_array($url, $this->getAllImages())) {
 								$this->setAllImages($url);
 							}
-							if ( !in_array($url, $this->getImagesPost())) {
+							if (!in_array($url, $this->getImagesPost())) {
 								$this->setImagesPost($url);
 							}
 						}
@@ -124,7 +125,7 @@
 						$media[1] = explode("|", $media[1][0]);
 					}
 
-					if ( !in_array($media[1][0], $this->getVideos())) {
+					if (!in_array($media[1][0], $this->getVideos())) {
 						$this->setVideos($media[1][0]);
 					}
 				}
@@ -139,7 +140,7 @@
 					} else {
 						$media[1] = explode("|", $media[1][0]);
 					}
-					if ( !in_array($media[1][0], $this->getAudios())) {
+					if (!in_array($media[1][0], $this->getAudios())) {
 						$this->setAudios($media[1][0]);
 					}
 				}
@@ -148,12 +149,12 @@
 					preg_match_all('/\[attachment=(\d+?):(.*)\]/', $allcontent, $file_arr);
 					foreach ($file_arr[0] as $i => $arr) {
 						$file_id = $file_arr[1][$i];
-						$file = $this->load_data('files', ['where' => ['id' => $file_id]])[0];
-						$url = $config['http_home_url']."uploads/files/".$file['onserver'];
-						$path = pathinfo($url);
+						$file    = $this->load_data('files', ['where' => ['id' => $file_id]])[0];
+						$url     = $config['http_home_url'] . "uploads/files/" . $file['onserver'];
+						$path    = pathinfo($url);
 
-						$audio = ['mp3', 'm4a'];
-						$video = ['mp4'];
+						$audio         = ['mp3', 'm4a'];
+						$video         = ['mp4'];
 						$allowed_media = array_merge($audio, $video);
 						if (in_array($path['extension'], $allowed_media)) {
 							if (in_array($path['extension'], $audio)) {
@@ -172,12 +173,12 @@
 				}
 
 				$xfields = xfieldsload();
-				
+
 				if (count($xfields)) {
 					$row['xfields_array'] = xfieldsdataload($row['xfields']);
 				}
 
-				$content = $this->if_check($content);
+				$content    = $this->if_check($content);
 				$temp_files = [];
 				if (count($xfields)) {
 					$xfieldsdata = $row['xfields_array'];
@@ -194,20 +195,20 @@
 
 							$path_parts = @pathinfo($temp_value);
 
-							$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/" .$path_parts['basename'];
+							$img_url = $config['http_home_url'] . "uploads/posts/" . $path_parts['dirname'] . "/" . $path_parts['basename'];
 
-							if ( !in_array($img_url, $this->getXfImages()[$value[0]])) {
+							if (!in_array($img_url, $this->getXfImages()[$value[0]])) {
 								$this->setXfImages($img_url, $value[0]);
 							}
-							if ( !in_array($img_url, $this->getAllImages()[$value[0]])) {
+							if (!in_array($img_url, $this->getAllImages()[$value[0]])) {
 								$this->setImagesPost($img_url);
 							}
 						}
 
 						if ($value[3] == "text" and $xfieldsdata[$value[0]]) {
 							$images = ['png', 'jpg', 'jpeg', 'gif'];
-							$audio = ['mp3', 'm4a'];
-							$video = ['mp4'];
+							$audio  = ['mp3', 'm4a'];
+							$video  = ['mp4'];
 
 							$temp_array = explode('|', $xfieldsdata[$value[0]]);
 
@@ -220,29 +221,29 @@
 							$path_parts = @pathinfo($temp_value);
 
 							if (in_array($path_parts['extension'], $images)) {
-								if ( ! in_array($temp_value, $this->getXfImages()[$value[0]])) {
+								if (!in_array($temp_value, $this->getXfImages()[$value[0]])) {
 									$this->setXfImages($temp_value, $value[0]);
 								}
-								if ( ! in_array($temp_value, $this->getAllImages())) {
+								if (!in_array($temp_value, $this->getAllImages())) {
 									$this->setAllImages($temp_value);
 								}
 							} elseif (in_array($path_parts['extension'], $audio)) {
-								if ( ! in_array($temp_value, $temp_files)) {
+								if (!in_array($temp_value, $temp_files)) {
 									$this->setXfAudios(['url' => $temp_value, 'size' => '', 'checksum' => ''], $value[0]);
 								}
 							} elseif (in_array($path_parts['extension'], $video)) {
-								if ( ! in_array($temp_value, $temp_files)) {
+								if (!in_array($temp_value, $temp_files)) {
 									$this->setVideos(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
 							}
 
-							if ( ! in_array($temp_value, $this->getAudios())) {
+							if (!in_array($temp_value, $this->getAudios())) {
 								if (in_array($path_parts['extension'], ['mp3', 'm4a'])) {
 									$this->setAudios(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
 							}
 
-							if ( ! in_array($temp_value, $this->getVideos())) {
+							if (!in_array($temp_value, $this->getVideos())) {
 								if ($path_parts['extension'] == 'mp4') {
 									$this->setVideos(['url' => $temp_value, 'size' => '', 'checksum' => '',]);
 								}
@@ -268,10 +269,10 @@
 								$file = $this->load_data('files', ['where' => ['name' => $temp_value]])[0];
 							}
 
-							$url = $config['http_home_url']."uploads/files/".$file['onserver'];
+							$url  = $config['http_home_url'] . "uploads/files/" . $file['onserver'];
 							$path = pathinfo($url);
 
-							if ( ! in_array($url, $temp_files)) {
+							if (!in_array($url, $temp_files)) {
 								$temp_files[] = $url;
 								if (isset($path['extension']) && in_array($path['extension'], $allowed_media)) {
 									if (in_array($path['extension'], ['mp3', 'm4a'])) {
@@ -284,13 +285,13 @@
 								}
 							}
 
-							if ( ! in_array($url, $this->getAudios())) {
+							if (!in_array($url, $this->getAudios())) {
 								if (in_array($path['extension'], ['mp3', 'm4a'])) {
 									$this->setAudios(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
 							}
 
-							if ( ! in_array($url, $this->getVideos())) {
+							if (!in_array($url, $this->getVideos())) {
 								if (in_array($path['extension'], ['mp4'])) {
 									$this->setVideos(['url' => $url, 'size' => $file['size'], 'checksum' => $file['checksum'],]);
 								}
@@ -319,19 +320,19 @@
 								if ($temp_value === null || (int)$temp_value === 0) {
 									$path_parts = @pathinfo($temp_array[0]);
 								}
-								$img_url = $config['http_home_url']."uploads/posts/".$path_parts['dirname']."/" .$path_parts['basename'];
+								$img_url = $config['http_home_url'] . "uploads/posts/" . $path_parts['dirname'] . "/" . $path_parts['basename'];
 
-								if ( !isset($path_parts['extension'])) {
+								if (!isset($path_parts['extension'])) {
 									LogGenerator::generate_log(
 										'telegram', 'processContent', ['Массив изображений либо сменил структуру, либо не верен.', $temp_array],
 										'warning'
 									);
 								}
 
-								if ( !in_array($img_url, $this->getXfImages()[$value[0]])) {
+								if (!in_array($img_url, $this->getXfImages()[$value[0]])) {
 									$this->setXfImages($img_url, $value[0]);
 								}
-								if ( !in_array($img_url, $this->getAllImages())) {
+								if (!in_array($img_url, $this->getAllImages())) {
 									$this->setAllImages($img_url);
 								}
 							}
@@ -341,7 +342,7 @@
 
 				foreach ($this->getAllImages() as $ims) {
 					foreach ($this->getXfImages() as $ii => $im) {
-						if ( ! in_array($ims, $im)) {
+						if (!in_array($ims, $im)) {
 							$this->getImagesPost()[$ii][] = $im;
 						}
 					}
@@ -363,22 +364,60 @@
 			return $this->setContent(null, true);
 		}
 
+		/**
+		 * @version 1.7.7
+		 * @throws JsonException
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function refactorFiles() {
-			$audio = ['mp3', 'm4a'];
-			$video = ['mp4'];
+			$audio         = ['mp3', 'm4a'];
+			$video         = ['mp4'];
 			$allowed_media = array_merge($audio, $video);
-			foreach ($this->getFiles() as $file) {
+			foreach ($this->getFiles() as $id => $file) {
 				$file_info = pathinfo($file['url']);
 				if (in_array($file_info['extension'], $allowed_media)) {
 					if (in_array($file_info['extension'], $audio)) {
 						$file_in_arr = array_search($file['url'], array_column($this->getAudios(), 'url'), true);
 						if ($file_in_arr === false) {
-							$this->setAudios($file);
+							if (file_get_contents($file['url'])) {
+								if (!DLEFiles::FileExists($file['url']))
+									$file['url'] = $this->tempFile($file['url']);
+								$this->setAudios($file);
+							} else $this->unsetFileById($id);
 						}
 					} else {
 						$file_in_arr = array_search($file['url'], array_column($this->getVideos(), 'url'), true);
 						if ($file_in_arr === false) {
-							$this->setVideos($file);
+							if (file_get_contents($file['url'])) {
+								if (!DLEFiles::FileExists($file['url']))
+									$file['url'] = $this->tempFile($file['url']);
+								$this->setVideos($file);
+							} else $this->unsetFileById($id);
+						}
+					}
+				}
+			}
+
+			foreach ($this->getXfFiles() as $id => $file) {
+				$file_info = pathinfo($file['url']);
+				if (in_array($file_info['extension'], $allowed_media)) {
+					if (in_array($file_info['extension'], $audio)) {
+						$file_in_arr = array_search($file['url'], array_column($this->getXfAudios(), 'url'), true);
+						if ($file_in_arr === false) {
+							if (file_get_contents($file['url'])) {
+								if (!DLEFiles::FileExists($file['url']))
+									$file['url'] = $this->tempFile($file['url']);
+								$this->setXfAudios($file);
+							} else $this->unsetXfFileById($id);
+						}
+					} else {
+						$file_in_arr = array_search($file['url'], array_column($this->getXfVideos(), 'url'), true);
+						if ($file_in_arr === false) {
+							if (file_get_contents($file['url'])) {
+								if (!DLEFiles::FileExists($file['url']))
+									$file['url'] = $this->tempFile($file['url']);
+								$this->setXfVideos($file);
+							} else $this->unsetXfFileById($id);
 						}
 					}
 				}
@@ -386,25 +425,61 @@
 
 			foreach ($this->getAllImages() as $id => $img) {
 				if (file_get_contents($img)) {
-
+					if (!DLEFiles::FileExists($img)) {
+						$this->setAllImagesById($id, $this->tempFile($img));
+					} else {
+						$this->setAllImagesById($id, $img);
+					}
 				} else {
 					$this->unsetAllImages($id);
 				}
 			}
+
+			foreach ($this->getImagesPost() as $id => $img) {
+				if (file_get_contents($img)) {
+					if (!DLEFiles::FileExists($img)) {
+						$this->setPostImagesById($id, $this->tempFile($img));
+					} else {
+						$this->setPostImagesById($id, $img);
+					}
+				} else {
+					$this->unsetPostImages($id);
+				}
+			}
+
+			foreach ($this->getXfImages() as $id => $img) {
+				if (file_get_contents($img)) {
+					if (!DLEFiles::FileExists($img)) {
+						$this->setXfImagesById($id, $img);
+					} else {
+						$this->setXfImagesById($id, $img);
+					}
+				} else {
+					$this->unsetXfImages($id);
+				}
+			}
+
 		}
 
 		private function cleanUp() {
-			$file_list = self::dirToArray($this->tg_temp_dir);
-			foreach ($file_list as $id => $file) {
-				@unlink($this->tg_temp_dir.DIRECTORY_SEPARATOR.$file);
+			foreach (self::dirToArray($this->tg_temp_dir) as $file) {
+				DLEFiles::Delete($this->tg_temp_dir . DIRECTORY_SEPARATOR . $file, 'local');
 			}
 		}
 
+		/**
+		 * @version 1.7.7
+		 *
+		 * @param $file
+		 *
+		 * @return string
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function tempFile($file) {
-			if ( ! mkdir($_dir = $this->tg_temp_dir, 0777, true)
-			     && ! is_dir($_dir)) {
+			DLEFiles::CreateDirectory($this->tg_temp_dir);
+			if (!is_dir($this->tg_temp_dir)) {
 				LogGenerator::generate_log(
-					'telegram', 'tempFile', sprintf('Directory "%s" was not created', $_dir)
+					'telegram', 'tempFile', sprintf('Directory "%s" was not created', $this->tg_temp_dir)
 				);
 			}
 
@@ -412,16 +487,23 @@
 				$_path = pathinfo($file);
 			} else {
 				$_url_path = parse_url($file);
-				$_path = pathinfo($_url_path['path']);
+				$_path     = pathinfo($_url_path['path']);
 			}
 
-			$_name = totranslit("{$_path['filename']}_temp.{$_path['extension']}");
-			$_file_path = "{$_dir}/{$_name}";
-			file_put_contents($_file_path, file_get_contents($file));
+			$_name      = totranslit("{$_path['filename']}_temp.{$_path['extension']}");
+			$_file_path = "{$this->tg_temp_dir}/{$_name}";
+
+			if (!DLEFiles::FileExists($_file_path, 'local')) DLEFiles::Save($_file_path, file_get_contents($file), 'local');
 
 			return $_file_path;
 		}
 
+		/**
+		 * @param $content
+		 *
+		 * @return string
+		 * @throws JsonException
+		 */
 		private function generateLinks($content) {
 			preg_match_all('/\[button=(.*?)\](.*?)\[\/button\]/', $content, $links_array);
 			$temp_links = [
@@ -429,8 +511,8 @@
 			];
 
 			foreach ($links_array[0] as $id => $button) {
-				$link_name = $links_array[1][$id];
-				$link_value = $links_array[2][$id];
+				$link_name                            = $links_array[1][$id];
+				$link_value                           = $links_array[2][$id];
 				$temp_links['inline_keyboard'][$id][] = [
 					'text' => $link_value, 'url' => $this->parse_content($link_name),
 				];
@@ -444,6 +526,14 @@
 			return $content;
 		}
 
+		/**
+		 * @param $xf_name
+		 * @param $limit_type
+		 * @param $limiter
+		 *
+		 * @return void
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function generateMediaXf($xf_name, $limit_type, $limiter) {
 			if (isset($this->getXfImages()[$xf_name])) {
 				if ($limit_type == 'file' && $limiter !== null) {
@@ -454,7 +544,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($this->getXfImages()[$xf_name][$f]);
 						}
@@ -475,7 +566,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaAudio($this->getXfAudios()[$xf_name][$f]);
 						}
@@ -496,7 +588,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaVideo($this->getXfVideos()[$xf_name][$f]);
 						}
@@ -517,7 +610,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaDocument($this->getXfFiles()[$xf_name][$f]);
 						}
@@ -532,6 +626,14 @@
 			}
 		}
 
+		/**
+		 * @param $type
+		 * @param $limit_type
+		 * @param $limiter
+		 *
+		 * @return void
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function generateMediaPost($type, $limit_type = null, $limiter = null) {
 			if ($type == 'image') {
 				if ($limit_type == 'image' && $limiter !== null) {
@@ -544,7 +646,8 @@
 						$limiter = $this->max_media;
 					}
 
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($this->getImagesPost()[$f]);
 						}
@@ -565,7 +668,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaVideo($this->getVideos()[$f]);
 						}
@@ -586,7 +690,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaAudio($this->getAudios()[$f]);
 						}
@@ -607,7 +712,8 @@
 						);
 					}
 				} elseif ($limit_type == 'max') {
-					for ($f = 0; $f <= $limiter; $f++) {
+					for (
+						$f = 0; $f <= $limiter; $f++) {
 						if ($this->checkMediaCount($this->media, $this->max_media)) {
 							$this->media[] = $this->mediaPhoto($this->getAllImages()[$f]);
 						}
@@ -622,10 +728,22 @@
 			}
 		}
 
+		/**
+		 * @param $arr
+		 * @param $max
+		 *
+		 * @return bool
+		 */
 		private function checkMediaCount($arr, $max) {
 			return (count($arr) <= $max);
 		}
 
+		/**
+		 * @param $content
+		 *
+		 * @return array|mixed|string|string[]
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function generateMedia($content) {
 			preg_match_all(
 				'/\[(telegram_media_(image|xfield_(.+?)|allimages|video|audio) (image|max|file|video|audio)=(\d)|telegram_media_(image|xfield_(.+?)|allimages|video|audio))\]/',
@@ -633,10 +751,10 @@
 			);
 
 			foreach ($media[0] as $i => $field) {
-				$type = ( ! empty($media[2][$i])) ? $media[2][$i] : $media[6][$i];
+				$type       = (!empty($media[2][$i])) ? $media[2][$i] : $media[6][$i];
 				$limit_type = $media[4][$i];
-				$limiter = (empty($media[5][$i])) ? null : (int)$media[5][$i] - 1;
-				if ( ! $this->checkMediaCount($this->media, $this->max_media)) {
+				$limiter    = (empty($media[5][$i])) ? null : (int)$media[5][$i] - 1;
+				if (!$this->checkMediaCount($this->media, $this->max_media)) {
 					break;
 				}
 
@@ -663,40 +781,37 @@
 		/**
 		 * Обработка изображения под нужные стандарты
 		 *
-		 * @version 1.7.3
+		 * @version 1.7.7
 		 *
-		 * @param   string  $image        Путь до изображения
-		 * @param   int     $quality      Качество изображения, по умолчанию: 90
-		 * @param   int     $min_quality  Минимальное качество изображения, по умолчанию: 75
-		 * @param   int     $max_res      Максимальное количество пискелей для изображений, по умолчанию: 320
-		 * @param   int     $min_res      Максимальное количество пискелей для изображений, по умолчанию: 240
+		 * @param int    $quality     Качество изображения, по умолчанию: 90
+		 * @param int    $min_quality Минимальное качество изображения, по умолчанию: 75
+		 * @param int    $max_res     Максимальное количество пискелей для изображений, по умолчанию: 320
+		 * @param string $image       Путь до изображения
 		 *
 		 * @return false|string
 		 * @throws \Exception
 		 */
 		private function processImage(
-			string $image, int $quality = 90, int $min_quality = 75, int $max_res = 320, int $min_res = 240
+			string $image, int $quality = 90, int $min_quality = 75, int $max_res = 320
 		) {
 			$getID3 = new getID3();
 
 			$thumb = $getID3->analyze($image);
-			if ( ! isset($thumb['error'])) {
+			if (!isset($thumb['error'])) {
 				$max_size = 200000;
-				if ( ! mkdir($thumb_dir = $this->tg_temp_dir, 0777, true)
-				     && ! is_dir(
-						$thumb_dir
-					)) {
+				DLEFiles::CreateDirectory($this->tg_temp_dir);
+				if (!is_dir($this->tg_temp_dir)) {
 					LogGenerator::generate_log(
-						'telegram', 'processImage', sprintf('Directory "%s" was not created', $thumb_dir)
+						'telegram', 'processImage', sprintf('Directory "%s" was not created', $this->tg_temp_dir)
 					);
 				}
-				$thumb_path = pathinfo($thumb['filenamepath']);
-				$thumb_name = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
-				$thumb_server = "{$thumb_dir}/{$thumb_name}";
-				$thumbnail = new Thumbs($thumb['filenamepath']);
+				$thumb_path   = pathinfo($thumb['filenamepath']);
+				$thumb_name   = "{$thumb_path['filename']}_thumb.{$thumb_path['extension']}";
+				$thumb_server = "{$this->tg_temp_dir}/{$thumb_name}";
+				$thumbnail    = new Thumbs($thumb['filenamepath']);
 
 				if ($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res
-				    || $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res) {
+					|| $thumb['jpg']['exif']['COMPUTED']['Width'] > $max_res) {
 					if ($thumb['jpg']['exif']['COMPUTED']['Height'] > $max_res) {
 						$thumbnail->reduce(
 							0, $max_res
@@ -714,17 +829,31 @@
 						$thumb_server = $this->processImage(
 							$thumb_server, ($quality - 1)
 						);
-					} elseif ($max_res > $min_res) {
+					} elseif ($max_res > 240) {
 						$thumb_server = $this->processImage(
 							$thumb_server, $quality, $min_quality, ($max_res - 1)
 						);
 					}
 				}
 
-				return $this->convertWebp($thumb_server, $quality);
+				return $thumb_server;
 			}
 
 			return false;
+		}
+
+		private function serverLink($link, $curl = true) {
+			global $config;
+			$_link = str_replace($config['http_home_url'], ROOT_DIR . DIRECTORY_SEPARATOR, $link);
+			if (file_exists($_link)) {
+				if ($curl) {
+					return new CURLFile($_link);
+				} else {
+					return $_link;
+				}
+			}
+
+			return $link;
 		}
 
 		/**
@@ -736,66 +865,48 @@
 		private function generateThumb($content = null) {
 			global $config;
 
-			if ( ! function_exists('serverLink')) {
-				function serverLink($link, $curl = true) {
-					global $config;
-					$_link = str_replace($config['http_home_url'], ROOT_DIR.DIRECTORY_SEPARATOR, $link);
-					if (file_exists($_link)) {
-						if ($curl) {
-							return new CURLFile($_link);
-						} else {
-							return $_link;
-						}
-					}
-
-					return $link;
-				}
-			}
-
 			$content = $this->parse_content($content);
 
 			if (preg_grep('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', explode("\n", $content))) {
 				preg_match('/\[telegram_thumb\](.*?)\[\/telegram_thumb\]/', $content, $thumb_arr);
-				if ($thumb_arr[1] === null || ! is_file($thumb_arr[1])) {
+				if ($thumb_arr[1] === null || !is_file($thumb_arr[1])) {
 					LogGenerator::generate_log('telegram', 'processImage', ['Изображения пусты', $thumb_arr], 'crit');
 					$this->generateThumb('');
 				} else {
-					$thumb = ($this->processImage(serverLink($thumb_arr[1], false)) !== false)
-						? $this->processImage(serverLink($thumb_arr[1], false))
-						: $this->processImage(
-							$this->getImages()[0]
-						);
+					$thumb = ($this->processImage($this->serverLink($thumb_arr[1], false)) !== false)
+						? $this->processImage($this->serverLink($thumb_arr[1], false))
+						: $this->processImage($this->getImages()[0]);
 					$thumb = ($thumb !== false) ?: $this->processImage($this->telegram_config['thumb_placeholder']);
 					if ($thumb) {
-						$this->thumb = serverLink($thumb);
+						$this->thumb = $this->serverLink($thumb);
 					}
 				}
-			} elseif ( ! empty($this->getImages()[0])) {
-				$thumb = $this->getImages()[0];
-				$url_parts = parse_url($thumb);
+			} elseif (!empty($this->getAllImages()[0])) {
+				$thumb      = $this->getAllImages()[0];
+				$url_parts  = parse_url($thumb);
 				$config_url = parse_url($config['http_home_url']);
-				if ($url_parts['host'] != $config_url['host'] && ! file_exists($thumb)) {
+				if ($url_parts['host'] != $config_url['host'] && !file_exists($thumb)) {
 					$thumb = $this->tempFile($thumb);
 				}
-				$thumb = $this->processImage($thumb);
-				$this->thumb = serverLink($thumb);
-			} elseif ( ! empty($this->telegram_config['thumb_placeholder'])) {
-				$thumb = $this->telegram_config['thumb_placeholder'];
-				$url_parts = parse_url($thumb);
+				$thumb       = $this->processImage($thumb);
+				$this->thumb = $this->serverLink($thumb);
+			} elseif (!empty($this->telegram_config['thumb_placeholder'])) {
+				$thumb      = $this->telegram_config['thumb_placeholder'];
+				$url_parts  = parse_url($thumb);
 				$config_url = parse_url($config['http_home_url']);
 				if ($url_parts['host'] != $config_url['host']) {
 					$thumb = $this->tempFile($thumb);
 				}
 				$thumb = $this->processImage($thumb);
-				//			if($thumb && !in_array('127.0.0.1', [$_SERVER['SERVER_ADDR'], $_SERVER['REMOTE_ADDR']]))
+
 				if ($thumb) {
-					$this->thumb = serverLink($thumb);
+					$this->thumb = $this->serverLink($thumb);
 				} else {
-					$title = str_replace(' ', '+', $this->getPostTitle());
+					$title       = str_replace(' ', '+', $this->getPostTitle());
 					$this->thumb = $this->tempFile("https://dummyimage.com/320x320/202328/fff.png?text={$title}");
 				}
 			} else {
-				$title = str_replace(' ', '+', $this->getPostTitle());
+				$title       = str_replace(' ', '+', $this->getPostTitle());
 				$this->thumb = $this->tempFile("https://dummyimage.com/320x320/202328/fff.png?text={$title}");
 			}
 
@@ -813,18 +924,18 @@
 		private function mediaPhoto($link) {
 			global $config;
 
-			$url_parts = parse_url($this->convertWebp($link));
+			$url_parts  = parse_url($this->convertWebp($link));
 			$config_url = parse_url($config['http_home_url']);
-			if (($url_parts['host'] == $config_url['host'] || ! isset($url_parts['host'])) && ($link instanceof CURLFile) === false) {
-				if ( ! isset($url_parts['host'])) {
-					$trenner = ($link[0] === '/') ? DIRECTORY_SEPARATOR : '';
+			if (($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) && ($link instanceof CURLFile) === false) {
+				if (!isset($url_parts['host'])) {
+					$trenner   = ($link[0] === '/') ? DIRECTORY_SEPARATOR : '';
 					$link_info = pathinfo($link);
 					$dirs_link = explode('/', str_replace([DIRECTORY_SEPARATOR, '\\'], '/', $link_info['dirname']));
 					if ($dirs_link[0] === 'uploads' || $dirs_link[1] === 'uploads') {
-						$link = ROOT_DIR.$trenner.$link;
+						$link = ROOT_DIR . $trenner . $link;
 					}
 				} else {
-					$link = str_replace($config['http_home_url'], ROOT_DIR.DIRECTORY_SEPARATOR, $link);
+					$link = str_replace($config['http_home_url'], ROOT_DIR . DIRECTORY_SEPARATOR, $link);
 				}
 				$image = new CURLFile($link);
 			} else {
@@ -838,32 +949,32 @@
 			];
 		}
 
+		/**
+		 * @param $file_array
+		 *
+		 * @return array
+		 * @throws Exception
+		 */
 		private function mediaDocument($file_array) {
 			global $config;
 
-			$file_array['url'] = str_replace([ROOT_DIR.DIRECTORY_SEPARATOR, ROOT_DIR.'/'], $config['http_home_url'],
-			                                 $file_array['url']);
-			$url_parts = parse_url($file_array['url']);
-			$config_url = parse_url($config['http_home_url']);
-			if ($url_parts['host'] == $config_url['host'] || ! isset($url_parts['host'])) {
-				if ( ! isset($url_parts['host'])) {
-					$trenner = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
+			$file_array['url'] = str_replace([ROOT_DIR . DIRECTORY_SEPARATOR, ROOT_DIR . '/'], $config['http_home_url'], $file_array['url']);
+			$url_parts         = parse_url($file_array['url']);
+			$config_url        = parse_url($config['http_home_url']);
+			if (($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) && ($file_array['url'] instanceof CURLFile) === false) {
+				if (!isset($url_parts['host'])) {
+					$trenner  = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
 					$url_info = parse_url($file_array['url']);
-					if (isset($url_info['host']) && $url_info['host'] == $config_url['host']
-					    && $file_array['url'][0] === '/') {
-						$file_array['url'] = ROOT_DIR.$trenner.$file_array['url'];
+					if (isset($url_info['host']) && $url_info['host'] == $config_url['host'] && $file_array['url'][0] === '/') {
+						$file_array['url'] = ROOT_DIR . $trenner . $file_array['url'];
 					}
-				} else {
-					$file_array['url'] = str_replace(
-						$config['http_home_url'], ROOT_DIR.DIRECTORY_SEPARATOR, $file_array['url']
-					);
 				}
 				$file = new CURLFile($file_array['url']);
 			} else {
 				$file = $file_array['url'];
 			}
 
-			$f_info = pathinfo($file_array['url']);
+			$f_info = pathinfo($file_array['url']->getFilename());
 
 			$send_array = [
 				'type' => 'document', 'media' => [
@@ -881,52 +992,57 @@
 				if ($thumb == null) {
 					$thumb = pathinfo($this->thumb->getFilename());
 				}
-				$send_array['media']['thumb'] = "attach://{$thumb['basename']}";
+				$send_array['media']['thumb']            = "attach://{$thumb['basename']}";
 				$send_array['media'][$thumb['basename']] = $this->thumb;
 			}
 
 			return $send_array;
 		}
 
+		/**
+		 * @version 1.7.7
+		 *
+		 * @param $file_array
+		 *
+		 * @return array
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function mediaAudio($file_array) {
 			global $config;
 
-			$file_array['url'] = str_replace([ROOT_DIR.DIRECTORY_SEPARATOR, ROOT_DIR.'/'], $config['http_home_url'],
-			                                 $file_array['url']);
-			$url_parts = parse_url($file_array['url']);
-			$config_url = parse_url($config['http_home_url']);
-			$getID3 = new getID3();
+
+			$file_array['url'] = str_replace([ROOT_DIR . DIRECTORY_SEPARATOR, ROOT_DIR . '/'], $config['http_home_url'],
+				$file_array['url']);
+			$url_parts         = parse_url($file_array['url']);
+			$config_url        = parse_url($config['http_home_url']);
+			$getID3            = new getID3();
 
 			if ($url_parts['host'] == $config_url['host']) {
-				$trenner = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
-				$file = str_replace($config['http_home_url'], ROOT_DIR.$trenner, $file_array['url']);
+				$file = $this->serverLink($file_array['url'], false);
 			} else {
 				$file = $this->tempFile($file_array['url']);
 			}
-			$audio = $getID3->analyze($file);
+			$audio        = $getID3->analyze($file);
 			$duration_arr = explode(':', $audio['playtime_string']);
-			$duration = ((int)$duration_arr[0] * 60) + (int)$duration_arr[1];
+			$duration     = ((int)$duration_arr[0] * 60) + (int)$duration_arr[1];
 			$tag_selector = (isset($audio['tags']['id3v2'])) ? 'id3v2' : 'id3v1';
 
-			if ($url_parts['host'] == $config_url['host'] || ! isset($url_parts['host'])) {
-				if ( ! isset($url_parts['host'])) {
-					$trenner = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
+			if (($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) && ($file_array['url'] instanceof CURLFile) === false) {
+				if (!isset($url_parts['host'])) {
+					$trenner  = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
 					$url_info = parse_url($file_array['url']);
-					if (isset($url_info['host']) && $url_info['host'] == $config_url['host']
-					    && $file_array['url'][0] === '/') {
-						$file_array['url'] = ROOT_DIR.$trenner.$file_array['url'];
+					if (isset($url_info['host']) && $url_info['host'] == $config_url['host'] && $file_array['url'][0] === '/') {
+						$file_array['url'] = ROOT_DIR . $trenner . $file_array['url'];
 					}
 				} else {
-					$file_array['url'] = str_replace(
-						$config['http_home_url'], ROOT_DIR.DIRECTORY_SEPARATOR, $file_array['url']
-					);
+					$file_array['url'] = $this->serverLink($file_array['url'], false);
 				}
 				$audio_file = new CURLFile($file_array['url']);
 			} else {
 				$audio_file = $file_array['url'];
 			}
 
-			$af_info = pathinfo($file_array['url']);
+			$af_info = pathinfo($file_array['url']->name);
 
 			$send_array = [
 				'type' => 'audio', 'media' => [
@@ -937,10 +1053,10 @@
 				],
 			];
 
-			if ( ! $audio['tags'][$tag_selector]['artist']) {
+			if (!$audio['tags'][$tag_selector]['artist']) {
 				unset($send_array['media']['performer']);
 			}
-			if ( ! $audio['tags'][$tag_selector]['title']) {
+			if (!$audio['tags'][$tag_selector]['title']) {
 				unset($send_array['media']['title']);
 			}
 			if ($duration === 0) {
@@ -956,44 +1072,52 @@
 				if ($thumb == null) {
 					$thumb = pathinfo($this->thumb->getFilename());
 				}
-				$send_array['media']['thumb'] = "attach://{$thumb['basename']}";
+				$send_array['media']['thumb']            = "attach://{$thumb['basename']}";
 				$send_array['media'][$thumb['basename']] = $this->thumb;
 			}
 
 			return $send_array;
 		}
 
+		/**
+		 * @version 1.7.7
+		 *
+		 * @param $file_array
+		 *
+		 * @return array
+		 * @throws \Monolog\Handler\MissingExtensionException
+		 */
 		private function mediaVideo($file_array) {
 			global $config;
 
-			$file_array['url'] = str_replace([ROOT_DIR.DIRECTORY_SEPARATOR, ROOT_DIR.'/'], $config['http_home_url'],
-			                                 $file_array['url']);
-			$url_parts = parse_url($file_array['url']);
-			$config_url = parse_url($config['http_home_url']);
-			$getID3 = new getID3();
+			$file_array['url'] = str_replace([ROOT_DIR . DIRECTORY_SEPARATOR, ROOT_DIR . '/'], $config['http_home_url'],
+				$file_array['url']);
+			$url_parts         = parse_url($file_array['url']);
+			$config_url        = parse_url($config['http_home_url']);
+			$getID3            = new getID3();
 
 			if ($url_parts['host'] == $config_url['host']) {
 				$trenner = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
-				$file = str_replace($config['http_home_url'], ROOT_DIR.$trenner, $file_array['url']);
+				$file    = $this->serverLink($file_array['url'], false);
 			} else {
 				$file = $this->tempFile($file_array['url']);
 			}
 
-			$video = $getID3->analyze($file);
+			$video        = $getID3->analyze($file);
 			$duration_arr = explode(':', $video['playtime_string']);
-			$duration = ((int)$duration_arr[0] * 60) + (int)$duration_arr[1];
+			$duration     = ((int)$duration_arr[0] * 60) + (int)$duration_arr[1];
 
-			if ($url_parts['host'] == $config_url['host'] || ! isset($url_parts['host'])) {
-				if ( ! isset($url_parts['host'])) {
-					$trenner = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
+			if (($url_parts['host'] == $config_url['host'] || !isset($url_parts['host'])) && ($file_array['url'] instanceof CURLFile) === false) {
+				if (!isset($url_parts['host'])) {
+					$trenner  = ($file_array['url'][0] !== '/') ? DIRECTORY_SEPARATOR : '';
 					$url_info = parse_url($file_array['url']);
 					if (isset($url_info['host']) && $url_info['host'] == $config_url['host']
-					    && $file_array['url'][0] === '/') {
-						$file_array['url'] = ROOT_DIR.$trenner.$file_array['url'];
+						&& $file_array['url'][0] === '/') {
+						$file_array['url'] = ROOT_DIR . $trenner . $file_array['url'];
 					}
 				} else {
 					$file_array['url'] = str_replace(
-						$config['http_home_url'], ROOT_DIR.DIRECTORY_SEPARATOR, $file_array['url']
+						$config['http_home_url'], ROOT_DIR . DIRECTORY_SEPARATOR, $file_array['url']
 					);
 				}
 				$video_file = new CURLFile($file_array['url']);
@@ -1001,7 +1125,7 @@
 				$video_file = $file_array['url'];
 			}
 
-			$vf_info = pathinfo($file_array['url']);
+			$vf_info = pathinfo($file_array['url']->getFilename());
 
 			$send_array = [
 				'type' => 'video', 'media' => [
@@ -1011,10 +1135,10 @@
 					'thumb'   => '',
 				],
 			];
-			if ( ! $video['video']['resolution_x']) {
+			if (!$video['video']['resolution_x']) {
 				unset($send_array['media']['width']);
 			}
-			if ( ! $video['video']['resolution_y']) {
+			if (!$video['video']['resolution_y']) {
 				unset($send_array['media']['height']);
 			}
 
@@ -1027,7 +1151,7 @@
 				if ($thumb == null) {
 					$thumb = pathinfo($this->thumb->getFilename());
 				}
-				$send_array['media']['thumb'] = "attach://{$thumb['basename']}";
+				$send_array['media']['thumb']            = "attach://{$thumb['basename']}";
 				$send_array['media'][$thumb['basename']] = $this->thumb;
 			}
 
@@ -1035,41 +1159,42 @@
 		}
 
 		/**
-		 * @throws \Exception
+		 * @version 1.7.7
+		 * @return array
+		 * @throws Exception
 		 */
 		private function mediaGroup() {
 			$media = [];
 
 			if (count($this->media) === 1) {
 				$media[] = $this->media[0]['media'];
-				if ( ! empty($this->thumb) && $this->thumb !== null
-				     && isset($media[0]['thumb'])) {
+				if (!empty($this->thumb) && $this->thumb !== null
+					&& isset($media[0]['thumb'])) {
 					$media[0]['thumb'] = $this->thumb;
 				}
-				if ( ! empty($this->links) && $this->links !== null
-				     && isset($media[0]['reply_markup'])) {
+				if (!empty($this->links) && $this->links !== null
+					&& isset($media[0]['reply_markup'])) {
 					$media[0]['reply_markup'] = $this->links;
 				}
-				if ( ! empty($this->getContent()) && $this->getContent() !== null
-				     && isset($media[0]['caption'])) {
+				if (!empty($this->getContent()) && $this->getContent() !== null
+					&& isset($media[0]['caption'])) {
 					$media[0]['caption'] = $this->finalContent();
 				}
 			} else {
 				foreach ($this->media as $i => $iValue) {
-					$media_arr = $iValue;
-					$media_tmp = $media_arr['media'];
-					$media_tmp['type'] = $media_arr['type'];
+					$media_arr          = $iValue;
+					$media_tmp          = $media_arr['media'];
+					$media_tmp['type']  = $media_arr['type'];
 					$media_tmp['media'] = $media_tmp[$media_arr['type']];
 					unset($media_tmp[$media_arr['type']]);
-					$first = $i === 0;
 
-					if ($first) {
-						if ( ! empty($this->links) && $this->links !== null
-						     && isset($media_tmp['reply_markup'])) {
+					if ($i === 0) {
+						if (!empty($this->links) && $this->links !== null
+							&& isset($media_tmp['reply_markup'])) {
 							$media_tmp['reply_markup'] = $this->links;
 						}
-						if ( ! empty($this->getContent()) && $this->getContent() !== null
-						     && isset($media_tmp['caption'])) {
+						if (!empty($this->getContent()) && $this->getContent() !== null
+							&& isset($media_tmp['caption'])) {
 							$media_tmp['caption'] = $this->finalContent();
 						}
 						$media_tmp['parse_mode'] = 'HTML';
@@ -1079,9 +1204,9 @@
 						$this->generateThumb($this->getContent());
 					}
 
-					if ( ! empty($this->thumb) && $this->thumb !== null && isset($media_tmp['thumb'])) {
-						$file = pathinfo($this->thumb);
-						$media_tmp['thumb'] = "attach://{$file['basename']}";
+					if (!empty($this->thumb) && $this->thumb !== null && isset($media_tmp['thumb'])) {
+						$file                         = pathinfo($this->thumb);
+						$media_tmp['thumb']           = "attach://{$file['basename']}";
 						$media_tmp[$file['basename']] = $this->thumb;
 					}
 
@@ -1101,19 +1226,19 @@
 		public function sendMessage() {
 			if ($this->getContent() !== null) {
 				$proxy = null;
-				$type = 'http';
-				$auth = null;
-				$url = $this->telegram_link();
+				$type  = 'http';
+				$auth  = null;
+				$url   = $this->telegram_link();
 				if ($this->telegram_config['proxy']) {
-					$proxy = $this->telegram_config['proxyip'].':'.$this->telegram_config['proxyport'];
+					$proxy = $this->telegram_config['proxyip'] . ':' . $this->telegram_config['proxyport'];
 				}
 				if ($this->telegram_config['proxytype'] == "socks") {
 					$proxy = "socks5://{$proxy}";
-					$type = $this->telegram_config['proxytype'];
+					$type  = $this->telegram_config['proxytype'];
 				}
 				if ($this->telegram_config['proxyauth']) {
-					$auth = $this->telegram_config['proxyuser'].':'
-					        .$this->telegram_config['proxypass'];
+					$auth = $this->telegram_config['proxyuser'] . ':'
+						. $this->telegram_config['proxypass'];
 				}
 
 				LogGenerator::generate_log('telegram', 'sendMessage', $url, 'info');
@@ -1128,7 +1253,7 @@
 						'Новость не соответствует требованиям!'
 					),
 				],
-				JSON_UNESCAPED_UNICODE
+					JSON_UNESCAPED_UNICODE
 				);
 			}
 
@@ -1145,7 +1270,7 @@
 				'video' => 'sendVideo', 'document' => 'sendDocument',
 			];
 
-			$send_array = [];
+			$send_array  = [];
 			$media_group = $this->mediaGroup();
 
 			switch ($this->telegram_config['message_type']) {
@@ -1160,20 +1285,22 @@
 
 				case 'media':
 					if ($media_group['single']) {
-						$send_array = $media_group['media'][0];
+						$send_array                            = $media_group['media'][0];
 						$this->telegram_config['message_type'] = $media_group['type'];
 					} else {
 						foreach ($media_group['media'] as $i => $media) {
 							$first = $i === 0;
 							try {
-								$file = $media['media']->getFilename();
-								$file = pathinfo($file);
-								$images = ['png', 'jpeg', 'jpg', 'gif'];
-								$video = ['mp4'];
-								$audio = ['mp3', 'm4a'];
+								$file          = $media['media']->getFilename();
+								$file          = pathinfo($file);
+								$images        = ['png', 'jpeg', 'jpg', 'gif'];
+								$video         = ['mp4'];
+								$audio         = ['mp3', 'm4a'];
 								$allowed_media = array_merge($images, $video, $audio);
 
-								$media['media']->setPostFilename($file['filename']);
+								$file_name = (is_null($this->getPostTitle())) ? $file['filename'] : $this->getPostTitle() . ' (Файл Nº ' . ($i + 1) . ')';
+
+								$media['media']->setPostFilename(totranslit($file_name));
 								if (in_array($file['extension'], $allowed_media)) {
 									$mime_type = '';
 									$extension = $file['extension'];
@@ -1184,19 +1311,14 @@
 										}
 									} elseif (in_array($file['extension'], $video)) {
 										$mime_type = 'video';
-										if ( ! $first) {
-											if ($media_group['media'][$i]['duration']
-											    === 0) {
+										if (!$first) {
+											if ($media_group['media'][$i]['duration'] === 0) {
 												unset($media_group['media'][$i]['duration']);
 											}
-											if ($media_group['media'][$i]['width'] === 0
-											    || $media_group['media'][$i]['width']
-											       === null) {
+											if ($media_group['media'][$i]['width'] === 0 || is_null($media_group['media'][$i]['width'])) {
 												unset($media_group['media'][$i]['width']);
 											}
-											if ($media_group['media'][$i]['height'] === 0
-											    || $media_group['media'][$i]['height']
-											       === null) {
+											if ($media_group['media'][$i]['height'] === 0 || is_null($media_group['media'][$i]['height'])) {
 												unset($media_group['media'][$i]['height']);
 											}
 										}
@@ -1205,20 +1327,16 @@
 										if ($file['extension'] == 'm4a') {
 											$extension = 'mp4';
 										}
-										if ( ! $first) {
-											if ($media_group['media'][$i]['duration']
-											    === 0) {
+										if (!$first) {
+											if ($media_group['media'][$i]['duration'] === 0) {
 												unset($media_group['media'][$i]['duration']);
 											}
-											if ($media_group['media'][$i]['performer']
-											    === null) {
+											if (is_null($media_group['media'][$i]['performer'])) {
 												unset($media_group['media'][$i]['performer']);
 											}
-											if ($media_group['media'][$i]['title'] === null) {
-												if ( ! empty(
-												$this->getPostTitle()
-												)) {
-													$media_group['media'][$i]['title'] = $this->getPostTitle();
+											if (is_null($media_group['media'][$i]['title'])) {
+												if (!empty($this->getPostTitle())) {
+													$media_group['media'][$i]['title'] = $file_name;
 												} else {
 													unset($media_group['media'][$i]['title']);
 												}
@@ -1229,8 +1347,9 @@
 								}
 							} catch (Exception $e) {
 								$file = pathinfo($media['media']);
+								LogGenerator::generate_log('Telegram', 'telegram_link', $e->getMessage());
 							}
-							$send_array[$file['basename']] = $media['media'];
+							$send_array[$file['basename']]     = $media['media'];
 							$media_group['media'][$i]['media'] = "attach://{$file['basename']}";
 							if (empty($media_group['media'][$i]['caption'])) {
 								unset($media_group['media'][$i]['caption']);
@@ -1239,7 +1358,7 @@
 								unset($media_group['media'][$i]['reply_markup']);
 							}
 						}
-						$m = json_encode($media_group['media'], JSON_UNESCAPED_UNICODE);
+						$m                   = json_encode($media_group['media'], JSON_UNESCAPED_UNICODE);
 						$send_array['media'] = $m;
 					}
 
@@ -1250,7 +1369,7 @@
 						$send_array = $this->mediaPhoto($this->getImages()[0])['media'];
 					} elseif (isset($this->getMedia()[0])) {
 						$send_array = $this->mediaPhoto($this->getMedia()[0])['media'];
-					} elseif ( ! empty($this->thumb)) {
+					} elseif (!empty($this->thumb)) {
 						$send_array = $this->mediaPhoto($this->thumb)['media'];
 					}
 					break;
@@ -1272,29 +1391,27 @@
 				$this->generateThumb($this->getContent());
 			}
 
-			if ( ! empty($this->thumb) && ! isset($send_array['thumb'])) {
+			if (!empty($this->thumb) && !isset($send_array['thumb'])) {
 				$thumb = pathinfo($this->thumb);
 				if ($thumb == null) {
 					$thumb = pathinfo($this->thumb->getFilename());
 				}
 
 				if (isset($thumb['extension'])) {
-					$send_array['thumb'] = "attach://{$thumb['basename']}";
+					$send_array['thumb']            = "attach://{$thumb['basename']}";
 					$send_array[$thumb['basename']] = $this->thumb;
 				} else {
 					unset($send_array['thumb']);
 				}
 			}
-			if ( ! empty($this->links) && $this->links !== null
-			     && isset($send_array['reply_markup'])) {
+			if (!empty($this->links) && isset($send_array['reply_markup'])) {
 				$send_array['reply_markup'] = $this->links;
 			}
-			if ( ! empty($this->getContent()) && $this->getContent() !== null
-			     && isset($send_array['caption'])) {
+			if (!empty($this->getContent()) && !is_null($this->getContent()) && isset($send_array['caption'])) {
 				$send_array['caption'] = $this->finalContent();
 			}
 
-			$send_array['chat_id'] = str_replace('%40', '@', $this->channel);
+			$send_array['chat_id']  = str_replace('%40', '@', $this->channel);
 			$send_url['parse_mode'] = 'HTML';
 
 			LogGenerator::generate_log('telegram', 'telegram_link', ['url' => $send_url, 'arr' => $send_array], 'info');
@@ -1303,13 +1420,13 @@
 			$url_query = str_replace('chat_id=%40', 'chat_id=@', $url_query);
 
 			return [
-				'url' => "https://api.telegram.org/bot".$this->bot
-				         ."/{$types[$this->telegram_config['message_type']]}?{$url_query}", 'post' => $send_array,
+				'url'  => "https://api.telegram.org/bot{$this->bot}/{$types[$this->telegram_config['message_type']]}?{$url_query}",
+				'post' => $send_array,
 			];
 		}
 
 		/**
-		 * @param   mixed  $bot
+		 * @param mixed $bot
 		 *
 		 * @return mixed
 		 */
@@ -1320,7 +1437,7 @@
 		}
 
 		/**
-		 * @param   mixed  $channel
+		 * @param mixed $channel
 		 *
 		 * @return mixed
 		 */
@@ -1333,8 +1450,7 @@
 		/**
 		 * @return array
 		 */
-		public function setTelegramConfig()
-		: array {
+		public function setTelegramConfig(): array {
 			$this->telegram_config = $this->getConfig('telegram');
 			$this->setBot($this->telegram_config['token']);
 			$this->setChannel($this->telegram_config['chat']);
@@ -1344,13 +1460,13 @@
 
 		/**
 		 * Функция конвертации изображений для отправки
-		 *
 		 * Так-же идёт проверка параметров для ТГ, чтобы изображение соответствовало требованиям
 		 *
-		 * @version 1.7.3
+		 * @version 1.7.7
+		 * @since   1.7.3
 		 *
-		 * @param   int     $q
-		 * @param   string  $img
+		 * @param string $img
+		 * @param int    $q
 		 *
 		 * @return false|string
 		 * @throws \Monolog\Handler\MissingExtensionException
@@ -1359,28 +1475,28 @@
 			global $config;
 
 			$max_file_size = 10485760;
-			$max_pixel = 10000;
-			$max_ratio = 20;
+			$max_pixel     = 10000;
+			$max_ratio     = 20;
 
 			if ($img instanceof CURLFile) {
 				$img = $img->name;
 			}
 
-			$img = str_replace($config['http_home_url'], ROOT_DIR.'/', $img);
+			$img = str_replace($config['http_home_url'], ROOT_DIR . '/', $img);
 
-			if ( ! is_file($img)) {
+			if (!is_file($img)) {
 				LogGenerator::generate_log('telegram', 'convertWebp', [
 					'message' => _('Файл изображения либо повреждён, либо полностью отсутствует'),
 					'img'     => $img,
-				],                         'warning');
+				], 'warning');
 
 				return false;
 			}
 
-			$img_data = pathinfo($img);
-			$img_info = getimagesize($img);
-			$img_data['width'] = $img_info[0];
-			$img_data['height'] = $img_info[1];
+			$img_data              = pathinfo($img);
+			$img_info              = getimagesize($img);
+			$img_data['width']     = $img_info[0];
+			$img_data['height']    = $img_info[1];
 			$img_data['file_size'] = filesize($img);
 
 			if ((int)$img_data['file_size'] > $max_file_size) {
@@ -1388,7 +1504,7 @@
 					'message'  => _('Файл изображения весит больше допустимого'),
 					'file'     => $img_data['file_size'],
 					'max_size' => $max_file_size,
-				],                         'warning');
+				], 'warning');
 
 				return false;
 			}
@@ -1400,7 +1516,7 @@
 					'message'  => _('Размеры изображения больше допустимого! '),
 					'pixels'   => $pixels,
 					'max_size' => $max_pixel,
-				],                         'warning');
+				], 'warning');
 
 				return false;
 			}
@@ -1412,30 +1528,30 @@
 					'message'   => _('Размеры изображения больше допустимого! '),
 					'ratio'     => $ratio,
 					'max_ratio' => $max_ratio,
-				],                         'warning');
+				], 'warning');
 
 				return false;
 			}
 
 			if (strtolower($img_data['extension']) != 'webp' && $config['force_webp']) {
-				$new_file = $this->tg_temp_dir.'/'.$img_data['filename'].'.webp';
+				$new_file = $this->tg_temp_dir . '/' . $img_data['filename'] . '.webp';
 			} else {
-				$new_file = $this->tg_temp_dir.'/'.$img_data['filename'].'.jpg';
+				$new_file = $this->tg_temp_dir . '/' . $img_data['filename'] . '.jpg';
 			}
 
-			if ( ! is_file($new_file)) {
-				if ( ! ImageConverter\convert($img, $new_file, $q)) {
+			if (!is_file($new_file)) {
+				if (!ImageConverter\convert($img, $new_file, $q)) {
 					LogGenerator::generate_log('telegram', 'convertWebp[ImageConverter]', [
 						'message'  => _('Файл изображения либо повреждён, либо полностью отсутствует'),
 						'img'      => $img,
 						'new_file' => $new_file,
-					],                         'warning');
+					], 'warning');
 
 					return false;
 				}
 			}
 
-			return str_replace(ROOT_DIR.'/', $config['http_home_url'], $new_file);
+			return $this->serverLink($new_file, false);
 		}
 
 		/**
