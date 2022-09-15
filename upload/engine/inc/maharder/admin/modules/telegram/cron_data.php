@@ -28,7 +28,7 @@ $end = isset($modInfo['_get']['page']) ? ($modInfo['_get']['page'] * $mh_config[
 $cron_data = $cron_post->getAll(['limit' => "{$start},{$end}", 'order' => ['main' => ['time' => 'ASC']]]);
 
 $modVars = [
-	'title' => _('Отложенный постинг'),
+	'title' => __('telegram', 'Отложенный постинг'),
 	'cron_data' => $cron_data,
 	'page' => $cur_page,
 	'total_pages' => $total_pages,
@@ -36,7 +36,7 @@ $modVars = [
 ];
 
 $breadcrumbs[] = [
-	'name' => $modVars['title'] . " ({$cron_post->count()} Новостей)",
+	'name' =>  __('telegram', $modVars['title'] . ' (%count% {0}0 Новостей|{1}1 Новость|{2}%count% Новости|]4,Inf[%count% Новостей)', [], $cron_post->count()),
 	'url' => $links['cron']['href'],
 ];
 
