@@ -29,177 +29,177 @@ $dependencies = [
 	[
 		'source' => '',
 		'name' => '',
-		'value' => _('-- выбираем, не стесняемся --')
+		'value' => __('telegram', '-- выбираем, не стесняемся --')
 	],
 	[
 		'source' => 'post',
 		'name' => 'autor',
-		'value' => _('Автор')
+		'value' => __('telegram', 'Автор')
 	],
 	[
 		'source' => 'post',
 		'name' => 'title',
-		'value' => _('Заголовок'),
+		'value' => __('telegram', 'Заголовок'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'date',
-		'value' => _('Дата'),
+		'value' => __('telegram', 'Дата'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'short_story',
-		'value' => _('Короткое содержание'),
+		'value' => __('telegram', 'Короткое содержание'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'full_story',
-		'value' => _('Полное содержание'),
+		'value' => __('telegram', 'Полное содержание'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'descr',
-		'value' => _('Описание'),
+		'value' => __('telegram', 'Описание'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'alt_name',
-		'value' => _('ЧПУ Имя'),
+		'value' => __('telegram', 'ЧПУ Имя'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'comm_num',
-		'value' => _('Кол-во комментариев'),
+		'value' => __('telegram', 'Кол-во комментариев'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'allow_comm',
-		'value' => _('Разрешеить комментарии'),
+		'value' => __('telegram', 'Разрешить комментарии'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'allow_main',
-		'value' => _('Вывод на главной'),
+		'value' => __('telegram', 'Вывод на главной'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'approve',
-		'value' => _('Проверено'),
+		'value' => __('telegram', 'Проверено'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'fixed',
-		'value' => _('Фиксированная новость'),
+		'value' => __('telegram', 'Фиксированная новость'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'allow_br',
-		'value' => _('Разрешить перенос строк'),
+		'value' => __('telegram', 'Разрешить перенос строк'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'symbol',
-		'value' => _('Символ'),
+		'value' => __('telegram', 'Символ'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'tags',
-		'value' => _('Теги'),
+		'value' => __('telegram', 'Теги'),
 	],
 	[
 		'source' => 'post',
 		'name' => 'metatitle',
-		'value' => _('Метазаголовок'),
+		'value' => __('telegram', 'Метазаголовок'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'news_read',
-		'value' => _('Кол-во прочтений'),
+		'value' => __('telegram', 'Кол-во прочтений'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'allow_rate',
-		'value' => _('Разрешить рейтинг'),
+		'value' => __('telegram', 'Разрешить рейтинг'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'rating',
-		'value' => _('Рейтинг'),
+		'value' => __('telegram', 'Рейтинг'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'vote_num',
-		'value' => _('ID Опроса'),
+		'value' => __('telegram', 'ID Опроса'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'votes',
-		'value' => _('Кол-во голосов'),
+		'value' => __('telegram', 'Кол-во голосов'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'view_edit',
-		'value' => _('view_edit'),
+		'value' => __('telegram', 'view_edit'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'disable_index',
-		'value' => _('Запретить индексировние'),
+		'value' => __('telegram', 'Запретить индексировние'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'related_ids',
-		'value' => _('Похожие новости'),
+		'value' => __('telegram', 'Похожие новости'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'access',
-		'value' => _('Доступ'),
+		'value' => __('telegram', 'Доступ'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'editdate',
-		'value' => _('Время редактирования'),
+		'value' => __('telegram', 'Время редактирования'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'editor',
-		'value' => _('Редактор'),
+		'value' => __('telegram', 'Редактор'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'reason',
-		'value' => _('Причина'),
+		'value' => __('telegram', 'Причина'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'user_id',
-		'value' => _('ID автора'),
+		'value' => __('telegram', 'ID автора'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'disable_search',
-		'value' => _('Исключить из поиска'),
+		'value' => __('telegram', 'Исключить из поиска'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'need_pass',
-		'value' => _('Нужен пароль'),
+		'value' => __('telegram', 'Нужен пароль'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'allow_rss',
-		'value' => _('Разрешить вывод в RSS-ленту'),
+		'value' => __('telegram', 'Разрешить вывод в RSS-ленту'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'allow_rss_turbo',
-		'value' => _('Разрешить вывод в Турбо-ленту'),
+		'value' => __('telegram', 'Разрешить вывод в Турбо-ленту'),
 	],
 	[
 		'source' => 'post_extras',
 		'name' => 'allow_rss_dzen',
-		'value' => _('Разрешить Дзен'),
+		'value' => __('telegram', 'Разрешить Дзен'),
 	],
 ];
 
@@ -222,7 +222,7 @@ foreach ($xfields as $id => $xf) {
 $dependencies[] = [
 	'source' => 'other',
 	'name' => '',
-	'value' => _('Прочее'),
+	'value' => __('telegram', 'Прочее'),
 ];
 
 $modVars = [
