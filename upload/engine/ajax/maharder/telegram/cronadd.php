@@ -30,7 +30,6 @@ if($config['http_home_url'] == "") {
 
 require_once(DLEPlugins::Check(ENGINE_DIR . '/classes/mysql.php'));
 require_once(DLEPlugins::Check(ENGINE_DIR . '/data/dbconfig.php'));
-require_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/models/Cron.php'));
 include_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/helpers/sender.php'));
 
 if($tg_config['onof'] && $tg_config['cron']) {
