@@ -8,6 +8,7 @@
 //	===============================
 //	Ничего не менять
 //	===============================
+global $MHDB;
 @error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
 @ini_set('display_errors', true);
 @ini_set('html_errors', false);
@@ -30,6 +31,7 @@ if($config['http_home_url'] == "") {
 
 require_once(DLEPlugins::Check(ENGINE_DIR . '/classes/mysql.php'));
 require_once(DLEPlugins::Check(ENGINE_DIR . '/data/dbconfig.php'));
+require_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/_models/Cron.php'));
 include_once(DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/helpers/sender.php'));
 
 if($tg_config['onof'] && $tg_config['cron']) {
@@ -37,14 +39,13 @@ if($tg_config['onof'] && $tg_config['cron']) {
 	if(empty($tg_config['cron_news'])) $tg_config['cron_news'] = 0;
 	if(empty($tg_config['cron_waittime']) || !(int)$tg_config['cron_waittime']) $tg_config['cron_waittime'] = 5;
 
-	$cron = new TgCron();
-	if($cron->count() <= 0) return;
+	if($MHDB->count(TgCron::class) <= 0) return;
 
-	$cron_all = $cron->getAll();
+	$cron_all = $MHDB->repository(TgCron::class)->findAll();
 
 	$round = 0;
 	foreach($cron_all as $c) {
-		$news_time = (new DateTime())::createFromFormat('Y-m-d H:i:s', $c['time'])->getTimestamp();
+		$news_time = (new DateTime())::createFromFormat('Y-m-d H:i:s', $c['time']->format('Y-m-d H:i:s'))->getTimestamp();
 		if(empty($tg_config['cron_time'])) $tg_config['cron_time'] = 0;
 		$cron_time = $tg_config['cron_time'] * 60;
 		$news_time += $cron_time;
@@ -57,15 +58,16 @@ if($tg_config['onof'] && $tg_config['cron']) {
 			$message = json_decode($telegram->sendMessage(), true);
 
 			if($message['ok']) {
-				$cron->delete($c[$cron->getTableId()]);
+				$MHDB->delete(TgCron::class, $c['id']);
 
 				$round++;
 				if($round >= $tg_config['cron_news']) break;
 			} else {
-				if($tg_config['cron_autodelete']) $cron->delete($c[$cron->getTableId()]);
+				if($tg_config['cron_autodelete']) $MHDB->delete(TgCron::class, $c['id']);
+
 			}
 
-			$cron->clear_cache($cron->getTableName());
+			CacheControl::clearCache(TgCron::class);
 
 			sleep($tg_config['cron_waittime']);
 		}
