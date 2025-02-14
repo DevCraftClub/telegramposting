@@ -12,6 +12,7 @@
 // Do not change anything!
 //===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===  ===
 
+global $MHDB;
 if(!defined('DATALIFEENGINE')) {
 	header('HTTP/1.1 403 Forbidden');
 	header('Location: ../../../../');
@@ -43,7 +44,7 @@ if(!function_exists('sendMessage')) {
 	function sendMessage($url) {
 		global $mh_admin;
 
-		$telebot = $mh_admin->getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
+		$telebot = DataManager::getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
 
 		if($telebot['proxy']) $proxy = $telebot['proxyip'] . ':' . $telebot['proxyport'];
 		if($telebot['proxytype'] == "socks") $proxy = "socks5://" . $proxy;
@@ -63,76 +64,76 @@ if(!function_exists('sendMessage')) {
 	}
 }
 
-include_once DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/models/Cron.php');
 
 switch($method) {
 	case 'send_cron_data':
 
-		include_once DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/telegram/classes/telegram.class.php');
+		include_once DLEPlugins::Check(MH_MODULES . '/classes/telegram.class.php');
 
 		$telegram = new Telegram($_data['news_id'], "cron_{$_data['type']}");
 		$message = json_decode($telegram->sendMessage(), true);
-		$cron = new TgCron();
 
 		if($message['ok']) {
-			echo json_encode($cron->delete($_data['cron_id']), JSON_UNESCAPED_UNICODE);
+			try {
+				$MHDB->delete(TgCron::class, $_data['cron_id']);
+				echo (new SuccessResponseAjax(203))->setData(__('Запись удалена!'))->send();
+			} catch (Exception|Throwable $e) {
+				echo (new ErrorResponseAjax())->setData($e->getMessage())->send();
+			}
 		} else {
-			echo json_encode(['success' => false, 'message' => $message['message']]);
+			echo json_encode(['success' => false, 'message' => $message['message'] ?? $message['description']]);
 		}
 
-		$mh_admin->clear_cache($cron->getTableName());
+		CacheControl::clearCache(TgCron::class);
 
 		break;
 
 	case 'delete_cron_data':
 
-		$cron = new TgCron();
+		try {
+			$MHDB->delete(TgCron::class, $_data['cron_id']);
+			echo (new SuccessResponseAjax(203))->setData(__('Запись удалена!'))->send();
+		} catch (Exception|Throwable $e) {
+			echo (new ErrorResponseAjax())->setData($e->getMessage())->send();
+		}
 
 		$mh_admin->clear_cache();
-
-		echo json_encode($cron->delete($_data['cron_id']), JSON_UNESCAPED_UNICODE);
 
 		break;
 
 	case 'save_cron_data':
 
-		$cron = new TgCron();
-		$update_cron = $cron->update($_data['cron_id'], [
-			'news_id' => $_data['news_id'], 'time' => $_data['time'], 'type' => $_data['type'],
-		]);
-		$post = $mh_admin->load_data('Post', [
-			'table' => 'post', 'selects' => ['id', 'title'], 'where' => [
-				'id' => $_data['news_id'],
-			]
-		])[0];
+		try {
+			$cron = $MHDB->get(TgCron::class, $_data['cron_id']);
+			$cron->news_id = $_data['news_id'];
+			$cron->time = new DateTimeImmutable($_data['time']);
+			$cron->type = $_data['type'];
 
-		$update_cron['data'] = array_merge($update_cron['data'], $post);
+			$MHDB->update($cron);
+			echo (new SuccessResponseAjax(201))->setData(__('Запись успешно сохранена!'))->setMeta((array) $cron)->send();
+		} catch (Exception|Throwable $e) {
+			echo (new ErrorResponseAjax())->setData($e->getMessage())->send();
 
-		$mh_admin->clear_cache($cron->getTableName());
+		}
 
-		echo json_encode($update_cron, JSON_UNESCAPED_UNICODE);
+		CacheControl::clearCache(TgCron::class);
 
 		break;
 
 	case 'cron_new_entry':
 
-		$cron = new TgCron();
-		$new_cron = $cron->create([
-			                          'news_id' => $_data['news_id'], 'time' => $_data['time'],
-			                          'type'    => $_data['type'],
-		                          ]);
-		$post = $mh_admin->load_data('Post', [
-			'table' => 'post', 'selects' => ['id', 'title'], 'where' => [
-				'id' => $_data['news_id'],
-			]
-		])[0];
+		try {
+			$cron          = new TgCron();
+			$cron->news_id = $_data['news_id'];
+			$cron->time    = new DateTimeImmutable($_data['time']);
+			$cron->type    = $_data['type'];
 
-		$new_cron = array_merge($new_cron, $post);
+			$MHDB->create($cron);
 
-		$mh_admin->clear_cache($cron->getTableName());
-
-		echo json_encode($new_cron, JSON_UNESCAPED_UNICODE);
-
+			echo (new SuccessResponseAjax())->setData(__('Запись успешно создана!'))->setMeta((array) $cron)->send();
+		} catch (Exception|Throwable $e) {
+			echo (new ErrorResponseAjax())->setData($e->getMessage())->send();
+		}
 		break;
 
 	case 'get_news':
@@ -178,15 +179,8 @@ HTML;
 		break;
 
 	case 'settings':
-		if(!mkdir($concurrentDirectory = ENGINE_DIR . '/inc/maharder/_config', 0777, true)
-		   && !is_dir(
-				$concurrentDirectory
-			)) {
-			$mh_admin->generate_log(
-				'telegram', 'settings[Сохранение настроек]', sprintf('Папка "%s" не была создана', $concurrentDirectory)
-			);
-		}
-		$file = $concurrentDirectory . '/' . $_POST['module'] . '.json';
+
+		$file = MH_CONFIG . '/' . $_POST['module'] . '.json';
 
 
 		if(empty($_data['list_count']) || !isset($_data['list_count'])) {
