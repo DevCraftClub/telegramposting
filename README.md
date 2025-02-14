@@ -1,13 +1,9 @@
-[![GitHub issues](https://img.shields.io/github/issues/Gokujo/telegramposting.svg?style=flat-square)](https://github.com/Gokujo/telegramposting/issues)
-[![GitHub forks](https://img.shields.io/github/forks/Gokujo/telegramposting.svg?style=flat-square)](https://github.com/Gokujo/telegramposting/network)
+[![GitHub issues](https://img.shields.io/github/issues/DevCraftClub/dle_faker.svg?style=flat-square)](https://github.com/DevCraftClub/telegramposting/issues)[![GitHub forks](https://img.shields.io/github/forks/DevCraftClub/telegramposting.svg?style=flat-square)](https://github.com/DevCraftClub/telegramposting/network)[![GitHub license](https://img.shields.io/github/license/DevCraftClub/telegramposting.svg?style=flat-square)](https://github.com/DevCraftClub/telegramposting/blob/master/LICENSE)
+# DLE Faker
 
-![DLE-11.x](https://img.shields.io/badge/DLE-11.x-red.svg?style=flat-square)
-![DLE-12.x](https://img.shields.io/badge/DLE-12.x-red.svg?style=flat-square)
-![DLE-13.x](https://img.shields.io/badge/DLE-13.x-red.svg?style=flat-square)
-![DLE-14.x](https://img.shields.io/badge/DLE-14.x-red.svg?style=flat-square)
-![DLE-15.x](https://img.shields.io/badge/DLE-15.x-green.svg?style=flat-square)
+![Текущая версия](https://img.shields.io/github/manifest-json/v/DevCraftClub/telegramposting/master?style=for-the-badge&label=%D0%92%D0%B5%D1%80%D1%81%D0%B8%D1%8F)![Статус разработки](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FDevCraftClub%2Ftelegramposting%2Frefs%2Fheads%2Fmaster%2Fmanifest.json&query=%24.status&style=for-the-badge&label=%D0%A1%D1%82%D0%B0%D1%82%D1%83%D1%81&color=orange)
 
-![Версия_релиза](https://img.shields.io/github/manifest-json/v/Gokujo/telegramposting?filename=manifest.json&style=flat-square)
+![Версия DLE](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FDevCraftClub%2Ftelegramposting%2Frefs%2Fheads%2Fmaster%2Fmanifest.json&query=%24.dle&style=for-the-badge&label=DLE)![Версия PHP](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FDevCraftClub%2Ftelegramposting%2Frefs%2Fheads%2Fmaster%2Fmanifest.json&query=%24.php&style=for-the-badge&logo=php&logoColor=777BB4&label=PHP&color=777BB4)![Версия MHAdmin](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FDevCraftClub%2Ftelegramposting%2Frefs%2Fheads%2Fmaster%2Fmanifest.json&query=%24.mhadmin&style=for-the-badge&label=MH-ADMIN&color=red)
 
 # Telegram Posting
 Отправка сообщений в телеграм при отправке новостей на сайте

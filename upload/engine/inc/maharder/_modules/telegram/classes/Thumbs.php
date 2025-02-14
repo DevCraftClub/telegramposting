@@ -4,11 +4,11 @@ class Thumbs {
 	public function __construct($filename) {
 		$this->filename = $filename;
 		if(empty($this->filename)) {
-			throw new Exception('Файл не найден');
+			LogGenerator::generateLog('Thumbs', 'construct', __('Файл не найден'));
 		} else {
 			$info = getimagesize($this->filename);
 			if(empty($info)) {
-				throw new Exception('Файл не найден');
+				LogGenerator::generateLog('Thumbs', 'construct', __('Файл не найден'));
 			} else {
 				$this->width = $info[0];
 				$this->height = $info[1];
@@ -29,7 +29,7 @@ class Thumbs {
 						$this->img = imageCreatefromWebp($this->filename);
 						break;
 					default:
-						throw new Exception('Формат файла не подерживается');
+						LogGenerator::generateLog('Thumbs', 'construct', __('Формат файла (:type) не подерживается', [':type' => $this->type]));
 						break;
 				}
 			}
@@ -104,7 +104,7 @@ class Thumbs {
 	 */
 	public function reduce($max_width, $max_height) {
 		if(empty($max_width) && empty($max_height)) {
-			throw new Exception('Не указан размер изображения');
+			LogGenerator::generateLog('Thumbs', 'reduce', __('Не указан размер изображения'));
 		} elseif(empty($max_width)) {
 			$max_width = ceil($max_height / ($this->height / $this->width));
 		} elseif(empty($max_height)) {
@@ -351,10 +351,10 @@ class Thumbs {
 					$left_rgb = imagecolorsforindex($tmp, $left_color);
 
 					if(!empty($top_rgb['alpha']) && !empty($top_rgb['alpha']) && !empty($top_rgb['alpha'])
-					   && !empty($top_rgb['alpha'])) {
+						&& !empty($top_rgb['alpha'])) {
 						$top_defined = $right_defined = $bottom_defined = $left_defined = true;
 					} elseif(empty($top_rgb['alpha']) || empty($top_rgb['alpha']) || empty($top_rgb['alpha'])
-					         || empty($top_rgb['alpha'])) {
+						|| empty($top_rgb['alpha'])) {
 						if($top_defined && $bottom_defined && $left_defined == false && $right_defined == false) {
 							if($th < $height) {
 								imagefilledrectangle($tmp, 0, 0, $width - 1, $height / 2, $top_color);
@@ -452,8 +452,8 @@ class Thumbs {
 						$seze = [$width - $tw, $height - $th, $width, $th];
 					}
 				} elseif($top_defined && $right_defined == false && $bottom_defined && $left_defined
-				         && ($top_color == $bottom_color
-				             && $bottom_color == $left_color)) {
+					&& ($top_color == $bottom_color
+						&& $bottom_color == $left_color)) {
 					// right
 					if($width >= $this->width && $height >= $this->height) {
 						$seze = [
@@ -583,11 +583,11 @@ class Thumbs {
 
 	public function watermark($file, $position = 'center', $transparency = 1) {
 		if(empty($file)) {
-			throw new Exception('Файл маски не найден');
+			LogGenerator::generateLog('Thumbs', 'watermark', __('Файл маски не найден'));
 		} else {
 			$info = getimagesize($file);
 			if(empty($info)) {
-				throw new Exception('Файл маски не найден');
+				LogGenerator::generateLog('Thumbs', 'watermark', __('Файл маски не найден'));
 			} else {
 				switch($info[2]) {
 					case 1:
@@ -611,7 +611,7 @@ class Thumbs {
 						$dest = imageCreatefromWebp($file);
 						break;
 					default:
-						throw new Exception('Формат файла маски не подерживается');
+						LogGenerator::generateLog('Thumbs', 'watermark', __('Формат файла (:format) маски не поддерживается', [':format' => $info[2]]));
 						break;
 				}
 

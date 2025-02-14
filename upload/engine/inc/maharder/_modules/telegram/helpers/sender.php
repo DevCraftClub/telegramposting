@@ -2,13 +2,12 @@
 
 if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 
-require_once (DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php'));
 
 $mh_data = new MhAjax();
-$tg_config = $mh_data->getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
+$tg_config = DataManager::getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
 
 function sendTelegram($id, $type = 'addnews') {
-	global $tg_config, $_TIME;
+	global $tg_config, $_TIME, $MHDB;
 
 	$news_id = (int) $id;
 	if(!$news_id) return;
@@ -19,11 +18,12 @@ function sendTelegram($id, $type = 'addnews') {
 
 		if($tg_config['cron']) {
 			$cron = new TgCron();
-			$cron->create([
-				              'news_id' => $news_id,
-				              'type' => $type,
-				              'time' => date( 'Y-m-d H:i:s', $_TIME )
-			              ]);
+
+			$cron->news_id = $news_id;
+			$cron->type = $type;
+			$cron->time = new DateTimeImmutable();
+
+			$MHDB->create($cron);
 		} else {
 			$telegram = new Telegram($news_id, $type);
 			$telegram->sendMessage();

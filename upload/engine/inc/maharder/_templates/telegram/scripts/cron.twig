@@ -3,7 +3,12 @@
 
         var news_obj = [];
 
-        function tableEntry(id, news_id, title, type, time) {
+        function tableEntry(id, news_id, type, time) {
+			console.info('id: ' + id);
+			console.info('news_id: ' + news_id);
+			console.info('type: ' + type);
+			console.info('time: ' + time);
+
             return `
                 <tr id="c-${id}" data-id="${id}" data-news_id="${news_id}">
 					<td>
@@ -11,10 +16,10 @@
 							<input type="checkbox" name="cron[]" value="${id}">
 						</div>
 					</td>
-					<td>${id}</td>
-					<td data-name="title">${title}</td>
+                    <td>${id}</td>
+					<td data-name="news_id">${news_id}</td>
 					<td data-name="type">${type}</td>
-					<td data-name="time">${time}</td>
+					<td data-name="time">${time.date}</td>
 					<td class="right aligned">
 						<div class='ui buttons'>
 								<a class='ui item' href="{{ dle_config.http_home_url }}{{ dle_config.admin_path }}?mod=editnews&action=editnews&id=${news_id}" target="_blank">
@@ -39,7 +44,6 @@
         }
 
         function prepareNews(selected = 0) {
-
             let obj = [];
 
             for (let i = 0, max = news_obj.length; i < max; i++) {
@@ -77,8 +81,8 @@
                 '</select>' +
                 '<label for="new_type">{% trans %}Тип{% endtrans %}</label>\n' +
                 '<select id="new_type" name="new_type" class="ui dropdown" required>\n' +
-                '<option value="addnews" ' + ((type === 'addnews') ? 'selected' : '') + '>Как новую новость</option>' +
-                '<option value="editnews" ' + ((type === 'editnews') ? 'selected' : '') + '>Как отредактированную новость</option>' +
+                '<option value="addnews" ' + ((type === 'addnews') ? 'selected' : '') + '>{% trans %}Как новую новость{% endtrans %}</option>' +
+                '<option value="editnews" ' + ((type === 'editnews') ? 'selected' : '') + '>{% trans %}Как отредактированную новость{% endtrans %}</option>' +
                 '</select>' +
                 '</div>' +
                 '<div class="field">\n' +
@@ -114,7 +118,7 @@
                                     showProgress: 'bottom',
                                     classProgress: 'blue',
                                     class: 'error',
-                                    message: 'Ошибка при парсинге новостей! Подробности в консоли!'
+                                    message: __('Ошибка при парсинге новостей! Подробности в консоли!')
                                 })
                             ;
                         }
@@ -144,19 +148,19 @@
                     case 'new':
                         getNews();
                         $.confirm({
-                            title: '{% trans %}Добавить новость{% endtrans %}',
+                            title: __('Добавить новость'),
                             theme: 'supervan',
                             useBootstrap: false,
                             content: cronForm(new Date().getTime()),
                             buttons: {
                                 spreichern: {
-                                    text: 'Сохранить',
+                                    text: __('Сохранить'),
                                     btnClass: 'ui button green',
                                     keys: ['enter'],
                                     action: function () {
                                         let new_news = $('#new_news').val(), new_time = $('#new_time').val(),
                                             new_type = $('#new_type').val();
-                                        $.ajax({
+                                        sendAjaxRequest({
                                             url: 'engine/ajax/controller.php?mod=maharder',
                                             data: {
                                                 user_hash: '{{ dle_login_hash }}',
@@ -169,42 +173,16 @@
                                                     type: new_type,
                                                 }
                                             },
-                                            type: 'POST',
-                                            success: function (data) {
-                                                try {
-                                                    data = JSON.parse(data);
-                                                } catch (e) {
-                                                    if (typeof (data) != 'object') {
-                                                        console.log(data);
-                                                        $('body')
-                                                            .toast({
-                                                                displayTime: 'auto',
-                                                                showProgress: 'bottom',
-                                                                classProgress: 'white',
-                                                                class: 'error',
-                                                                message: 'Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!'
-                                                            })
-                                                        ;
-                                                    }
-                                                }
-                                                console.log(data);
-                                                $('[data-id="cron_data"]').append(tableEntry(data.cron_id, data.news_id, data.title, data.type, data.time));
-                                                $('body')
-                                                    .toast({
-                                                        displayTime: 'auto',
-                                                        showProgress: 'bottom',
-                                                        classProgress: 'white',
-                                                        class: 'success',
-                                                        message: 'Страна была успешно добавлена!'
-                                                    })
-                                                ;
+                                            successCallback: function (data) {
+												console.log(data)
+                                                $('[data-id="cron_data"]').append(tableEntry(data.meta.id, data.meta.news_id, data.meta.type, data.meta.time));
                                             }
                                         });
                                         hideLoading();
                                     }
                                 },
                                 abbrechen: {
-                                    text: 'Отмена',
+                                    text: __('Отмена'),
                                     btnClass: 'ui button red',
                                     keys: ['esc'],
                                     action: function () {
@@ -223,13 +201,13 @@
                             content: cronForm(time, type, news_id, id),
                             buttons: {
                                 spreichern: {
-                                    text: 'Сохранить',
+                                    text: __('Сохранить'),
                                     btnClass: 'ui button green',
                                     keys: ['enter'],
                                     action: function () {
                                         let new_news = $('#new_news').val(), new_time = $('#new_time').val(),
                                             new_type = $('#new_type').val(), id = $('#form_id').val();
-                                        $.ajax({
+                                        sendAjaxRequest({
                                             url: 'engine/ajax/controller.php?mod=maharder',
                                             data: {
                                                 user_hash: '{{ dle_login_hash }}',
@@ -243,52 +221,33 @@
                                                     cron_id: id
                                                 }
                                             },
-                                            type: 'POST',
-                                            success: function (data) {
-                                                try {
-                                                    data = JSON.parse(data);
-                                                } catch (e) {
-                                                    if (typeof (data) != 'object') {
-                                                        console.log(data);
-                                                        $('body')
-                                                            .toast({
-                                                                displayTime: 'auto',
-                                                                showProgress: 'bottom',
-                                                                classProgress: 'white',
-                                                                class: 'error',
-                                                                message: 'Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!'
-                                                            })
-                                                        ;
-                                                    }
-                                                }
-
+                                            successCallback: function (data) {
                                                 let
                                                     entry = $(document).find('#c-' + id).first(),
-                                                    title = $(entry).find('[data-name="title"]').first(),
+                                                    title = $(entry).find('[data-name="news_id"]').first(),
                                                     type = $(entry).find('[data-name="type"]').first(),
                                                     time = $(entry).find('[data-name="time"]').first()
                                                 ;
 
-                                                $(title).html(`#${data.data.news_id}: ${data.data.title}`);
-                                                $(type).html(data.data.type);
-                                                $(time).html(data.data.time);
+                                                $(title).html(data.meta.news_id);
+                                                $(type).html(data.meta.type);
+                                                $(time).html(data.meta.time);
                                                 $('body')
                                                     .toast({
                                                         displayTime: 'auto',
                                                         showProgress: 'top',
                                                         classProgress: 'white',
                                                         class: 'success',
-                                                        message: 'Отправление было успешно изменено!'
+                                                        message: __('Отправление было успешно изменено!')
                                                     })
                                                 ;
                                             }
                                         });
 
-                                        hideLoading();
                                     }
                                 },
                                 abbrechen: {
-                                    text: 'Отмена',
+                                    text: __('Отмена'),
                                     btnClass: 'ui button red',
                                     keys: ['esc'],
                                     action: function () {
@@ -304,14 +263,14 @@
                             title: '{% trans %}Удалить: {% endtrans %}' + title,
                             theme: 'supervan',
                             useBootstrap: false,
-                            content: "После удаления, данные будет не возможно вернуть!",
+                            content: __("После удаления, данные будет не возможно вернуть!"),
                             buttons: {
                                 delete: {
-                                    text: 'Удалить',
+                                    text: __('Удалить'),
                                     btnClass: 'ui button green',
                                     keys: ['enter'],
                                     action: function () {
-                                        $.ajax({
+                                        sendAjaxRequest({
                                             url: 'engine/ajax/controller.php?mod=maharder',
                                             data: {
                                                 user_hash: '{{ dle_login_hash }}',
@@ -322,56 +281,11 @@
                                                     cron_id: id
                                                 }
                                             },
-                                            type: 'POST',
-                                            success: function (data) {
-                                                try {
-                                                    data = JSON.parse(data);
-                                                } catch (e) {
-                                                    if (typeof (data) != 'object') {
-                                                        console.log(data);
-                                                        $('body')
-                                                            .toast({
-                                                                displayTime: 'auto',
-                                                                showProgress: 'bottom',
-                                                                classProgress: 'white',
-                                                                class: 'error',
-                                                                message: 'Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!'
-                                                            })
-                                                        ;
-                                                    }
-                                                }
-
-                                                if (data.success) {
-                                                    $(parent).remove();
-                                                    $('body')
-                                                        .toast({
-                                                            displayTime: 'auto',
-                                                            showProgress: 'top',
-                                                            classProgress: 'white',
-                                                            class: 'success',
-                                                            message: 'Отправление было успешно удалено!'
-                                                        })
-                                                    ;
-                                                } else {
-                                                    console.log(data);
-                                                    $('body')
-                                                        .toast({
-                                                            displayTime: 'auto',
-                                                            showProgress: 'bottom',
-                                                            classProgress: 'white',
-                                                            class: 'error',
-                                                            message: 'Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!'
-                                                        })
-                                                    ;
-                                                }
-                                            }
                                         });
-
-                                        hideLoading();
                                     }
                                 },
                                 abbrechen: {
-                                    text: 'Отмена',
+                                    text: __('Отмена'),
                                     btnClass: 'ui button red',
                                     keys: ['esc'],
                                     action: function () {
@@ -384,13 +298,13 @@
 
                     case 'send':
                         $.confirm({
-                            title: '{% trans %}Отправить в телеграм: {% endtrans %}' + title,
+                            title: __('Отправить в телеграм: ') + title,
                             theme: 'supervan',
                             useBootstrap: false,
-                            content: "Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!",
+                            content: __("Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!"),
                             buttons: {
                                 send: {
-                                    text: 'Отправить',
+                                    text: __('Отправить'),
                                     btnClass: 'ui button green',
                                     keys: ['enter'],
                                     action: function () {
@@ -420,7 +334,7 @@
                                                                 showProgress: 'bottom',
                                                                 classProgress: 'white',
                                                                 class: 'error',
-                                                                message: 'Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!'
+                                                                message: __('Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!')
                                                             })
                                                         ;
                                                     }
@@ -434,7 +348,7 @@
                                                             showProgress: 'top',
                                                             classProgress: 'white',
                                                             class: 'success',
-                                                            message: 'Новость была успешно отправлена в телеграм!'
+                                                            message: __('Новость была успешно отправлена в телеграм!')
                                                         })
                                                     ;
                                                 } else {
@@ -445,7 +359,7 @@
                                                             showProgress: 'bottom',
                                                             classProgress: 'white',
                                                             class: 'error',
-                                                            message: 'Новость не могла быть обработана!<br><b>Причина</b>: ' + data.message
+                                                            message: __('Новость не могла быть обработана!<br><b>Причина</b>: ') + data.message
                                                         })
                                                     ;
                                                 }
@@ -456,7 +370,7 @@
                                     }
                                 },
                                 abbrechen: {
-                                    text: 'Отмена',
+                                    text: __('Отмена'),
                                     btnClass: 'ui button red',
                                     keys: ['esc'],
                                     action: function () {
@@ -469,56 +383,6 @@
                 }
             });
 
-            $('table .checkbox').checkbox({
-                debug: true,
-                onChange: function () {
-                    let
-                        $parentCheckBox = $('#crons'),
-                        $childCheckbox = $parentCheckBox.parents('table').find('tbody').first().find('.checkbox'),
-                        parentChecked = $parentCheckBox.parent().hasClass('checked'),
-                        allChecked = false,
-                        allUnchecked = true
-                    ;
-
-                    if (!parentChecked) {
-                        $parentCheckBox.checkbox('uncheck');
-                        $childCheckbox.checkbox('uncheck');
-                        $parentCheckBox.checkbox('set unchecked');
-                        $childCheckbox.checkbox('set unchecked');
-                    } else {
-                        $parentCheckBox.checkbox('check');
-                        $childCheckbox.checkbox('check');
-                        $parentCheckBox.checkbox('set checked');
-                        $childCheckbox.checkbox('set checked');
-                    }
-
-                    $childCheckbox.each(function () {
-                        if ($(this).parent().hasClass('checked')) {
-                            allUnchecked = false;
-                        } else {
-                            allChecked = false;
-                        }
-                    });
-
-                    if (allChecked) {
-                        $parentCheckBox.checkbox('set checked');
-                        $parentCheckBox.checkbox('check');
-                    } else if (allUnchecked) {
-                        $parentCheckBox.checkbox('set unchecked');
-                        $parentCheckBox.checkbox('uncheck');
-                    } else {
-                        $parentCheckBox.checkbox('set indeterminate');
-                        $parentCheckBox.checkbox('indeterminate');
-                    }
-
-                    console.table({
-                        allUnchecked: allUnchecked,
-                        allChecked: allChecked,
-                        parentCheckBox: $parentCheckBox,
-                        childCheckbox: $childCheckbox
-                    })
-                }
-            });
 
             getNews();
         });
