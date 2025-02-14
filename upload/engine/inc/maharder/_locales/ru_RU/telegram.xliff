@@ -8,10 +8,6 @@
 				<target>Отложенный постинг</target>
 			</trans-unit>
 			<trans-unit>
-				<source>$modVars['title'] . ' (%count% {0}0 Новостей|{1}1 Новость|{2}%count% Новости|]4,Inf[%count% Новостей)</source>
-				<target>$modVars['title'] . ' (%count% {0}0 Новостей|{1}1 Новость|{2}%count% Новости|]4,Inf[%count% Новостей)</target>
-			</trans-unit>
-			<trans-unit>
 				<source>-- выбираем, не стесняемся --</source>
 				<target>-- выбираем, не стесняемся --</target>
 			</trans-unit>
@@ -98,10 +94,6 @@
 			<trans-unit>
 				<source>Кол-во голосов</source>
 				<target>Кол-во голосов</target>
-			</trans-unit>
-			<trans-unit>
-				<source>view_edit</source>
-				<target>view_edit</target>
 			</trans-unit>
 			<trans-unit>
 				<source>Запретить индексировние</source>
