@@ -4,211 +4,211 @@
     <body>
       <trans-unit id="1">
         <source>Отложенный постинг</source>
-        <target state="needs-translation">Отложенный постинг</target>
+        <target state="translated">Відкладене публікування</target>
       </trans-unit>
       <trans-unit id="2">
         <source>-- выбираем, не стесняемся --</source>
-        <target state="needs-translation">-- выбираем, не стесняемся --</target>
+        <target state="translated">-- вибираємо, не соромимося --</target>
       </trans-unit>
       <trans-unit id="3">
         <source>Автор</source>
-        <target state="needs-translation">Автор</target>
+        <target state="translated">Автор</target>
       </trans-unit>
       <trans-unit id="4">
         <source>Заголовок</source>
-        <target state="needs-translation">Заголовок</target>
+        <target state="translated">Назва</target>
       </trans-unit>
       <trans-unit id="5">
         <source>Дата</source>
-        <target state="needs-translation">Дата</target>
+        <target state="translated">Дата</target>
       </trans-unit>
       <trans-unit id="6">
         <source>Короткое содержание</source>
-        <target state="needs-translation">Короткое содержание</target>
+        <target state="translated">Виключити з пошуку по сайту</target>
       </trans-unit>
       <trans-unit id="7">
         <source>Полное содержание</source>
-        <target state="needs-translation">Полное содержание</target>
+        <target state="translated">Використовувати в Яндекс Турбо</target>
       </trans-unit>
       <trans-unit id="8">
         <source>Описание</source>
-        <target state="needs-translation">Описание</target>
+        <target state="translated">Опис</target>
       </trans-unit>
       <trans-unit id="9">
         <source>ЧПУ Имя</source>
-        <target state="needs-translation">ЧПУ Имя</target>
+        <target state="translated">ЧПУ ім'я</target>
       </trans-unit>
       <trans-unit id="10">
         <source>Кол-во комментариев</source>
-        <target state="needs-translation">Кол-во комментариев</target>
+        <target state="translated">Кількість коментарів</target>
       </trans-unit>
       <trans-unit id="11">
         <source>Разрешить комментарии</source>
-        <target state="needs-translation">Разрешить комментарии</target>
+        <target state="translated">Вимкнути</target>
       </trans-unit>
       <trans-unit id="12">
         <source>Вывод на главной</source>
-        <target state="needs-translation">Вывод на главной</target>
+        <target state="translated">Вивід на головній</target>
       </trans-unit>
       <trans-unit id="13">
         <source>Проверено</source>
-        <target state="needs-translation">Проверено</target>
+        <target state="translated">Перевірено</target>
       </trans-unit>
       <trans-unit id="14">
         <source>Фиксированная новость</source>
-        <target state="needs-translation">Фиксированная новость</target>
+        <target state="translated">Фіксована новина</target>
       </trans-unit>
       <trans-unit id="15">
         <source>Разрешить перенос строк</source>
-        <target state="needs-translation">Разрешить перенос строк</target>
+        <target state="translated">Дозволити перенос рядків</target>
       </trans-unit>
       <trans-unit id="16">
         <source>Символ</source>
-        <target state="needs-translation">Символ</target>
+        <target state="translated">Символ</target>
       </trans-unit>
       <trans-unit id="17">
         <source>Теги</source>
-        <target state="needs-translation">Теги</target>
+        <target state="translated">Теги</target>
       </trans-unit>
       <trans-unit id="18">
         <source>Метазаголовок</source>
-        <target state="needs-translation">Метазаголовок</target>
+        <target state="translated">Мета-заголовок</target>
       </trans-unit>
       <trans-unit id="19">
         <source>Кол-во прочтений</source>
-        <target state="needs-translation">Кол-во прочтений</target>
+        <target state="translated">Кількість прочитань</target>
       </trans-unit>
       <trans-unit id="20">
         <source>Разрешить рейтинг</source>
-        <target state="needs-translation">Разрешить рейтинг</target>
+        <target state="translated">Дозволити рейтинг</target>
       </trans-unit>
       <trans-unit id="21">
         <source>Рейтинг</source>
-        <target state="needs-translation">Рейтинг</target>
+        <target state="translated">Рейтинг</target>
       </trans-unit>
       <trans-unit id="22">
         <source>ID Опроса</source>
-        <target state="needs-translation">ID Опроса</target>
+        <target state="translated">ID опитування</target>
       </trans-unit>
       <trans-unit id="23">
         <source>Кол-во голосов</source>
-        <target state="needs-translation">Кол-во голосов</target>
+        <target state="translated">Кількість голосів</target>
       </trans-unit>
       <trans-unit id="24">
         <source>Запретить индексировние</source>
-        <target state="needs-translation">Запретить индексировние</target>
+        <target state="translated">Заборонити індексацію</target>
       </trans-unit>
       <trans-unit id="25">
         <source>Похожие новости</source>
-        <target state="needs-translation">Похожие новости</target>
+        <target state="translated">Схожі новини</target>
       </trans-unit>
       <trans-unit id="26">
         <source>Доступ</source>
-        <target state="needs-translation">Доступ</target>
+        <target state="translated">Доступ</target>
       </trans-unit>
       <trans-unit id="27">
         <source>Время редактирования</source>
-        <target state="needs-translation">Время редактирования</target>
+        <target state="translated">Час редагування</target>
       </trans-unit>
       <trans-unit id="28">
         <source>Редактор</source>
-        <target state="needs-translation">Редактор</target>
+        <target state="translated">Редактор</target>
       </trans-unit>
       <trans-unit id="29">
         <source>Причина</source>
-        <target state="needs-translation">Причина</target>
+        <target state="translated">Причина</target>
       </trans-unit>
       <trans-unit id="30">
         <source>ID автора</source>
-        <target state="needs-translation">ID автора</target>
+        <target state="translated">ID автора</target>
       </trans-unit>
       <trans-unit id="31">
         <source>Исключить из поиска</source>
-        <target state="needs-translation">Исключить из поиска</target>
+        <target state="translated">Виключити з пошуку</target>
       </trans-unit>
       <trans-unit id="32">
         <source>Нужен пароль</source>
-        <target state="needs-translation">Нужен пароль</target>
+        <target state="translated">Потрібен пароль</target>
       </trans-unit>
       <trans-unit id="33">
         <source>Разрешить вывод в RSS-ленту</source>
-        <target state="needs-translation">Разрешить вывод в RSS-ленту</target>
+        <target state="translated">Дозволити вивід у RSS-стрічку</target>
       </trans-unit>
       <trans-unit id="34">
         <source>Разрешить вывод в Турбо-ленту</source>
-        <target state="needs-translation">Разрешить вывод в Турбо-ленту</target>
+        <target state="translated">Дозволити вивід у Турбо-стрічку</target>
       </trans-unit>
       <trans-unit id="35">
         <source>Разрешить Дзен</source>
-        <target state="needs-translation">Разрешить Дзен</target>
+        <target state="translated">Дозволити Дзен</target>
       </trans-unit>
       <trans-unit id="36">
         <source>Прочее</source>
-        <target state="needs-translation">Прочее</target>
+        <target state="translated">Інше</target>
       </trans-unit>
       <trans-unit id="37">
         <source>Название новости</source>
-        <target state="needs-translation">Название новости</target>
+        <target state="translated">Назва новини</target>
       </trans-unit>
       <trans-unit id="38">
         <source>Тип</source>
-        <target state="needs-translation">Тип</target>
+        <target state="translated">Тип</target>
       </trans-unit>
       <trans-unit id="39">
         <source>Дата добавления</source>
-        <target state="needs-translation">Дата добавления</target>
+        <target state="translated">Дата додавання</target>
       </trans-unit>
       <trans-unit id="40">
         <source>Действие</source>
-        <target state="needs-translation">Действие</target>
+        <target state="translated">Дія</target>
       </trans-unit>
       <trans-unit id="41">
         <source>Редактировать новость</source>
-        <target state="needs-translation">Редактировать новость</target>
+        <target state="translated">Редагувати новину</target>
       </trans-unit>
       <trans-unit id="42">
         <source>Открыть на сайте</source>
-        <target state="needs-translation">Открыть на сайте</target>
+        <target state="translated">Відкрити на сайті</target>
       </trans-unit>
       <trans-unit id="43">
         <source>Изменить дату</source>
-        <target state="needs-translation">Изменить дату</target>
+        <target state="translated">Змінити дату</target>
       </trans-unit>
       <trans-unit id="44">
         <source>Отправить в телеграм</source>
-        <target state="needs-translation">Отправить в телеграм</target>
+        <target state="translated">Надіслати в телеграм</target>
       </trans-unit>
       <trans-unit id="45">
         <source>Удалить</source>
-        <target state="needs-translation">Удалить</target>
+        <target state="translated">Видалити</target>
       </trans-unit>
       <trans-unit id="46">
         <source>Добавить новость в список</source>
-        <target state="needs-translation">Добавить новость в список</target>
+        <target state="translated">Додати новину до списку</target>
       </trans-unit>
       <trans-unit id="47">
         <source>Новость</source>
-        <target state="needs-translation">Новость</target>
+        <target state="translated">Новина</target>
       </trans-unit>
       <trans-unit id="48">
         <source>Время</source>
-        <target state="needs-translation">Время</target>
+        <target state="translated">Час</target>
       </trans-unit>
       <trans-unit id="49">
         <source>Добавить новость</source>
-        <target state="needs-translation">Добавить новость</target>
+        <target state="translated">Додати новину</target>
       </trans-unit>
       <trans-unit id="50">
         <source>Изменить: </source>
-        <target state="needs-translation">Изменить: </target>
+        <target state="translated">Шаблон було ввімкнено: </target>
       </trans-unit>
       <trans-unit id="51">
         <source>Удалить: </source>
-        <target state="needs-translation">Удалить: </target>
+        <target state="translated">Видалити: </target>
       </trans-unit>
       <trans-unit id="52">
         <source>Отправить в телеграм: </source>
-        <target state="needs-translation">Отправить в телеграм: </target>
+        <target state="translated">Надіслати в телеграм: </target>
       </trans-unit>
     </body>
   </file>
