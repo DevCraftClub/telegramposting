@@ -34,9 +34,9 @@
         <source>Описание</source>
         <target state="translated">Beschreibung</target>
       </trans-unit>
-      <trans-unit id="9">
+      <trans-unit id="9" approved="yes">
         <source>ЧПУ Имя</source>
-        <target state="translated">Slug-Name</target>
+        <target state="final">Slug-Name</target>
       </trans-unit>
       <trans-unit id="10">
         <source>Кол-во комментариев</source>
@@ -138,9 +138,9 @@
         <source>Разрешить вывод в Турбо-ленту</source>
         <target state="translated">Turbo-Feed-Ausgabe erlauben</target>
       </trans-unit>
-      <trans-unit id="35">
+      <trans-unit id="35" approved="yes">
         <source>Разрешить Дзен</source>
-        <target state="translated">Dzen erlauben</target>
+        <target state="final">Dzen erlauben</target>
       </trans-unit>
       <trans-unit id="36">
         <source>Прочее</source>
