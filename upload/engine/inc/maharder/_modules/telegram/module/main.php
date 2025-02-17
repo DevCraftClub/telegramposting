@@ -138,7 +138,7 @@ $dependencies = [
 	[
 		'source' => 'post_extras',
 		'name' => 'view_edit',
-		'value' => __('view_edit'),
+		'value' => 'view_edit',
 	],
 	[
 		'source' => 'post_extras',
