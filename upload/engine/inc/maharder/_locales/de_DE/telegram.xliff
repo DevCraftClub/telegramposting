@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="telegram.ru_RU" datatype="plaintext" source-language="ru" target-language="de">
+    <body>
+      <trans-unit id="1">
+        <source>Отложенный постинг</source>
+        <target state="translated">Verzögerte Veröffentlichung</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>-- выбираем, не стесняемся --</source>
+        <target state="translated">-- nicht scheu sein, auswählen --</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Автор</source>
+        <target state="translated">Autor</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>Заголовок</source>
+        <target state="translated">Titel</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Дата</source>
+        <target state="translated">Datum</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>Короткое содержание</source>
+        <target state="translated">Kurzfassung</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Полное содержание</source>
+        <target state="translated">Vollständiger Inhalt</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Описание</source>
+        <target state="translated">Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>ЧПУ Имя</source>
+        <target state="translated">Slug-Name</target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Кол-во комментариев</source>
+        <target state="translated">Anzahl der Kommentare</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Разрешить комментарии</source>
+        <target state="translated">Kommentare erlauben</target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Вывод на главной</source>
+        <target state="translated">Anzeige auf der Startseite</target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Проверено</source>
+        <target state="translated">Geprüft</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Фиксированная новость</source>
+        <target state="translated">Fixierte Nachricht</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>Разрешить перенос строк</source>
+        <target state="translated">Zeilenumbrüche erlauben</target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Символ</source>
+        <target state="translated">Symbol</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>Теги</source>
+        <target state="translated">Tags</target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>Метазаголовок</source>
+        <target state="translated">Meta-Titel</target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>Кол-во прочтений</source>
+        <target state="translated">Anzahl der Aufrufe</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Разрешить рейтинг</source>
+        <target state="translated">Bewertung erlauben</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>Рейтинг</source>
+        <target state="translated">Bewertung</target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>ID Опроса</source>
+        <target state="translated">Umfrage-ID</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Кол-во голосов</source>
+        <target state="translated">Anzahl der Stimmen</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Запретить индексировние</source>
+        <target state="translated">Indexierung verbieten</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Похожие новости</source>
+        <target state="translated">Ähnliche Nachrichten</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Доступ</source>
+        <target state="translated">Zugriff</target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>Время редактирования</source>
+        <target state="translated">Bearbeitungszeit</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Редактор</source>
+        <target state="translated">Editor</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>Причина</source>
+        <target state="translated">Grund</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>ID автора</source>
+        <target state="translated">Autor-ID</target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>Исключить из поиска</source>
+        <target state="translated">Von der Suche ausschließen</target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>Нужен пароль</source>
+        <target state="translated">Passwort erforderlich</target>
+      </trans-unit>
+      <trans-unit id="33">
+        <source>Разрешить вывод в RSS-ленту</source>
+        <target state="translated">RSS-Feed-Ausgabe erlauben</target>
+      </trans-unit>
+      <trans-unit id="34">
+        <source>Разрешить вывод в Турбо-ленту</source>
+        <target state="translated">Turbo-Feed-Ausgabe erlauben</target>
+      </trans-unit>
+      <trans-unit id="35">
+        <source>Разрешить Дзен</source>
+        <target state="translated">Dzen erlauben</target>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>Прочее</source>
+        <target state="translated">Sonstiges</target>
+      </trans-unit>
+      <trans-unit id="37">
+        <source>Название новости</source>
+        <target state="translated">Nachrichtenüberschrift</target>
+      </trans-unit>
+      <trans-unit id="38">
+        <source>Тип</source>
+        <target state="translated">Typ</target>
+      </trans-unit>
+      <trans-unit id="39">
+        <source>Дата добавления</source>
+        <target state="translated">Erstelldatum</target>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>Действие</source>
+        <target state="translated">Aktion</target>
+      </trans-unit>
+      <trans-unit id="41">
+        <source>Редактировать новость</source>
+        <target state="translated">Nachricht bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="42">
+        <source>Открыть на сайте</source>
+        <target state="translated">Auf der Seite öffnen</target>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>Изменить дату</source>
+        <target state="translated">Datum ändern</target>
+      </trans-unit>
+      <trans-unit id="44">
+        <source>Отправить в телеграм</source>
+        <target state="translated">An Telegramm senden</target>
+      </trans-unit>
+      <trans-unit id="45">
+        <source>Удалить</source>
+        <target state="translated">Löschen</target>
+      </trans-unit>
+      <trans-unit id="46">
+        <source>Добавить новость в список</source>
+        <target state="translated">Nachricht zur Liste hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="47">
+        <source>Новость</source>
+        <target state="translated">Nachricht</target>
+      </trans-unit>
+      <trans-unit id="48">
+        <source>Время</source>
+        <target state="translated">Zeit</target>
+      </trans-unit>
+      <trans-unit id="49">
+        <source>Добавить новость</source>
+        <target state="translated">Nachricht hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>Изменить: </source>
+        <target state="translated">Bearbeiten: </target>
+      </trans-unit>
+      <trans-unit id="51">
+        <source>Удалить: </source>
+        <target state="translated">Löschen: </target>
+      </trans-unit>
+      <trans-unit id="52">
+        <source>Отправить в телеграм: </source>
+        <target state="translated">An Telegramm senden: </target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
