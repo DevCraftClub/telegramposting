@@ -26,9 +26,9 @@
         <source>Короткое содержание</source>
         <target state="translated">Виключити з пошуку по сайту</target>
       </trans-unit>
-      <trans-unit id="7">
+      <trans-unit id="7" approved="yes">
         <source>Полное содержание</source>
-        <target state="translated">Використовувати в Яндекс Турбо</target>
+        <target state="final">Використовувати в Яндекс Турбо</target>
       </trans-unit>
       <trans-unit id="8">
         <source>Описание</source>
@@ -58,9 +58,9 @@
         <source>Фиксированная новость</source>
         <target state="translated">Фіксована новина</target>
       </trans-unit>
-      <trans-unit id="15">
+      <trans-unit id="15" approved="yes">
         <source>Разрешить перенос строк</source>
-        <target state="translated">Дозволити перенос рядків</target>
+        <target state="final">Дозволити перенос рядків</target>
       </trans-unit>
       <trans-unit id="16">
         <source>Символ</source>
@@ -70,9 +70,9 @@
         <source>Теги</source>
         <target state="translated">Теги</target>
       </trans-unit>
-      <trans-unit id="18">
+      <trans-unit id="18" approved="yes">
         <source>Метазаголовок</source>
-        <target state="translated">Мета-заголовок</target>
+        <target state="final">Мета-заголовок</target>
       </trans-unit>
       <trans-unit id="19">
         <source>Кол-во прочтений</source>
@@ -134,9 +134,9 @@
         <source>Разрешить вывод в RSS-ленту</source>
         <target state="translated">Дозволити вивід у RSS-стрічку</target>
       </trans-unit>
-      <trans-unit id="34">
+      <trans-unit id="34" approved="yes">
         <source>Разрешить вывод в Турбо-ленту</source>
-        <target state="translated">Дозволити вивід у Турбо-стрічку</target>
+        <target state="final">Дозволити вивід у Турбо-стрічку</target>
       </trans-unit>
       <trans-unit id="35">
         <source>Разрешить Дзен</source>
