@@ -2,27 +2,23 @@
 <dleplugin>
 	<name>Telegram Posting</name>
 	<description>Модуль будет отправлять сообщения в выбранный чат при помощи бота. Гибкие настройки позволят модулю отправлять лишь то, что вы хотите.</description>
-	<icon>engine/inc/maharder/admin/assets/img/telegram/icon.png</icon>
-	<version>1.7.6</version>
-	<dleversion>15.0</dleversion>
+	<icon>engine/inc/maharder/_modules/telegram/assets/icon.png</icon>
+	<version>173.8.0</version>
+	<dleversion>17.3</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
 	<filedelete>1</filedelete>
 	<needplugin>MH Admin</needplugin>
 	<mnotice>0</mnotice>
 	<mysqlinstall><![CDATA[ALTER TABLE {prefix}_post ENGINE=InnoDB;]]></mysqlinstall>
-	<mysqlupgrade><![CDATA[UPDATE {prefix}_admin_sections SET title = 'Telegram Posting v1.7.6' WHERE name = 'telegram';
+	<mysqlupgrade><![CDATA[UPDATE {prefix}_admin_sections SET title = 'Telegram Posting v173.8.0' WHERE name = 'telegram';
 ALTER TABLE {prefix}_post ENGINE=InnoDB;]]></mysqlupgrade>
-	<mysqlenable><![CDATA[INSERT INTO {prefix}_admin_sections (name, title, descr, icon, allow_groups) VALUES ('telegram', 'Telegram Posting v1.7.6', 'Публикация сообщений при появлении и / или обновлений новостей', 'engine/inc/maharder/admin/assets/img/telegram/icon.png', '1') ON DUPLICATE KEY UPDATE title = 'Telegram Posting v1.7.6';]]></mysqlenable>
+	<mysqlenable><![CDATA[INSERT INTO {prefix}_admin_sections (name, title, descr, icon, allow_groups) VALUES ('telegram', 'Telegram Posting v173.8.0', 'Публикация сообщений при появлении и / или обновлений новостей', 'engine/inc/maharder/_modules/telegram/assets/icon.png', '1') ON DUPLICATE KEY UPDATE title = 'Telegram Posting v173.8.0';]]></mysqlenable>
 	<mysqldisable><![CDATA[DELETE FROM {prefix}_admin_sections WHERE name = 'telegram';]]></mysqldisable>
 	<mysqldelete><![CDATA[DELETE FROM {prefix}_admin_sections WHERE name = 'telegram';
 DROP TABLE {prefix}_telegram_cron;]]></mysqldelete>
-	<phpinstall><![CDATA[@unlink(ENGINE_DIR . '/inc/maharder/telegram/models/Cron.php');
-		@unlink(ENGINE_DIR . '/inc/maharder/telegram/classes/telegram.class.php');
-		@unlink(ENGINE_DIR . '/inc/maharder/telegram/classes/repost.class.php');]]></phpinstall>
-	<phpupgrade><![CDATA[@unlink(ENGINE_DIR . '/inc/maharder/telegram/models/Cron.php');
-		@unlink(ENGINE_DIR . '/inc/maharder/telegram/classes/telegram.class.php');
-		@unlink(ENGINE_DIR . '/inc/maharder/telegram/classes/repost.class.php');]]></phpupgrade>
+	<phpinstall><![CDATA[]]></phpinstall>
+	<phpupgrade><![CDATA[]]></phpupgrade>
 	<phpenable><![CDATA[]]></phpenable>
 	<phpdisable><![CDATA[]]></phpdisable>
 	<phpdelete><![CDATA[@unlink(ROOT_DIR . '/uploads/telegram');]]></phpdelete>
@@ -39,7 +35,7 @@ sendTelegram($id);]]></replacecode>
 	</file>
 	<file name="engine/inc/editnews.php">
 		<operation action="before">
-			<searchcode><![CDATA[clear_cache( array('news_', 'full_'.$item_db[0], 'comm_'.$item_db[0], 'tagscloud_', 'archives_', 'related_', 'calendar_', 'rss', 'stats') );]]></searchcode>
+			<searchcode><![CDATA[clear_cache(]]></searchcode>
 			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
 sendTelegram($item_db[0], 'editnews');]]></replacecode>
 			<searchcount>1</searchcount>
@@ -57,11 +53,31 @@ sendTelegram($row['id']);]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
 	</file>
-	<file name="engine/inc/maharder/_includes/extras/paths.php">
+	<file name="engine/inc/include/functions.inc.php">
 		<operation action="after">
+			<searchcode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_subscribe WHERE news_id='{$id}'");]]></searchcode>
+			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_cron WHERE news_id='{$id}'");]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/modules/functions.php">
+		<operation action="after">
+			<searchcode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_subscribe WHERE news_id='{$id}'");]]></searchcode>
+			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_cron WHERE news_id='{$id}'");]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+	</file>
+	<file name="engine/inc/maharder/_includes/extras/paths.php">
+		<operation action="before">
 			<searchcode><![CDATA[// Custom paths //]]></searchcode>
-			<replacecode><![CDATA[			MH_ROOT . '/telegram/classes',
-			MH_ROOT . '/telegram/models',]]></replacecode>
+			<replacecode><![CDATA[			MH_MODULES . '/telegram/classes',
+			MH_MODULES . '/telegram/helpers',
+			MH_MODULES . '/telegram/repositories',]]></replacecode>
+			<enabled>1</enabled>
+		</operation>
+		<operation action="before">
+			<searchcode><![CDATA[// Custom models //]]></searchcode>
+			<replacecode><![CDATA[			MH_MODULES . '/telegram/models',]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
 	</file>

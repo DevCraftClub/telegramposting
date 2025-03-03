@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% from "_macros/pagination.twig" import pagination %}
+{% from "_macros/tablesort.twig" import tablesort %}
+
+{% block filter %}
+{{ include('templateIncludes/filterArea.html', {filters: filters}) }}
+{% endblock %}
+
+{% block content %}
+
+<form class="ui form attached segment">
+    <div class="ui bottom attached tab active" data-tab="main">
+        <h4 class="ui dividing header">{{title}} ({{total_entries|default(0)}} {{decline(total_entries|default(0), ["Новость"|trans, "Новости"|trans, "Новостей"|trans])}})</h4>
+
+        <div class="ui four column grid">
+            {% autoescape 'html' %}
+            <table class="ui very basic stackable selectable celled striped table">
+                <thead>
+                <tr>
+                    <th class="collapsing">
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="cron_all" tabindex="0" class="hidden">
+                        </div>
+                    </th>
+                    <th class="collapsing two wide">{{ tablesort('#', 'id', order, sort) }}</th>
+                    <th>{{ tablesort('ID новости'|trans, 'news_id', order, sort) }}</th>
+                    <th>{{ tablesort('Тип'|trans, 'type', order, sort) }}</th>
+                    <th class="collapsing">{{ tablesort('Запланированная дата'|trans, 'time', order, sort) }}</th>
+                    <th class="right aligned collapsing">{%trans%}Действие{%endtrans%}</th>
+                </tr>
+                </thead>
+                <tbody data-id="cron_data">
+                {% for c in cron_data %}
+                <tr id="c-{{c.id}}" data-id="{{c.id}}" data-news_id="{{c.news_id}}">
+                    <td>
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="cron[]" value="{{c.id}}" tabindex="0" class="hidden">
+                        </div>
+                    </td>
+                    <td>{{c.id}}</td>
+                    <td data-name="news_id"><a href="{{ dle_url }}/index.php?newsid={{c.news_id}}" target="_blank">{{c.news_id}}</a>
+                    </td>
+                    <td data-name="type">{{c.type}}</td>
+                    <td data-name="time">{{c.time|from_dti}}</td>
+                    <td class="right aligned">
+                        <div class="ui icon top left pointing dropdown button">
+                            <i class="wrench icon"></i>
+                            <div class="menu">
+                                <a class='ui item'
+                                   href="{{dle_config.http_home_url}}{{dle_config.admin_path}}?mod=editnews&action=editnews&id={{c.news_id}}"
+                                   target="_blank">
+                                    <i class="fa-duotone fa-pen-to-square"></i> {%trans%}Редактировать новость{%endtrans%}
+                                </a>
+                                <a class='ui item' href="{{dle_config.http_home_url}}index.php?newsid={{c.news_id}}"
+                                   target="_blank">
+                                    <i class="fa-duotone fa-eye"></i> {%trans%}Открыть на сайте{%endtrans%}
+                                </a>
+                                <a data-action='change' class='ui item act_btn' data-id='{{c.id}}'>
+                                    <i class="fa-duotone fa-timer"></i> {%trans%}Изменить дату{%endtrans%}
+                                </a>
+                                <a data-action='send' class='ui item act_btn' data-id='{{c.id}}'>
+                                    <i class="fa-duotone fa-paper-plane"></i> {%trans%}Отправить в телеграм{%endtrans%}
+                                </a>
+                                <a data-action='delete' class='ui item act_btn' data-id='{{c.id}}'>
+                                    <i class="fa-duotone fa-trash-can"></i> {%trans%}Удалить{%endtrans%}
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <a href="#" role="button" class="ui button act_btn" data-action='new'>
+                            {%trans%}Добавить новость в список{%endtrans%}
+                        </a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+
+
+            {% endautoescape %}
+        </div>
+
+
+    </div>
+</form>
+
+{{ pagination(total_pages, page) }}
+
+{% endblock %}
+
+{% block scripts %}
+{% autoescape 'js' %}
+<script>
+	$(() => {
+		toggleCheckboxGroup('cron_all', 'cron');
+	});
+</script>
+{% endautoescape %}
+
+{{ include('telegram/scripts/cron.twig') }}
+
+{% endblock %}
