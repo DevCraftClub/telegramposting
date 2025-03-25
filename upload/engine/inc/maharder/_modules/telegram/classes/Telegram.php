@@ -494,12 +494,11 @@ class Telegram extends RePost {
 	 * @throws \Monolog\Handler\MissingExtensionException
 	 */
 	private function tempFile($file) {
-		DLEFiles::CreateDirectory($this->tg_temp_dir);
-		if (!is_dir($this->tg_temp_dir)) {
+		if (!DataManager::CreateDir('Telegram', 'tempFile', paths: $this->tg_temp_dir)) {
 			LogGenerator::generateLog(
 				'telegram',
 				'tempFile',
-				sprintf('Directory "%s" was not created', $this->tg_temp_dir)
+				sprintf(__('Невозможно создать папку по пути "%s"'), $this->tg_temp_dir)
 			);
 		}
 
@@ -511,9 +510,18 @@ class Telegram extends RePost {
 		}
 
 		$_name      = totranslit("{$_path['filename']}_temp.{$_path['extension']}");
-		$_file_path = "{$this->tg_temp_dir}/{$_name}";
+		$_file_path = DataManager::joinPaths($this->tg_temp_dir, $_name);
 
-		if (!DLEFiles::FileExists($_file_path, 'local')) DLEFiles::Save($_file_path, file_get_contents($file), 'local');
+		if (!is_file($_file_path)) {
+			$originalData = file_get_contents($file);
+			if (!@file_put_contents($_file_path, $originalData, LOCK_EX)) {
+				LogGenerator::generateLog(
+					'telegram',
+					'tempFile',
+					sprintf(__('Невозможно записать файл по пути "%s"'), $_file_path)
+				);
+			}
+		}
 
 		return $_file_path;
 	}
@@ -816,7 +824,7 @@ class Telegram extends RePost {
 				LogGenerator::generateLog(
 					'telegram',
 					'processImage',
-					sprintf('Directory "%s" was not created', $this->tg_temp_dir)
+					sprintf(__('Невозможно создать папку по пути "%s"'), $this->tg_temp_dir)
 				);
 			}
 			$thumb_path   = pathinfo($thumb['filenamepath']);
@@ -1440,9 +1448,10 @@ class Telegram extends RePost {
 		}
 
 		if (!empty($this->thumb) && !isset($send_array['thumb'])) {
-			$thumb = pathinfo($this->thumb);
-			if ($thumb == null) {
+			if ($this->thumb instanceof CURLFile) {
 				$thumb = pathinfo($this->thumb->getFilename());
+			} else {
+				$thumb = pathinfo($this->thumb);
 			}
 
 			if (isset($thumb['extension'])) {
@@ -1541,7 +1550,7 @@ class Telegram extends RePost {
 			$img = $img['media']['photo']->name;
 		}
 
-		$img = str_replace($config['http_home_url'], ROOT_DIR . '/', $img);
+		$img = DataManager::normalizePath(str_replace($config['http_home_url'], ROOT_DIR . '/', $img));
 
 		if (!is_string($img) || !is_file($img)) {
 			LogGenerator::generateLog('telegram', 'convertWebp', [
