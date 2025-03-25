@@ -7,7 +7,7 @@ $mh_data = new MhAjax();
 $tg_config = DataManager::getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
 
 function sendTelegram($id, $type = 'addnews') {
-	global $tg_config, $_TIME, $MHDB;
+	global $tg_config, $MHDB;
 
 	$news_id = (int) $id;
 	if(!$news_id) return;
