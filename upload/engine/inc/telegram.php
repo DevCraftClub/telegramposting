@@ -18,9 +18,9 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 $modInfo = [
 	'module_name'        => 'Telegram Posting',
-	'module_version'     => '173.8.0',
+	'module_version'     => '180.8.1',
 	'module_id'          => 11,
-	'module_description' => 'Отправка сообщений в телеграм канал или группу',
+	'module_description' => __('Отправка сообщений в телеграм канал или группу'),
 	'module_code'        => 'telegram',
 	'module_icon'        => 'fa-brands fa-telegram',
 	'site_link'          => 'https://devcraft.club/downloads/telegram-posting.11/',
