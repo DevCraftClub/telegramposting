@@ -3,7 +3,7 @@
 	<name>Telegram Posting</name>
 	<description>Модуль будет отправлять сообщения в выбранный чат при помощи бота. Гибкие настройки позволят модулю отправлять лишь то, что вы хотите.</description>
 	<icon>engine/inc/maharder/_modules/telegram/assets/icon.png</icon>
-	<version>173.8.0</version>
+	<version>18.8.0</version>
 	<dleversion>17.3</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
@@ -25,7 +25,7 @@ DROP TABLE {prefix}_telegram_cron;]]></mysqldelete>
 	<notice><![CDATA[]]></notice>
 	<file name="engine/inc/addnews.php">
 		<operation action="before">
-			<searchcode><![CDATA[clear_cache( array('news_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );]]></searchcode>
+			<searchcode><![CDATA[clear_cache( array('news_', ]]></searchcode>
 			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
 sendTelegram($id);]]></replacecode>
 			<searchcount>1</searchcount>
@@ -45,7 +45,7 @@ sendTelegram($item_db[0], 'editnews');]]></replacecode>
 	</file>
 	<file name="engine/modules/addnews.php">
 		<operation action="before">
-			<searchcode><![CDATA[clear_cache( array('news_', 'related_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );]]></searchcode>
+			<searchcode><![CDATA[clear_cache( array('news_', ]]></searchcode>
 			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
 sendTelegram($row['id']);]]></replacecode>
 			<searchcount>1</searchcount>
