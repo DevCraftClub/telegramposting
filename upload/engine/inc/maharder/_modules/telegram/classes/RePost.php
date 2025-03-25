@@ -519,7 +519,7 @@ class RePost {
 	 * @throws \JsonException
 	 */
 	public function parse_content($content, array $filter = []) {
-		global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $user_group, $member_id, $customlangdate;
+		global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $user_group, $member_id, $customlangdate, $news_date;
 
 		if (count($this->getContentTags()) === 0) {
 
@@ -599,10 +599,17 @@ class RePost {
 			}
 
 			// TODO
-			$content = preg_replace_callback("#\{date=(.+?)\}#i",
-											 "formdate",
-											 $content
+			$content = preg_replace_callback(
+				"#\{date=(.+?)\}#i",
+				fn($matches) => langdate(
+					$matches[1],
+					$news_date,
+					!$config['decline_date'], // true, если $config['decline_date'] = false
+					$config['decline_date'] ? false : $customlangdate // $customlangdate обрабатывается только при необходимости
+				),
+				$content
 			);
+
 
 			if ($row['fixed']) {
 				$this->setContentTags("[fixed]", "");
@@ -760,9 +767,7 @@ class RePost {
 			} else {
 				$my_cat      = [];
 				$my_cat_link = [];
-				$cat_list
-							 =
-				$row['cats'] = explode($this->getCategorySeparator(), $row['category']);
+				$cat_list    = $row['cats'] = explode($this->getCategorySeparator(), $row['category']);
 
 				$this->setContentTags('[has-category]', "");
 				$this->setContentTags('[/has-category]', "");
@@ -1551,7 +1556,7 @@ class RePost {
 
 			$this->setContentTags(
 				['{short-story}', '{full-story}'],
-				[$row['short_story'], $row['full_story']]);
+				[strip_tags($row['short_story']), strip_tags($row['full_story'])]);
 
 			if (preg_match("#\\{full-story limit=['\"]?(\d+)['\"]?\\}#i", $content, $matches)) {
 				$count = (int)$matches[1];
