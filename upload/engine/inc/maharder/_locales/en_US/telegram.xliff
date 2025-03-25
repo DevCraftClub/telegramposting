@@ -4,795 +4,795 @@
     <body>
       <trans-unit id="3a8855c999996a6e8182b0c4d68d1ab0">
         <source>Отложенный постинг</source>
-        <target state="needs-translation">Отложенный постинг</target>
+        <target state="translated">Deferred Posting</target>
       </trans-unit>
       <trans-unit id="460bde1ff962b943f515957cfd40ea6d">
         <source>-- выбираем, не стесняемся --</source>
-        <target state="needs-translation">-- выбираем, не стесняемся --</target>
+        <target state="translated">-- Select, Don't Hold Back --</target>
       </trans-unit>
       <trans-unit id="7c7d054bc5ae9c0d93b69431dfdf2264">
         <source>Автор</source>
-        <target state="needs-translation">Автор</target>
+        <target state="translated">Author</target>
       </trans-unit>
       <trans-unit id="2e9d7991efe99efaf9cf325b6f10d8a0">
         <source>Заголовок</source>
-        <target state="needs-translation">Заголовок</target>
+        <target state="translated">Title</target>
       </trans-unit>
       <trans-unit id="8cdd8bb771bcf038dfb2740fd50b332c">
         <source>Дата</source>
-        <target state="needs-translation">Дата</target>
+        <target state="translated">Date</target>
       </trans-unit>
       <trans-unit id="6418fff1c1bb0f812528eacd276b10b3">
         <source>Короткое содержание</source>
-        <target state="needs-translation">Короткое содержание</target>
+        <target state="translated">Short Summary</target>
       </trans-unit>
       <trans-unit id="5a7ceb4db78e5ebe67854d7e30a00ca7">
         <source>Полное содержание</source>
-        <target state="needs-translation">Полное содержание</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Full content</target>
       </trans-unit>
       <trans-unit id="38ca0af80cd7bd241500e81ba2e6efff">
         <source>Описание</source>
-        <target state="needs-translation">Описание</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Description</target>
       </trans-unit>
       <trans-unit id="de7913c8e449025a8756133f9091aed4">
         <source>ЧПУ Имя</source>
-        <target state="needs-translation">ЧПУ Имя</target>
+        <target state="translated">SEO Friendly Name</target>
       </trans-unit>
       <trans-unit id="1f88bbe820a77169b07e03402e38f7f1">
         <source>Кол-во комментариев</source>
-        <target state="needs-translation">Кол-во комментариев</target>
+        <target state="translated">Number of Comments</target>
       </trans-unit>
       <trans-unit id="a94208dd57b1535ac8db57ee2ea3902e">
         <source>Разрешить комментарии</source>
-        <target state="needs-translation">Разрешить комментарии</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Allow comments</target>
       </trans-unit>
       <trans-unit id="67cf17f261383c76d1e47cebe036c35d">
         <source>Вывод на главной</source>
-        <target state="needs-translation">Вывод на главной</target>
+        <target state="translated">Display on Main Page</target>
       </trans-unit>
       <trans-unit id="a0b118653194950b2eec6f96373e3260">
         <source>Проверено</source>
-        <target state="needs-translation">Проверено</target>
+        <target state="translated">Verified</target>
       </trans-unit>
       <trans-unit id="8a2ae7523929469f7e8c9b3e165e7a1b">
         <source>Фиксированная новость</source>
-        <target state="needs-translation">Фиксированная новость</target>
+        <target state="translated">Fixed News</target>
       </trans-unit>
       <trans-unit id="c333b3e233d99e7e0a35dc6610609b85">
         <source>Разрешить перенос строк</source>
-        <target state="needs-translation">Разрешить перенос строк</target>
+        <target state="translated">Allow Line Breaks</target>
       </trans-unit>
       <trans-unit id="de3a206f3504f68f920c4e3c7b8b59ea">
         <source>Символ</source>
-        <target state="needs-translation">Символ</target>
+        <target state="translated">Symbol</target>
       </trans-unit>
       <trans-unit id="54f067a401b1d97fb64ed2e6767094e0">
         <source>Теги</source>
-        <target state="needs-translation">Теги</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Tags</target>
       </trans-unit>
       <trans-unit id="351377661ae10714f207881c7a717744">
         <source>Метазаголовок</source>
-        <target state="needs-translation">Метазаголовок</target>
+        <target state="translated">Meta Title</target>
       </trans-unit>
       <trans-unit id="47c7eeff35bed162b038f3033c5df2cd">
         <source>Кол-во прочтений</source>
-        <target state="needs-translation">Кол-во прочтений</target>
+        <target state="translated">Number of Views</target>
       </trans-unit>
       <trans-unit id="c65e131815197aa089434e1cf4ca57b2">
         <source>Разрешить рейтинг</source>
-        <target state="needs-translation">Разрешить рейтинг</target>
+        <target state="translated">Allow Rating</target>
       </trans-unit>
       <trans-unit id="304ce2c8c71568195da204b85122598a">
         <source>Рейтинг</source>
-        <target state="needs-translation">Рейтинг</target>
+        <target state="translated">Rating</target>
       </trans-unit>
       <trans-unit id="79a352b9537ba1b321f4fb635543a5bd">
         <source>ID Опроса</source>
-        <target state="needs-translation">ID Опроса</target>
+        <target state="translated">Poll ID</target>
       </trans-unit>
       <trans-unit id="98fa1dc6afa0721fc3f31e4b24fd0146">
         <source>Кол-во голосов</source>
-        <target state="needs-translation">Кол-во голосов</target>
+        <target state="translated">Number of Votes</target>
       </trans-unit>
       <trans-unit id="cbe472e2bdc860b3677374ca0f9313e0">
         <source>Запретить индексировние</source>
-        <target state="needs-translation">Запретить индексировние</target>
+        <target state="translated">Exclude from Indexing</target>
       </trans-unit>
       <trans-unit id="d8b99945d3426010f44d8723e9767944">
         <source>Похожие новости</source>
-        <target state="needs-translation">Похожие новости</target>
+        <target state="translated">Related News</target>
       </trans-unit>
       <trans-unit id="dbf2fcc8d96e960a90917b8733fbd804">
         <source>Доступ</source>
-        <target state="needs-translation">Доступ</target>
+        <target state="translated">Access</target>
       </trans-unit>
       <trans-unit id="0c6f9e8c2677d795ca5422cb86517922">
         <source>Время редактирования</source>
-        <target state="needs-translation">Время редактирования</target>
+        <target state="translated">Editing Time</target>
       </trans-unit>
       <trans-unit id="7e2554f86f1c02efe1b063981afad801">
         <source>Редактор</source>
-        <target state="needs-translation">Редактор</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Editor</target>
       </trans-unit>
       <trans-unit id="d88300c7c0b7740f87529906ba91cb7f">
         <source>Причина</source>
-        <target state="needs-translation">Причина</target>
+        <target state="translated">Reason</target>
       </trans-unit>
       <trans-unit id="b5f52efcbf4eb2259d927cbdf805317c">
         <source>ID автора</source>
-        <target state="needs-translation">ID автора</target>
+        <target state="translated">Author ID</target>
       </trans-unit>
       <trans-unit id="5b20ca74e786bc51e9dee5667f040854">
         <source>Исключить из поиска</source>
-        <target state="needs-translation">Исключить из поиска</target>
+        <target state="translated">Exclude from Search</target>
       </trans-unit>
       <trans-unit id="5d539d3dfd28187accc1f136b2a104b4">
         <source>Нужен пароль</source>
-        <target state="needs-translation">Нужен пароль</target>
+        <target state="translated">Password Required</target>
       </trans-unit>
       <trans-unit id="c714f6d051d19c6cb49bbe404543f5f7">
         <source>Разрешить вывод в RSS-ленту</source>
-        <target state="needs-translation">Разрешить вывод в RSS-ленту</target>
+        <target state="translated">Allow RSS Feed Output</target>
       </trans-unit>
       <trans-unit id="0a264aec296c6e112e2bd87cfbd4a3ee">
         <source>Разрешить вывод в Турбо-ленту</source>
-        <target state="needs-translation">Разрешить вывод в Турбо-ленту</target>
+        <target state="translated">Allow Turbo Feed Output</target>
       </trans-unit>
       <trans-unit id="6675a0d5fcd5f5ce7b8d3cc66c9c550f">
         <source>Разрешить Дзен</source>
-        <target state="needs-translation">Разрешить Дзен</target>
+        <target state="translated">Allow Zen</target>
       </trans-unit>
       <trans-unit id="57af51f34d67a37027635ae36d516dbe">
         <source>Прочее</source>
-        <target state="needs-translation">Прочее</target>
+        <target state="translated">Others</target>
       </trans-unit>
       <trans-unit id="e42aa265fb5d20050273363049e9f6d5">
         <source>Название новости</source>
-        <target state="needs-translation">Название новости</target>
+        <target state="translated">News Title</target>
       </trans-unit>
       <trans-unit id="345805b88b9ca1e189fa11ea817e5666">
         <source>Тип</source>
-        <target state="needs-translation">Тип</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Type</target>
       </trans-unit>
       <trans-unit id="25a6277a4b6770a85f2f3d78bf1138ba">
         <source>Дата добавления</source>
-        <target state="needs-translation">Дата добавления</target>
+        <target state="translated">Date Added</target>
       </trans-unit>
       <trans-unit id="50a761a11275b70272b97775ec641e61">
         <source>Действие</source>
-        <target state="needs-translation">Действие</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Action</target>
       </trans-unit>
       <trans-unit id="05e7d3d057147626f0af6cb8f6d61515">
         <source>Редактировать новость</source>
-        <target state="needs-translation">Редактировать новость</target>
+        <target state="translated">Edit News</target>
       </trans-unit>
       <trans-unit id="861b48f1f3978ee321ec45c1192ca940">
         <source>Открыть на сайте</source>
-        <target state="needs-translation">Открыть на сайте</target>
+        <target state="translated">Open on Site</target>
       </trans-unit>
       <trans-unit id="4d95cdf9f92b361742ec15d9e0beb2ec">
         <source>Изменить дату</source>
-        <target state="needs-translation">Изменить дату</target>
+        <target state="translated">Change Date</target>
       </trans-unit>
       <trans-unit id="df7425dd89861814b4598b776ffbdff5">
         <source>Отправить в телеграм</source>
-        <target state="needs-translation">Отправить в телеграм</target>
+        <target state="translated">Send to Telegram</target>
       </trans-unit>
       <trans-unit id="ed2bbfbc53d83d3ad81f7fd6485ac6e8">
         <source>Удалить</source>
-        <target state="needs-translation">Удалить</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Delete</target>
       </trans-unit>
       <trans-unit id="6bcbe66d5200ca97c04e6ef3d485dca5">
         <source>Добавить новость в список</source>
-        <target state="needs-translation">Добавить новость в список</target>
+        <target state="translated">Add News to List</target>
       </trans-unit>
       <trans-unit id="e1d08dd59f145584d8af5c85aaa69703">
         <source>Новость</source>
-        <target state="needs-translation">Новость</target>
+        <target state="translated">News</target>
       </trans-unit>
       <trans-unit id="3e729b3484832c4d7e40709d83a20ee4">
         <source>Время</source>
-        <target state="needs-translation">Время</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Time</target>
       </trans-unit>
       <trans-unit id="30ede6b2878bcf38723287fd02f0de53">
         <source>Добавить новость</source>
-        <target state="needs-translation">Добавить новость</target>
+        <target state="translated">Add News</target>
       </trans-unit>
       <trans-unit id="4212c4bd14865f89bda390471afda25f">
         <source>Изменить: </source>
-        <target state="needs-translation">Изменить: </target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Change: </target>
       </trans-unit>
       <trans-unit id="6e24bab0b077be09036e05362b78e1d3">
         <source>Удалить: </source>
-        <target state="needs-translation">Удалить: </target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Delete: </target>
       </trans-unit>
       <trans-unit id="086cc77f502caf277384a815012aba09">
         <source>Отправить в телеграм: </source>
-        <target state="needs-translation">Отправить в телеграм: </target>
+        <target state="translated">Send to Telegram: </target>
       </trans-unit>
       <trans-unit id="9686b54b9a339067ef1ab3a3bd215cd1">
         <source>Запись удалена!</source>
-        <target state="needs-translation">Запись удалена!</target>
+        <target state="translated">Entry has been deleted!</target>
       </trans-unit>
       <trans-unit id="d82a7b2d627a6e24ab534cd4b23f3833">
         <source>Запись успешно сохранена!</source>
-        <target state="needs-translation">Запись успешно сохранена!</target>
+        <target state="translated">Entry was successfully saved!</target>
       </trans-unit>
       <trans-unit id="a4e796230d48ce05a924fb81e5a9dcf5">
         <source>Запись успешно создана!</source>
-        <target state="needs-translation">Запись успешно создана!</target>
+        <target state="translated">Entry was successfully created!</target>
       </trans-unit>
       <trans-unit id="6367e6f45dd3f8c5fe870e8fd3fb66d7">
         <source>Массив изображений либо сменил структуру, либо не верен.</source>
-        <target state="needs-translation">Массив изображений либо сменил структуру, либо не верен.</target>
+        <target state="translated">Image array has either changed structure or is incorrect.</target>
       </trans-unit>
       <trans-unit id="6947e878b052eb1df6a70279fea1d438">
         <source>Изображения пусты</source>
-        <target state="needs-translation">Изображения пусты</target>
+        <target state="translated">Images are empty</target>
       </trans-unit>
       <trans-unit id="2e694638ede97c09443d7b7edd973872">
         <source>Новость не соответствует требованиям!</source>
-        <target state="needs-translation">Новость не соответствует требованиям!</target>
+        <target state="translated">News does not meet the requirements!</target>
       </trans-unit>
       <trans-unit id="f05adf4078eb07e2ec4e4dd5d4d35645">
         <source>Файл изображения либо повреждён, либо полностью отсутствует</source>
-        <target state="needs-translation">Файл изображения либо повреждён, либо полностью отсутствует</target>
+        <target state="translated">Image file is either corrupted or completely missing</target>
       </trans-unit>
       <trans-unit id="cd58ac7c81622333d65bf7a818d52cd1">
         <source>Файл изображения весит больше допустимого</source>
-        <target state="needs-translation">Файл изображения весит больше допустимого</target>
+        <target state="translated">Image file exceeds the allowable size</target>
       </trans-unit>
       <trans-unit id="4e5ea8afd56050e3aec101fc592e6f4e">
         <source>Размеры изображения больше допустимого!</source>
-        <target state="needs-translation">Размеры изображения больше допустимого!</target>
+        <target state="translated">Image dimensions exceed the allowable limits!</target>
       </trans-unit>
       <trans-unit id="925e0a0388ada98ce26a045fcf537317">
         <source>Файл не найден</source>
-        <target state="needs-translation">Файл не найден</target>
+        <target state="translated">File not found</target>
       </trans-unit>
       <trans-unit id="f539ed7ce6ba537ce28f2ddadd7420b1">
         <source>Формат файла (:type) не подерживается</source>
-        <target state="needs-translation">Формат файла (:type) не подерживается</target>
+        <target state="translated">File format (:type) is not supported</target>
       </trans-unit>
       <trans-unit id="198ec74c2ceced7a2c6126321751055b">
         <source>Не указан размер изображения</source>
-        <target state="needs-translation">Не указан размер изображения</target>
+        <target state="translated">Image size not specified</target>
       </trans-unit>
       <trans-unit id="84271fee370171cc5df2b25fd236634e">
         <source>Файл маски не найден</source>
-        <target state="needs-translation">Файл маски не найден</target>
+        <target state="translated">Mask file not found</target>
       </trans-unit>
       <trans-unit id="b1ca8e33569964751cc7e25580a7df9e">
         <source>Формат файла (:format) маски не поддерживается</source>
-        <target state="needs-translation">Формат файла (:format) маски не поддерживается</target>
+        <target state="translated">Mask file format (:format) is not supported</target>
       </trans-unit>
       <trans-unit id="1e087161104da1129c22742a46b13eee">
         <source>[UPDATE] Изменена функция обработки текстов: удаляются все теги из краткой и полной новости</source>
-        <target state="needs-translation">[UPDATE] Изменена функция обработки текстов: удаляются все теги из краткой и полной новости</target>
+        <target state="translated">[UPDATE] Text processing function has been changed: all tags are removed from the short and full news</target>
       </trans-unit>
       <trans-unit id="2ed3eb505e1ec03d9e055a33c8806bf8">
         <source>[FIX] Исправлены все заявленные ошибки</source>
-        <target state="needs-translation">[FIX] Исправлены все заявленные ошибки</target>
+        <target state="translated">[FIX] All reported bugs have been fixed</target>
       </trans-unit>
       <trans-unit id="82f4158ce8d36e135da86cbb177954b2">
         <source>&lt;span class="ui red text"&gt;[INFO] Последняя версия данного плагина!&lt;/span&gt;</source>
-        <target state="needs-translation">&lt;span class="ui red text"&gt;[INFO] Последняя версия данного плагина!&lt;/span&gt;</target>
+        <target state="translated">&lt;span class="ui red text"&gt;[INFO] This is the latest version of this plugin!&lt;/span&gt;</target>
       </trans-unit>
       <trans-unit id="2a62d6c925d10f2e8a979993872a71e3">
         <source>[UPDATE] Обновлено до DLE 17.3 и MHAdmin 173.3.4</source>
-        <target state="needs-translation">[UPDATE] Обновлено до DLE 17.3 и MHAdmin 173.3.4</target>
+        <target state="translated">[UPDATE] Updated to DLE 17.3 and MHAdmin 173.3.4</target>
       </trans-unit>
       <trans-unit id="cc712f1ab6dc9fc2707b8241d73401dc">
         <source>[FIX] Исправлена заявленная ошибка: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</target>
+        <target state="translated">[FIX] Fixed reported bug: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</target>
       </trans-unit>
       <trans-unit id="f9a7b33d16120075ebddf02776134fe2">
         <source>[FIX] Исправлена заявленная ошибка: Конвертер изображений неверно обрабатывал пути до временных файлов</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка: Конвертер изображений неверно обрабатывал пути до временных файлов</target>
+        <target state="translated">[FIX] Fixed reported bug: Image converter incorrectly handled paths to temporary files</target>
       </trans-unit>
       <trans-unit id="044257aaf4d87483c11110f6c295d205">
         <source>[FIX] Исправлен установщик</source>
-        <target state="needs-translation">[FIX] Исправлен установщик</target>
+        <target state="translated">[FIX] Installer has been fixed</target>
       </trans-unit>
       <trans-unit id="df61541850e0d0f7e802a5483f489b02">
         <source>[FIX] Исправлены ошибки подключений</source>
-        <target state="needs-translation">[FIX] Исправлены ошибки подключений</target>
+        <target state="translated">[FIX] Connection errors have been fixed</target>
       </trans-unit>
       <trans-unit id="8df700b5d219b4eb9d5fd663d7edd05d">
         <source>[FIX] Исправлен скрипт очистки временных файлов</source>
-        <target state="needs-translation">[FIX] Исправлен скрипт очистки временных файлов</target>
+        <target state="translated">[FIX] Temporary file cleanup script has been fixed</target>
       </trans-unit>
       <trans-unit id="1e9d0eb6d36a10f2ced289759f7d0544">
         <source>[FIX] Исправлено под MH Admin 2.0.8</source>
-        <target state="needs-translation">[FIX] Исправлено под MH Admin 2.0.8</target>
+        <target state="translated">[FIX] Compatibility fixed for MH Admin 2.0.8</target>
       </trans-unit>
       <trans-unit id="e7be370748f260a55a7630edfc635f4f">
         <source>[FIX] Удалён мусор</source>
-        <target state="needs-translation">[FIX] Удалён мусор</target>
+        <target state="translated">[FIX] Removed clutter</target>
       </trans-unit>
       <trans-unit id="47f130ea4dff5b0bf3369d25a601a6a4">
         <source>[UPDATE] Обновление кода до версии MHAdmin 2.0.7</source>
-        <target state="needs-translation">[UPDATE] Обновление кода до версии MHAdmin 2.0.7</target>
+        <target state="translated">[UPDATE] Code updated to MHAdmin 2.0.7</target>
       </trans-unit>
       <trans-unit id="c5340222a58c0a5447e95d5a4a355226">
         <source>[NEW] Добавлена возможность назначать отдельно разделители тегов, хештегов и категорий</source>
-        <target state="needs-translation">[NEW] Добавлена возможность назначать отдельно разделители тегов, хештегов и категорий</target>
+        <target state="translated">[NEW] Added the ability to assign separate separators for tags, hashtags, and categories</target>
       </trans-unit>
       <trans-unit id="b61d25d21542307553228d642dca6c7f">
         <source>[FIX] Исправлена совместимость с версией PHP 7.2</source>
-        <target state="needs-translation">[FIX] Исправлена совместимость с версией PHP 7.2</target>
+        <target state="translated">[FIX] Compatibility fixed with PHP 7.2</target>
       </trans-unit>
       <trans-unit id="fcf5a91f11d80c8092a0e3ce708ecd81">
         <source>[FIX] Исправлена совместимость с версией DLE до 1.5.0</source>
-        <target state="needs-translation">[FIX] Исправлена совместимость с версией DLE до 1.5.0</target>
+        <target state="translated">[FIX] Compatibility fixed with DLE versions below 1.5.0</target>
       </trans-unit>
       <trans-unit id="d350d6d5ef0c2027353477b18cf7fd5e">
         <source>[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/prevju.5/</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/prevju.5/</target>
+        <target state="translated">[FIX] Fixed reported bug: https://devcraft.club/tickets/prevju.5/</target>
       </trans-unit>
       <trans-unit id="232bea489b776491bf7b638871c229fc">
         <source>[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</target>
+        <target state="translated">[FIX] Fixed reported bug: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</target>
       </trans-unit>
       <trans-unit id="88dec0175e609ef1514794dc346afbe8">
         <source>[FIX] Исправлена заявленная ошибка: обработка данных тега [telegram_media_</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка: обработка данных тега [telegram_media_</target>
+        <target state="translated">[FIX] Fixed reported bug: processing of [telegram_media_ data</target>
       </trans-unit>
       <trans-unit id="6d15a3580bc939acf603d855b695d37c">
         <source>[FIX] Тег {category} исправлен</source>
-        <target state="needs-translation">[FIX] Тег {category} исправлен</target>
+        <target state="translated">[FIX] Tag {category} has been fixed</target>
       </trans-unit>
       <trans-unit id="941a17b7d8b56dcc97bc0b0bd1c602ff">
         <source>[FIX] Тег {link-category} исправлен</source>
-        <target state="needs-translation">[FIX] Тег {link-category} исправлен</target>
+        <target state="translated">[FIX] Tag {link-category} has been fixed</target>
       </trans-unit>
       <trans-unit id="c03f7a57e032dc0b3803a1903d7b0cc5">
         <source>[FIX] Поправлен вывод категорий в виде хештегов</source>
-        <target state="needs-translation">[FIX] Поправлен вывод категорий в виде хештегов</target>
+        <target state="translated">[FIX] Fixed category output as hashtags</target>
       </trans-unit>
       <trans-unit id="6b48d35de3c1e356de904b4390a0f2b0">
         <source>[NEW] Добавлен тег {category-hashtag} - отвечающий за вывод категории новости в виде хештегов.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {category-hashtag} - отвечающий за вывод категории новости в виде хештегов.</target>
+        <target state="translated">[NEW] Added tag {category-hashtag} - responsible for displaying the news category as hashtags.</target>
       </trans-unit>
       <trans-unit id="644a2cb0d8a323f892fec4c1ccfbbdb3">
         <source>[NEW] Добавлен тег {link-category} - отвечающий за вывод категории новости в виде ссылок на вашем сайте.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {link-category} - отвечающий за вывод категории новости в виде ссылок на вашем сайте.</target>
+        <target state="translated">[NEW] Added tag {link-category} - responsible for displaying the news category as links on your site.</target>
       </trans-unit>
       <trans-unit id="82030df4504805268e0738861d489405">
         <source>[NEW] Добавлен тег {category} - отвечающий за вывод категории новости в виде текста.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {category} - отвечающий за вывод категории новости в виде текста.</target>
+        <target state="translated">[NEW] Added tag {category} - responsible for displaying the news category as text.</target>
       </trans-unit>
       <trans-unit id="25e896a6114f5c4802d918bef4279b1b">
         <source>[NEW] Добавлен тег {views} - отвечающий за кол-во просмотров новости.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {views} - отвечающий за кол-во просмотров новости.</target>
+        <target state="translated">[NEW] Added tag {views} - responsible for the number of news views.</target>
       </trans-unit>
       <trans-unit id="52aa69e4f49175eb6dbe80aa0d1e8e3f">
         <source>[NEW] Добавлен тег {comments-num} - отвечающий за кол-во комментариев в новости.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {comments-num} - отвечающий за кол-во комментариев в новости.</target>
+        <target state="translated">[NEW] Added tag {comments-num} - responsible for the number of comments in the news.</target>
       </trans-unit>
       <trans-unit id="e4f85bc6eb9190320cb71e56774f0062">
         <source>[NEW] Добавлен тег {now=FORMAT} - отвечающий за текущее время в пользовательском формате.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {now=FORMAT} - отвечающий за текущее время в пользовательском формате.</target>
+        <target state="translated">[NEW] Added tag {now=FORMAT} - responsible for the current time in a custom format.</target>
       </trans-unit>
       <trans-unit id="b5c2abaed8c1e62656ce9ab2a7548795">
         <source>[NEW] Добавлен тег {now} - отвечающий за текущее время.</source>
-        <target state="needs-translation">[NEW] Добавлен тег {now} - отвечающий за текущее время.</target>
+        <target state="translated">[NEW] Added tag {now} - responsible for the current time.</target>
       </trans-unit>
       <trans-unit id="02bac51930034405f5eafed4fce33a78">
         <source>[NEW] Добавлена функция проверки изображения на требуемые свойства для отправки</source>
-        <target state="needs-translation">[NEW] Добавлена функция проверки изображения на требуемые свойства для отправки</target>
+        <target state="translated">[NEW] Added image validation function for sending</target>
       </trans-unit>
       <trans-unit id="9d8dc51bb5c641ebeda1460dd701950d">
         <source>[UPDATE] Поправлена функция конвертации WebP в JPG, если данная опция отключена в настройках DLE.</source>
-        <target state="needs-translation">[UPDATE] Поправлена функция конвертации WebP в JPG, если данная опция отключена в настройках DLE.</target>
+        <target state="translated">[UPDATE] Fixed WebP to JPG conversion function if this option is disabled in DLE settings.</target>
       </trans-unit>
       <trans-unit id="885f3bba59d1d2e479e1db09771e0f7a">
         <source>[FIX] Исправлена заявленная ошибка на сайте: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</source>
-        <target state="needs-translation">[FIX] Исправлена заявленная ошибка на сайте: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</target>
+        <target state="translated">[FIX] Fixed reported bug on the site: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</target>
       </trans-unit>
       <trans-unit id="4cf35b88a996dbce79939833b55cff0f">
         <source>[FIX] Исправлена ошибка отправки лишь одного шаблона в телеграм</source>
-        <target state="needs-translation">[FIX] Исправлена ошибка отправки лишь одного шаблона в телеграм</target>
+        <target state="translated">[FIX] Fixed sending only one template to Telegram</target>
       </trans-unit>
       <trans-unit id="4fa315fef16002415f7b79b5be5c3ba1">
         <source>[FIX] Исправлен файл установки (install.xml), при обновлении выдавало ошибку, что значение TABLE лишнее</source>
-        <target state="needs-translation">[FIX] Исправлен файл установки (install.xml), при обновлении выдавало ошибку, что значение TABLE лишнее</target>
+        <target state="translated">[FIX] Fixed installer file (install.xml), was giving an error that TABLE value was extra during update</target>
       </trans-unit>
       <trans-unit id="499dc98941c55f01a8e8d6697a208904">
         <source>[NEW] К редактору шаблонов была добавлена возможность копирования из других шаблонов</source>
-        <target state="needs-translation">[NEW] К редактору шаблонов была добавлена возможность копирования из других шаблонов</target>
+        <target state="translated">[NEW] Added the ability to copy from other templates to the template editor</target>
       </trans-unit>
       <trans-unit id="251d2c14a9468db7a41a56a28f63ffbc">
         <source>[NEW] К редактору шаблонов была добавлена возможность поиска и вставки возможных тегов с их описанием (макс. 800 символов)</source>
-        <target state="needs-translation">[NEW] К редактору шаблонов была добавлена возможность поиска и вставки возможных тегов с их описанием (макс. 800 символов)</target>
+        <target state="translated">[NEW] Added the ability to search and insert possible tags with their descriptions to the template editor (max. 800 characters)</target>
       </trans-unit>
       <trans-unit id="fe805a07727c8a8faf208b425c9ffeb2">
         <source>[UPDATE] Редактор сообщений был упрощён</source>
-        <target state="needs-translation">[UPDATE] Редактор сообщений был упрощён</target>
+        <target state="translated">[UPDATE] Message editor has been simplified</target>
       </trans-unit>
       <trans-unit id="6d55107725587351168ada22f81a5b47">
         <source>[FIX] Исправлен парсинг содержимого, переставил местами обработчики</source>
-        <target state="needs-translation">[FIX] Исправлен парсинг содержимого, переставил местами обработчики</target>
+        <target state="translated">[FIX] Fixed content parsing, swapped handlers</target>
       </trans-unit>
       <trans-unit id="322d02be91e141faa151db898023b51f">
         <source>[NEW]: Добавлена конвертация WebP в JPG/PNG</source>
-        <target state="needs-translation">[NEW]: Добавлена конвертация WebP в JPG/PNG</target>
+        <target state="translated">[NEW]: Added WebP to JPG/PNG conversion</target>
       </trans-unit>
       <trans-unit id="91a44fb2241ed2d7ddd5e0b986dcdb62">
         <source>[NEW]: Добавлена настройка задержки отправки новостей в телеграм при работе с кроном</source>
-        <target state="needs-translation">[NEW]: Добавлена настройка задержки отправки новостей в телеграм при работе с кроном</target>
+        <target state="translated">[NEW]: Added setting for delaying Telegram news sending when working with cron</target>
       </trans-unit>
       <trans-unit id="3205c3dd8f761d0b8a320bef5b484336">
         <source>[NEW]: Добавлена настройка удаления неверно добавленных новостей в отложенные сообщения</source>
-        <target state="needs-translation">[NEW]: Добавлена настройка удаления неверно добавленных новостей в отложенные сообщения</target>
+        <target state="translated">[NEW]: Added setting to delete incorrectly added news from deferred messages</target>
       </trans-unit>
       <trans-unit id="1faa298cae610fa44c43ed2c5ed57412">
         <source>[UPDATE] Плагин обновлён до последней версии MHAdmin (2.0.5)</source>
-        <target state="needs-translation">[UPDATE] Плагин обновлён до последней версии MHAdmin (2.0.5)</target>
+        <target state="translated">[UPDATE] Plugin updated to the latest MHAdmin version (2.0.5)</target>
       </trans-unit>
       <trans-unit id="6829677489373ec2f7dc38b811ec4e2c">
         <source>[FIX] Устранена зависимость от класса миниатюр самой DLE, плагин будет работать на DLE 15.1</source>
-        <target state="needs-translation">[FIX] Устранена зависимость от класса миниатюр самой DLE, плагин будет работать на DLE 15.1</target>
+        <target state="translated">[FIX] Removed dependency on DLE's thumbnail class, plugin will work on DLE 15.1</target>
       </trans-unit>
       <trans-unit id="b445c05961de4dd25715ce93a2368670">
         <source>[FIX] Устранена ошибка проверки зависимости при добавлении/редактировании новости</source>
-        <target state="needs-translation">[FIX] Устранена ошибка проверки зависимости при добавлении/редактировании новости</target>
+        <target state="translated">[FIX] Fixed dependency check error when adding/editing news</target>
       </trans-unit>
       <trans-unit id="d53f69c1e5364f6b2a7117df7d0c2473">
         <source>[FIX] Устранена ошибка отправки новости по крону, функционал переработан</source>
-        <target state="needs-translation">[FIX] Устранена ошибка отправки новости по крону, функционал переработан</target>
+        <target state="translated">[FIX] Fixed cron news sending error, functionality has been redesigned</target>
       </trans-unit>
       <trans-unit id="fe532edebd4293b47deed416c619c9f1">
         <source>FIX: Теперь можно указывать прочие зависимости (забыл добавить их в массив)</source>
-        <target state="needs-translation">FIX: Теперь можно указывать прочие зависимости (забыл добавить их в массив)</target>
+        <target state="translated">FIX: Now you can specify additional dependencies (forgot to add them to the array)</target>
       </trans-unit>
       <trans-unit id="7e693844a0da22e7021ffa0e71e0f1c3">
         <source>FIX: Обработка текста перенесена уже в новую функцию, поскольку урезались нужные теги для обработки данных</source>
-        <target state="needs-translation">FIX: Обработка текста перенесена уже в новую функцию, поскольку урезались нужные теги для обработки данных</target>
+        <target state="translated">FIX: Text processing has been moved to the new function, as necessary tags for data processing were removed</target>
       </trans-unit>
       <trans-unit id="fa7e8f34273c706138720c3050f493aa">
         <source>FIX: Поправлен тег [xfvalue_XXX_hashtag]</source>
-        <target state="needs-translation">FIX: Поправлен тег [xfvalue_XXX_hashtag]</target>
+        <target state="translated">FIX: Fixed tag [xfvalue_XXX_hashtag]</target>
       </trans-unit>
       <trans-unit id="65d6a95e331562cab5414c698a10e985">
         <source>FIX: Исправлена работа с кроном. Временный штамп не отправлялся в базу данных</source>
-        <target state="needs-translation">FIX: Исправлена работа с кроном. Временный штамп не отправлялся в базу данных</target>
+        <target state="translated">FIX: Fixed cron handling. Temporary timestamp was not being sent to the database</target>
       </trans-unit>
       <trans-unit id="5dbc6aaff5d53da4ad20d106349eceff">
         <source>NEW: Добавлен вывод списка с ожидаемыми новостями на отправку</source>
-        <target state="needs-translation">NEW: Добавлен вывод списка с ожидаемыми новостями на отправку</target>
+        <target state="translated">NEW: Added a list display with pending news for sending</target>
       </trans-unit>
       <trans-unit id="062dd9e4d5897ed5051c73cbbd7942de">
         <source>Логирование не работает на PHP 7.4, поэтому для таких случаев сделан вывод в браузер</source>
-        <target state="needs-translation">Логирование не работает на PHP 7.4, поэтому для таких случаев сделан вывод в браузер</target>
+        <target state="translated">Logging does not work on PHP 7.4, so output to the browser has been made for such cases</target>
       </trans-unit>
       <trans-unit id="b778d794e319267b1ab0abacd5c20f42">
         <source>FIX: Убраны дубли</source>
-        <target state="needs-translation">FIX: Убраны дубли</target>
+        <target state="translated">FIX: Removed duplicates</target>
       </trans-unit>
       <trans-unit id="c835e1049524daa82d6529169384cd45">
         <source>FIX: Исправлена "копипаста</source>
-        <target state="needs-translation">FIX: Исправлена "копипаста</target>
+        <target state="translated">FIX: Corrected "copy-paste"</target>
       </trans-unit>
       <trans-unit id="33508a226ebbe038cc09fa68a4e01291">
         <source>FIX: Для файлов в доп. полях которые сохраняются как [attachment...] была сделана обработка (упустил из виду)</source>
-        <target state="needs-translation">FIX: Для файлов в доп. полях которые сохраняются как [attachment...] была сделана обработка (упустил из виду)</target>
+        <target state="translated">FIX: Added handling for files in additional fields saved as [attachment...] (overlooked earlier)</target>
       </trans-unit>
       <trans-unit id="6f90459f74fd89e41b4d0925210b7dd6">
         <source>NEW: Максимальная длина сообщения отправляемого в телеграм была установлена, вшита в код. Это - 1024 символов, включая пробелы. Если длина сообщения равна или больше 1024 символов, то отправляются 1021 символа и троеточие в конце.</source>
-        <target state="needs-translation">NEW: Максимальная длина сообщения отправляемого в телеграм была установлена, вшита в код. Это - 1024 символов, включая пробелы. Если длина сообщения равна или больше 1024 символов, то отправляются 1021 символа и троеточие в конце.</target>
+        <target state="translated">NEW: Set the maximum message length sent to Telegram, embedded in the code. It is 1024 characters, including spaces. If the message length is equal to or exceeds 1024 characters, 1021 characters are sent followed by an ellipsis.</target>
       </trans-unit>
       <trans-unit id="972ef935761420b367e9aa39446c3bdb">
         <source>FIX: Сбор изображений из базы данных был исправлен</source>
-        <target state="needs-translation">FIX: Сбор изображений из базы данных был исправлен</target>
+        <target state="translated">FIX: Image collection from the database has been fixed</target>
       </trans-unit>
       <trans-unit id="47615e3c4a663654e207e12f31fc4a46">
         <source>FIX: Миниатюры теперь генерируются из списка всех изображений</source>
-        <target state="needs-translation">FIX: Миниатюры теперь генерируются из списка всех изображений</target>
+        <target state="translated">FIX: Thumbnails are now generated from the list of all images</target>
       </trans-unit>
       <trans-unit id="fbd89a7ddc715b549a5840e2c910ac4b">
         <source>FIX: Исправлена отправка данные, если указана внутренняя ссылка без домена, а-ля /uploads/...</source>
-        <target state="needs-translation">FIX: Исправлена отправка данные, если указана внутренняя ссылка без домена, а-ля /uploads/...</target>
+        <target state="translated">FIX: Fixed data sending if an internal link without a domain is specified, like /uploads/...</target>
       </trans-unit>
       <trans-unit id="c79f3a88e7bf567a32befec340625357">
         <source>Добавлено кеширование данных на запросы в базу данных</source>
-        <target state="needs-translation">Добавлено кеширование данных на запросы в базу данных</target>
+        <target state="translated">Added data caching for database queries</target>
       </trans-unit>
       <trans-unit id="d52f4c4ce3e82c175f425418db7fb679">
         <source>В общий массив медиа добавлены изображения и файлы из базы данных, если такие есть.</source>
-        <target state="needs-translation">В общий массив медиа добавлены изображения и файлы из базы данных, если такие есть.</target>
+        <target state="translated">Images and files from the database have been added to the general media array, if available.</target>
       </trans-unit>
       <trans-unit id="2f69423435c95946a611e07fd3c9687b">
         <source>FIX: Исправлен запрос в базу данных на новость (забыл закрывающую скобку поставить)</source>
-        <target state="needs-translation">FIX: Исправлен запрос в базу данных на новость (забыл закрывающую скобку поставить)</target>
+        <target state="translated">FIX: Fixed database query for news (forgot to close the bracket)</target>
       </trans-unit>
       <trans-unit id="b7d307144f874c59bc50dce5f9843976">
         <source>Что-бы включить логирование отправки данных, достаточно в файле RePost.php заменить $logs = 0 на $logs = 1</source>
-        <target state="needs-translation">Что-бы включить логирование отправки данных, достаточно в файле RePost.php заменить $logs = 0 на $logs = 1</target>
+        <target state="translated">To enable data sending logging, simply replace $logs = 0 with $logs = 1 in the RePost.php file</target>
       </trans-unit>
       <trans-unit id="d2ac4ce98735fa32c5d75742c205878b">
         <source>FIX: Добавление аудио из доп. полей в общий массив</source>
-        <target state="needs-translation">FIX: Добавление аудио из доп. полей в общий массив</target>
+        <target state="translated">FIX: Added audio from additional fields to the general array</target>
       </trans-unit>
       <trans-unit id="a0ec2f7d9380fda06e118e0d0970a3aa">
         <source>FIX: Добавление видео из доп. полей в общий массив</source>
-        <target state="needs-translation">FIX: Добавление видео из доп. полей в общий массив</target>
+        <target state="translated">FIX: Added video from additional fields to the general array</target>
       </trans-unit>
       <trans-unit id="bf6b71ede1d7eacf722a7267c137b1ed">
         <source>Добавлена заглушка по умолчанию из сервиса dummyimage.com</source>
-        <target state="needs-translation">Добавлена заглушка по умолчанию из сервиса dummyimage.com</target>
+        <target state="translated">Added default placeholder from dummyimage.com service</target>
       </trans-unit>
       <trans-unit id="9d7f84e9397c2db218cfdb93c05503f3">
         <source>FIX: Исправлена отправка файлов со сторонних источников</source>
-        <target state="needs-translation">FIX: Исправлена отправка файлов со сторонних источников</target>
+        <target state="translated">FIX: Fixed sending files from external sources</target>
       </trans-unit>
       <trans-unit id="470f710f377b5c5549bfe5b5afbe066f">
         <source>FIX: Исправлена отправка текстовых сообщений</source>
-        <target state="needs-translation">FIX: Исправлена отправка текстовых сообщений</target>
+        <target state="translated">FIX: Fixed sending text messages</target>
       </trans-unit>
       <trans-unit id="38b0341772af8c45f5dc8ffe40bbb0e0">
         <source>FIX: Отправка сообщений из настроек</source>
-        <target state="needs-translation">FIX: Отправка сообщений из настроек</target>
+        <target state="translated">FIX: Sending messages from settings</target>
       </trans-unit>
       <trans-unit id="f1fd7237a0a3ca16a63a0d732e04936c">
         <source>FIX: Сохранение зависимостей (скрипт начинал работать после подключения второй зависимости, из-за чего вызывал ошибку 504)</source>
-        <target state="needs-translation">FIX: Сохранение зависимостей (скрипт начинал работать после подключения второй зависимости, из-за чего вызывал ошибку 504)</target>
+        <target state="translated">FIX: Saved dependencies (script started working after connecting the second dependency, causing a 504 error)</target>
       </trans-unit>
       <trans-unit id="73c50b805296ffc70ade7d8ef902140a">
         <source>FIX: Если файл указан как ссылка (простое текстовое поле), то он пропускался. Теперь, если файл находится не на сервере, то пропускает проверку, а указывается как ссылка.</source>
-        <target state="needs-translation">FIX: Если файл указан как ссылка (простое текстовое поле), то он пропускался. Теперь, если файл находится не на сервере, то пропускает проверку, а указывается как ссылка.</target>
+        <target state="translated">FIX: If a file is specified as a link (simple text field), it was being skipped. Now, if the file is not on the server, it skips the check and is specified as a link.</target>
       </trans-unit>
       <trans-unit id="f395a2f88648a0d4c1c85f33d3d34f43">
         <source>FIX: Убраны дубли, из-за чего движок ругался</source>
-        <target state="needs-translation">FIX: Убраны дубли, из-за чего движок ругался</target>
+        <target state="translated">FIX: Removed duplicates, which caused the engine to complain</target>
       </trans-unit>
       <trans-unit id="acde529c5718c4c8e5e3c0f2323f2757">
         <source>Фикс файла version.php. При мёрдже файл был сохранён не верно</source>
-        <target state="needs-translation">Фикс файла version.php. При мёрдже файл был сохранён не верно</target>
+        <target state="translated">Fixed version.php file. During merge, the file was saved incorrectly</target>
       </trans-unit>
       <trans-unit id="17ae951c547e07cb8a2d852ad2d709e9">
         <source>Добавлена поддержка медиа контента. Можно выбирать одно из двух.</source>
-        <target state="needs-translation">Добавлена поддержка медиа контента. Можно выбирать одно из двух.</target>
+        <target state="translated">Added media content support. You can choose one of two.</target>
       </trans-unit>
       <trans-unit id="646af1a896c5fa325c1bf9c57fdce253">
         <source>Добавлена поддержка парсинга всех стандртных тегов DLE</source>
-        <target state="needs-translation">Добавлена поддержка парсинга всех стандртных тегов DLE</target>
+        <target state="translated">Added support for parsing all standard DLE tags</target>
       </trans-unit>
       <trans-unit id="7e615beaec3693dffbe20dd66b527d7b">
         <source>Исправлена проблема с отрпавкой данных из HTML редактора</source>
-        <target state="needs-translation">Исправлена проблема с отрпавкой данных из HTML редактора</target>
+        <target state="translated">Fixed issue with sending data from the HTML editor</target>
       </trans-unit>
       <trans-unit id="35878166cb0c57374ec031d7a3b08844">
         <source>Небольшой фикс касательно поиска названия группы / канала</source>
-        <target state="needs-translation">Небольшой фикс касательно поиска названия группы / канала</target>
+        <target state="translated">Minor fix regarding group/channel name search</target>
       </trans-unit>
       <trans-unit id="511e709bc82b5242c717338850f91943">
         <source>Созданы значения по умолчанию для крона, теперь, даже если он и не настроен, телеграм будет получать сообщения по крону</source>
-        <target state="needs-translation">Созданы значения по умолчанию для крона, теперь, даже если он и не настроен, телеграм будет получать сообщения по крону</target>
+        <target state="translated">Default values have been created for cron, now even if it's not set up, Telegram will receive messages via cron</target>
       </trans-unit>
       <trans-unit id="4a477a87ef8ea09f8500cc0e559a9183">
         <source>Обновлено для версии DLE 14.x</source>
-        <target state="needs-translation">Обновлено для версии DLE 14.x</target>
+        <target state="translated">Updated for DLE version 14.x</target>
       </trans-unit>
       <trans-unit id="870eaf98b0a26c3721c9a14e7576e046">
         <source>Добавлена возможность выводить лимитированные описания</source>
-        <target state="needs-translation">Добавлена возможность выводить лимитированные описания</target>
+        <target state="translated">Added the ability to display limited descriptions</target>
       </trans-unit>
       <trans-unit id="85e6a724f9f76f710480b3d4f5748aea">
         <source>Исправлен поиск чата</source>
-        <target state="needs-translation">Исправлен поиск чата</target>
+        <target state="translated">Fixed chat search</target>
       </trans-unit>
       <trans-unit id="8bcff3ab349d7c0260b964a825e20e3a">
         <source>Исправлены мелкие баги и недочёты</source>
-        <target state="needs-translation">Исправлены мелкие баги и недочёты</target>
+        <target state="translated">Fixed minor bugs and oversights</target>
       </trans-unit>
       <trans-unit id="ffc95a3d7047c38622c151ed077e5536">
         <source>Добавлена поддержка SOCKS5 прокси.</source>
-        <target state="needs-translation">Добавлена поддержка SOCKS5 прокси.</target>
+        <target state="translated">Added SOCKS5 proxy support.</target>
       </trans-unit>
       <trans-unit id="b0d9c7cb29d68f56f2d432d72b0e23df">
         <source>Небольшой фикс со стилями.</source>
-        <target state="needs-translation">Небольшой фикс со стилями.</target>
+        <target state="translated">Minor style fix.</target>
       </trans-unit>
       <trans-unit id="0b2ea536fb3058b3e44e9e855068c9d1">
         <source>Небольшой фикс по отправке сообщений.</source>
-        <target state="needs-translation">Небольшой фикс по отправке сообщений.</target>
+        <target state="translated">Minor message sending fix.</target>
       </trans-unit>
       <trans-unit id="ef15443840bf4b8aaba53a07cc5ba45a">
         <source>Исправлена ошибка созданная гитом</source>
-        <target state="needs-translation">Исправлена ошибка созданная гитом</target>
+        <target state="translated">Fixed error caused by git</target>
       </trans-unit>
       <trans-unit id="4c5eb1c9d220af41fffa8d104e6781cc">
         <source>Добавлена возможность отправлять в телеграм при добавлении с сайта</source>
-        <target state="needs-translation">Добавлена возможность отправлять в телеграм при добавлении с сайта</target>
+        <target state="translated">Added the ability to send to Telegram when adding from the site</target>
       </trans-unit>
       <trans-unit id="babfdae09a055869b7d83f72f8316810">
         <source>Добавлены новые теги для шаблонов: %categories% (выводит все категории через разделитель указанный в настройках движка) и %category_links% (выводит так же категории, только ссылками)</source>
-        <target state="needs-translation">Добавлены новые теги для шаблонов: %categories% (выводит все категории через разделитель указанный в настройках движка) и %category_links% (выводит так же категории, только ссылками)</target>
+        <target state="translated">Added new template tags: %categories% (displays all categories separated by the delimiter specified in engine settings) and %category_links% (displays categories as links as well)</target>
       </trans-unit>
       <trans-unit id="ce8361e223b1836d4a2b68e20b80fced">
         <source>Добавлены новые теги для шаблонов: [xfgiven_XXX]XYZ[/xfgiven_XXX] (аналогичен тегам для новостей, если доп. поле заполнено, то выведет информацию заключённую в теги)</source>
-        <target state="needs-translation">Добавлены новые теги для шаблонов: [xfgiven_XXX]XYZ[/xfgiven_XXX] (аналогичен тегам для новостей, если доп. поле заполнено, то выведет информацию заключённую в теги)</target>
+        <target state="translated">Added new template tags: [xfgiven_XXX]XYZ[/xfgiven_XXX] (similar to news tags, if the additional field is filled, it will display information enclosed in the tags)</target>
       </trans-unit>
       <trans-unit id="328b9e8a684c1e372839afffee1e0dab">
         <source>Добавлены новые теги для шаблонов: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (аналогичен тегам для новостей, если доп. поле не заполнено, то выведет информацию заключённую в теги)</source>
-        <target state="needs-translation">Добавлены новые теги для шаблонов: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (аналогичен тегам для новостей, если доп. поле не заполнено, то выведет информацию заключённую в теги)</target>
+        <target state="translated">Added new template tags: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (similar to news tags, if the additional field is not filled, it will display information enclosed in the tags)</target>
       </trans-unit>
       <trans-unit id="5252231ab462b010db7b707370d41200">
         <source>Исправлено пару багов</source>
-        <target state="needs-translation">Исправлено пару багов</target>
+        <target state="translated">Fixed a couple of bugs</target>
       </trans-unit>
       <trans-unit id="514f189473c2ade11124191dd4e93b3d">
         <source>Облегчённая версия</source>
-        <target state="needs-translation">Облегчённая версия</target>
+        <target state="translated">Lightweight version</target>
       </trans-unit>
       <trans-unit id="c67c905a44110e7686084485e65f9787">
         <source>Версия для DLE 13 и выше</source>
-        <target state="needs-translation">Версия для DLE 13 и выше</target>
+        <target state="translated">Version for DLE 13 and above</target>
       </trans-unit>
       <trans-unit id="f4877e9cea055c8140cde26a462a2ded">
         <source>Мелкие правки</source>
-        <target state="needs-translation">Мелкие правки</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Minor edits</target>
       </trans-unit>
       <trans-unit id="d7cc8da16df939c916ff5826fbd6f201">
         <source>Добавлена возможность использовать прокси (актуально для сайтов размещённых в РФ)</source>
-        <target state="needs-translation">Добавлена возможность использовать прокси (актуально для сайтов размещённых в РФ)</target>
+        <target state="translated">Added the ability to use a proxy (relevant for sites hosted in Russia)</target>
       </trans-unit>
       <trans-unit id="6ac5e828f9f819c790a374d2810c71bd">
         <source>Добавлена возможность отправки сообщений по крону</source>
-        <target state="needs-translation">Добавлена возможность отправки сообщений по крону</target>
+        <target state="translated">Added the ability to send messages via cron</target>
       </trans-unit>
       <trans-unit id="91c38227796c235cd68e63ed92ed50ed">
         <source>Последняя версия для DLE 12.x (Добавлена конвертация текстав нужную кодировку)</source>
-        <target state="needs-translation">Последняя версия для DLE 12.x (Добавлена конвертация текстав нужную кодировку)</target>
+        <target state="translated">Last version for DLE 12.x (Added text conversion to the required encoding)</target>
       </trans-unit>
       <trans-unit id="1598396666caac44b5f65035eb4d7046">
         <source>Исправлена ошибка со считыванием данных</source>
-        <target state="needs-translation">Исправлена ошибка со считыванием данных</target>
+        <target state="translated">Fixed data reading error</target>
       </trans-unit>
       <trans-unit id="3f5996c8be823133b947be1960740cfb">
         <source>Добавлены новые теги для шаблонов: %full_descr% и %short_descr%</source>
-        <target state="needs-translation">Добавлены новые теги для шаблонов: %full_descr% и %short_descr%</target>
+        <target state="translated">Added new template tags: %full_descr% and %short_descr%</target>
       </trans-unit>
       <trans-unit id="5f9848c6d7434c863152900e85dcfeb3">
         <source>Тег %descr% будет заменён на %short_descr%</source>
-        <target state="needs-translation">Тег %descr% будет заменён на %short_descr%</target>
+        <target state="translated">Tag %descr% will be replaced with %short_descr%</target>
       </trans-unit>
       <trans-unit id="50de0fbef15e1769f526648805d77237">
         <source>Исправлена ошибка с доп. полями</source>
-        <target state="needs-translation">Исправлена ошибка с доп. полями</target>
+        <target state="translated">Fixed issue with additional fields</target>
       </trans-unit>
       <trans-unit id="226ca30a4aa10e67705406e0ba59cc67">
         <source>Базовая версия</source>
-        <target state="needs-translation">Базовая версия</target>
+        <target state="translated">Basic version</target>
       </trans-unit>
       <trans-unit id="15180cb881cfcb9ac831d1e0d76078ff">
         <source>Отправка сообщений при добавлении новости</source>
-        <target state="needs-translation">Отправка сообщений при добавлении новости</target>
+        <target state="translated">Sending messages when adding news</target>
       </trans-unit>
       <trans-unit id="173d292548669a0223ab86718678a9f7">
         <source>Отправка сообщений при редактировании новости</source>
-        <target state="needs-translation">Отправка сообщений при редактировании новости</target>
+        <target state="translated">Sending messages when editing news</target>
       </trans-unit>
       <trans-unit id="72f0f271c171c2e351f9411c74f4f54f">
         <source>Отправка при зависимости от полей</source>
-        <target state="needs-translation">Отправка при зависимости от полей</target>
+        <target state="translated">Sending based on field dependencies</target>
       </trans-unit>
       <trans-unit id="d77dcc3bfda156e285c689d65ef3b006">
         <source>Отправка обычного сообщения на канал</source>
-        <target state="needs-translation">Отправка обычного сообщения на канал</target>
+        <target state="translated">Sending a regular message to a channel</target>
       </trans-unit>
       <trans-unit id="17e880b26896b24afce7a15c70c3ac1e">
         <source>Поиск нужного чата</source>
-        <target state="needs-translation">Поиск нужного чата</target>
+        <target state="translated">Template settings for sending messages</target>
       </trans-unit>
       <trans-unit id="095aea736b89d1d24b73b71136f02a48">
         <source>Настройка шаблонов для отправки сообщений</source>
-        <target state="needs-translation">Настройка шаблонов для отправки сообщений</target>
+        <target state="translated">Configuration of templates for sending messages</target>
       </trans-unit>
       <trans-unit id="8808519d077254a78c4d8c112f1f4652">
         <source>Если сайт работает через SSL, то будет возможность приобразовать бота в Webhook</source>
-        <target state="needs-translation">Если сайт работает через SSL, то будет возможность приобразовать бота в Webhook</target>
+        <target state="translated">If the site operates via SSL, then there will be an option to convert the bot to Webhook</target>
       </trans-unit>
       <trans-unit id="593c9576a2a5b74de0d875b0af564132">
         <source>Журнал изменений</source>
-        <target state="needs-translation">Журнал изменений</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Changelog</target>
       </trans-unit>
       <trans-unit id="cf6061b60978974b598cc6c58a0ee21e">
         <source>Список отложенной отправки</source>
-        <target state="needs-translation">Список отложенной отправки</target>
+        <target state="translated">Deferred Sending List</target>
       </trans-unit>
       <trans-unit id="a9796357b87c6e2e998370b12b21c9c4">
         <source>ID Новости</source>
-        <target state="needs-translation">ID Новости</target>
+        <target state="translated">News ID</target>
       </trans-unit>
       <trans-unit id="0f294eb506cdfa7b88cd2b7f4ce88f8e">
         <source>Запланированная отправка</source>
-        <target state="needs-translation">Запланированная отправка</target>
+        <target state="translated">Scheduled Sending</target>
       </trans-unit>
       <trans-unit id="2db281c93395da574576e224c17375a2">
         <source>Страница %page%</source>
-        <target state="needs-translation">Страница %page%</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Page %page%</target>
       </trans-unit>
       <trans-unit id="78851c4377266e5ed513628d76b6f479">
         <source>Разрешеить комментарии</source>
-        <target state="needs-translation">Разрешеить комментарии</target>
+        <target state="translated">Allow Comments</target>
       </trans-unit>
       <trans-unit id="b475317d4d28461ae61ccf975b1c98f2">
         <source>Настройки модуля</source>
-        <target state="needs-translation">Настройки модуля</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Module settings</target>
       </trans-unit>
       <trans-unit id="eb1c9dbf462343f43f2b9da2e7af4b3f">
         <source>ID новости</source>
-        <target state="needs-translation">ID новости</target>
+        <target state="translated">News ID</target>
       </trans-unit>
       <trans-unit id="beec20f25573359ea30a38b26a119989">
         <source>Запланированная дата</source>
-        <target state="needs-translation">Запланированная дата</target>
+        <target state="translated">Scheduled Date</target>
       </trans-unit>
       <trans-unit id="77f6adb2a8bea2db77669b05b898a5f0">
         <source>Как новую новость</source>
-        <target state="needs-translation">Как новую новость</target>
+        <target state="translated">As New News</target>
       </trans-unit>
       <trans-unit id="67fda529f3f37e1ff05c9f88125e8b94">
         <source>Как отредактированную новость</source>
-        <target state="needs-translation">Как отредактированную новость</target>
+        <target state="translated">As Edited News</target>
       </trans-unit>
       <trans-unit id="0e264e07f5d108d472222fb4b7e43b32">
         <source>Ошибка при парсинге новостей! Подробности в консоли!</source>
-        <target state="needs-translation">Ошибка при парсинге новостей! Подробности в консоли!</target>
+        <target state="translated">Error parsing news! Details in console!</target>
       </trans-unit>
       <trans-unit id="74ea58b6a801f0dce4e5d34dbca034dc">
         <source>Сохранить</source>
-        <target state="needs-translation">Сохранить</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Save</target>
       </trans-unit>
       <trans-unit id="987b33c664dce148f1d17f6eb9ab3e79">
         <source>Отмена</source>
-        <target state="needs-translation">Отмена</target>
+        <target state="translated">Cancel</target>
       </trans-unit>
       <trans-unit id="55ab82df9f5c62852b221667f36d7ab0">
         <source>Изменить:</source>
-        <target state="needs-translation">Изменить:</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Change:</target>
       </trans-unit>
       <trans-unit id="56b0125ea0a9282c4a4e68b233a8c1e3">
         <source>Отправление было успешно изменено!</source>
-        <target state="needs-translation">Отправление было успешно изменено!</target>
+        <target state="translated">Sending was successfully modified!</target>
       </trans-unit>
       <trans-unit id="340963393760c4e42d1dfe25f10343a9">
         <source>Удалить:</source>
-        <target state="needs-translation">Удалить:</target>
+        <target state="needs-review-translation" state-qualifier="leveraged-tm">Delete:</target>
       </trans-unit>
       <trans-unit id="75f153e9501c62a58e1a87ac6cd83e46">
         <source>После удаления, данные будет не возможно вернуть!</source>
-        <target state="needs-translation">После удаления, данные будет не возможно вернуть!</target>
+        <target state="translated">After deletion, the data cannot be retrieved!</target>
       </trans-unit>
       <trans-unit id="32457a30a74b2e78c0723008bd974388">
         <source>Отправить в телеграм:</source>
-        <target state="needs-translation">Отправить в телеграм:</target>
+        <target state="translated">Send to Telegram:</target>
       </trans-unit>
       <trans-unit id="7e5972c4fa28e972199db8a96a492892">
         <source>Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!</source>
-        <target state="needs-translation">Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!</target>
+        <target state="translated">Confirm sending the news to Telegram! After successful sending, the news will be removed from the sending queue!</target>
       </trans-unit>
       <trans-unit id="6da0f0ae044012e784cdb53ab72a16f1">
         <source>Отправить</source>
-        <target state="needs-translation">Отправить</target>
+        <target state="translated">Send</target>
       </trans-unit>
       <trans-unit id="9d34a0c9610305ab5db3a4f8cfd9e5c6">
         <source>Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!</source>
-        <target state="needs-translation">Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!</target>
+        <target state="translated">An error occurred while processing data! Check the browser console for details!</target>
       </trans-unit>
       <trans-unit id="e5e353b12e00e5af8c4d9c43942c20e0">
         <source>Новость была успешно отправлена в телеграм!</source>
-        <target state="needs-translation">Новость была успешно отправлена в телеграм!</target>
+        <target state="translated">The news was successfully sent to Telegram!</target>
       </trans-unit>
       <trans-unit id="1e70e3c3db6388be4620e87e61ca066d">
         <source>Новость не могла быть обработана!&lt;br&gt;&lt;b&gt;Причина&lt;/b&gt;:</source>
-        <target state="needs-translation">Новость не могла быть обработана!&lt;br&gt;&lt;b&gt;Причина&lt;/b&gt;:</target>
+        <target state="translated">The news could not be processed!&lt;br&gt;&lt;b&gt;Reason&lt;/b&gt;:</target>
       </trans-unit>
       <trans-unit id="eda08fe58a5f60383f8132a1012a3125">
         <source>Отправка сообщений в телеграм канал или группу</source>
-        <target state="needs-translation">Отправка сообщений в телеграм канал или группу</target>
+        <target state="translated">Sending messages to Telegram channel or group</target>
       </trans-unit>
     </body>
   </file>
