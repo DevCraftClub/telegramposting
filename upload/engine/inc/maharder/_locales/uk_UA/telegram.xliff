@@ -2,797 +2,797 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file original="telegram.ru_RU" datatype="plaintext" source-language="ru" target-language="uk">
     <body>
-      <trans-unit id="3a8855c999996a6e8182b0c4d68d1ab0">
+      <trans-unit id="3a8855c999996a6e8182b0c4d68d1ab0" approved="yes">
         <source>Отложенный постинг</source>
-        <target state="translated">Відкладене публікування</target>
+        <target state="final">Відкладене публікування</target>
       </trans-unit>
-      <trans-unit id="460bde1ff962b943f515957cfd40ea6d">
+      <trans-unit id="460bde1ff962b943f515957cfd40ea6d" approved="yes">
         <source>-- выбираем, не стесняемся --</source>
-        <target state="translated">-- обираємо, не соромимося --</target>
+        <target state="final">-- обираємо, не соромимося --</target>
       </trans-unit>
-      <trans-unit id="7c7d054bc5ae9c0d93b69431dfdf2264">
+      <trans-unit id="7c7d054bc5ae9c0d93b69431dfdf2264" approved="yes">
         <source>Автор</source>
-        <target state="translated">Автор</target>
+        <target state="final">Автор</target>
       </trans-unit>
-      <trans-unit id="2e9d7991efe99efaf9cf325b6f10d8a0">
+      <trans-unit id="2e9d7991efe99efaf9cf325b6f10d8a0" approved="yes">
         <source>Заголовок</source>
-        <target state="translated">Заголовок</target>
+        <target state="final">Заголовок</target>
       </trans-unit>
-      <trans-unit id="8cdd8bb771bcf038dfb2740fd50b332c">
+      <trans-unit id="8cdd8bb771bcf038dfb2740fd50b332c" approved="yes">
         <source>Дата</source>
-        <target state="translated">Дата</target>
+        <target state="final">Дата</target>
       </trans-unit>
-      <trans-unit id="6418fff1c1bb0f812528eacd276b10b3">
+      <trans-unit id="6418fff1c1bb0f812528eacd276b10b3" approved="yes">
         <source>Короткое содержание</source>
-        <target state="translated">Виключити з пошуку по сайту</target>
+        <target state="final">Виключити з пошуку по сайту</target>
       </trans-unit>
-      <trans-unit id="5a7ceb4db78e5ebe67854d7e30a00ca7">
+      <trans-unit id="5a7ceb4db78e5ebe67854d7e30a00ca7" approved="yes">
         <source>Полное содержание</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Використовувати в Яндекс Турбо</target>
+        <target state="final">Використовувати в Яндекс Турбо</target>
       </trans-unit>
-      <trans-unit id="38ca0af80cd7bd241500e81ba2e6efff">
+      <trans-unit id="38ca0af80cd7bd241500e81ba2e6efff" approved="yes">
         <source>Описание</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Опис</target>
+        <target state="final">Опис</target>
       </trans-unit>
-      <trans-unit id="de7913c8e449025a8756133f9091aed4">
+      <trans-unit id="de7913c8e449025a8756133f9091aed4" approved="yes">
         <source>ЧПУ Имя</source>
-        <target state="translated">ЧПУ Ім'я</target>
+        <target state="final">ЧПУ Ім'я</target>
       </trans-unit>
-      <trans-unit id="1f88bbe820a77169b07e03402e38f7f1">
+      <trans-unit id="1f88bbe820a77169b07e03402e38f7f1" approved="yes">
         <source>Кол-во комментариев</source>
-        <target state="translated">Кількість коментарів</target>
+        <target state="final">Кількість коментарів</target>
       </trans-unit>
-      <trans-unit id="a94208dd57b1535ac8db57ee2ea3902e">
+      <trans-unit id="a94208dd57b1535ac8db57ee2ea3902e" approved="yes">
         <source>Разрешить комментарии</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Вимкнути</target>
+        <target state="final">Вимкнути</target>
       </trans-unit>
-      <trans-unit id="67cf17f261383c76d1e47cebe036c35d">
+      <trans-unit id="67cf17f261383c76d1e47cebe036c35d" approved="yes">
         <source>Вывод на главной</source>
-        <target state="translated">Вивід на головній</target>
+        <target state="final">Вивід на головній</target>
       </trans-unit>
-      <trans-unit id="a0b118653194950b2eec6f96373e3260">
+      <trans-unit id="a0b118653194950b2eec6f96373e3260" approved="yes">
         <source>Проверено</source>
-        <target state="translated">Перевірено</target>
+        <target state="final">Перевірено</target>
       </trans-unit>
-      <trans-unit id="8a2ae7523929469f7e8c9b3e165e7a1b">
+      <trans-unit id="8a2ae7523929469f7e8c9b3e165e7a1b" approved="yes">
         <source>Фиксированная новость</source>
-        <target state="translated">Закріплена новина</target>
+        <target state="final">Закріплена новина</target>
       </trans-unit>
-      <trans-unit id="c333b3e233d99e7e0a35dc6610609b85">
+      <trans-unit id="c333b3e233d99e7e0a35dc6610609b85" approved="yes">
         <source>Разрешить перенос строк</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Дозволити перенос рядків</target>
+        <target state="final">Дозволити перенос рядків</target>
       </trans-unit>
-      <trans-unit id="de3a206f3504f68f920c4e3c7b8b59ea">
+      <trans-unit id="de3a206f3504f68f920c4e3c7b8b59ea" approved="yes">
         <source>Символ</source>
-        <target state="translated">Символ</target>
+        <target state="final">Символ</target>
       </trans-unit>
-      <trans-unit id="54f067a401b1d97fb64ed2e6767094e0">
+      <trans-unit id="54f067a401b1d97fb64ed2e6767094e0" approved="yes">
         <source>Теги</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Теги</target>
+        <target state="final">Теги</target>
       </trans-unit>
-      <trans-unit id="351377661ae10714f207881c7a717744">
+      <trans-unit id="351377661ae10714f207881c7a717744" approved="yes">
         <source>Метазаголовок</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Мета-заголовок</target>
+        <target state="final">Мета-заголовок</target>
       </trans-unit>
-      <trans-unit id="47c7eeff35bed162b038f3033c5df2cd">
+      <trans-unit id="47c7eeff35bed162b038f3033c5df2cd" approved="yes">
         <source>Кол-во прочтений</source>
-        <target state="translated">Кількість прочитань</target>
+        <target state="final">Кількість прочитань</target>
       </trans-unit>
-      <trans-unit id="c65e131815197aa089434e1cf4ca57b2">
+      <trans-unit id="c65e131815197aa089434e1cf4ca57b2" approved="yes">
         <source>Разрешить рейтинг</source>
-        <target state="translated">Дозволити рейтинг</target>
+        <target state="final">Дозволити рейтинг</target>
       </trans-unit>
-      <trans-unit id="304ce2c8c71568195da204b85122598a">
+      <trans-unit id="304ce2c8c71568195da204b85122598a" approved="yes">
         <source>Рейтинг</source>
-        <target state="translated">Рейтинг</target>
+        <target state="final">Рейтинг</target>
       </trans-unit>
-      <trans-unit id="79a352b9537ba1b321f4fb635543a5bd">
+      <trans-unit id="79a352b9537ba1b321f4fb635543a5bd" approved="yes">
         <source>ID Опроса</source>
-        <target state="translated">ID Опитування</target>
+        <target state="final">ID Опитування</target>
       </trans-unit>
-      <trans-unit id="98fa1dc6afa0721fc3f31e4b24fd0146">
+      <trans-unit id="98fa1dc6afa0721fc3f31e4b24fd0146" approved="yes">
         <source>Кол-во голосов</source>
-        <target state="translated">Кількість голосів</target>
+        <target state="final">Кількість голосів</target>
       </trans-unit>
-      <trans-unit id="cbe472e2bdc860b3677374ca0f9313e0">
+      <trans-unit id="cbe472e2bdc860b3677374ca0f9313e0" approved="yes">
         <source>Запретить индексировние</source>
-        <target state="translated">Заборонити індексацію</target>
+        <target state="final">Заборонити індексацію</target>
       </trans-unit>
-      <trans-unit id="d8b99945d3426010f44d8723e9767944">
+      <trans-unit id="d8b99945d3426010f44d8723e9767944" approved="yes">
         <source>Похожие новости</source>
-        <target state="translated">Схожі новини</target>
+        <target state="final">Схожі новини</target>
       </trans-unit>
-      <trans-unit id="dbf2fcc8d96e960a90917b8733fbd804">
+      <trans-unit id="dbf2fcc8d96e960a90917b8733fbd804" approved="yes">
         <source>Доступ</source>
-        <target state="translated">Доступ</target>
+        <target state="final">Доступ</target>
       </trans-unit>
-      <trans-unit id="0c6f9e8c2677d795ca5422cb86517922">
+      <trans-unit id="0c6f9e8c2677d795ca5422cb86517922" approved="yes">
         <source>Время редактирования</source>
-        <target state="translated">Час редагування</target>
+        <target state="final">Час редагування</target>
       </trans-unit>
-      <trans-unit id="7e2554f86f1c02efe1b063981afad801">
+      <trans-unit id="7e2554f86f1c02efe1b063981afad801" approved="yes">
         <source>Редактор</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Редактор</target>
+        <target state="final">Редактор</target>
       </trans-unit>
-      <trans-unit id="d88300c7c0b7740f87529906ba91cb7f">
+      <trans-unit id="d88300c7c0b7740f87529906ba91cb7f" approved="yes">
         <source>Причина</source>
-        <target state="translated">Причина</target>
+        <target state="final">Причина</target>
       </trans-unit>
-      <trans-unit id="b5f52efcbf4eb2259d927cbdf805317c">
+      <trans-unit id="b5f52efcbf4eb2259d927cbdf805317c" approved="yes">
         <source>ID автора</source>
-        <target state="translated">ID автора</target>
+        <target state="final">ID автора</target>
       </trans-unit>
-      <trans-unit id="5b20ca74e786bc51e9dee5667f040854">
+      <trans-unit id="5b20ca74e786bc51e9dee5667f040854" approved="yes">
         <source>Исключить из поиска</source>
-        <target state="translated">Виключити з пошуку</target>
+        <target state="final">Виключити з пошуку</target>
       </trans-unit>
-      <trans-unit id="5d539d3dfd28187accc1f136b2a104b4">
+      <trans-unit id="5d539d3dfd28187accc1f136b2a104b4" approved="yes">
         <source>Нужен пароль</source>
-        <target state="translated">Потрібен пароль</target>
+        <target state="final">Потрібен пароль</target>
       </trans-unit>
-      <trans-unit id="c714f6d051d19c6cb49bbe404543f5f7">
+      <trans-unit id="c714f6d051d19c6cb49bbe404543f5f7" approved="yes">
         <source>Разрешить вывод в RSS-ленту</source>
-        <target state="translated">Дозволити вивід у RSS-стрічку</target>
+        <target state="final">Дозволити вивід у RSS-стрічку</target>
       </trans-unit>
-      <trans-unit id="0a264aec296c6e112e2bd87cfbd4a3ee">
+      <trans-unit id="0a264aec296c6e112e2bd87cfbd4a3ee" approved="yes">
         <source>Разрешить вывод в Турбо-ленту</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Дозволити вивід у Турбо-стрічку</target>
+        <target state="final">Дозволити вивід у Турбо-стрічку</target>
       </trans-unit>
-      <trans-unit id="6675a0d5fcd5f5ce7b8d3cc66c9c550f">
+      <trans-unit id="6675a0d5fcd5f5ce7b8d3cc66c9c550f" approved="yes">
         <source>Разрешить Дзен</source>
-        <target state="translated">Дозволити Дзен</target>
+        <target state="final">Дозволити Дзен</target>
       </trans-unit>
-      <trans-unit id="57af51f34d67a37027635ae36d516dbe">
+      <trans-unit id="57af51f34d67a37027635ae36d516dbe" approved="yes">
         <source>Прочее</source>
-        <target state="translated">Інше</target>
+        <target state="final">Інше</target>
       </trans-unit>
-      <trans-unit id="e42aa265fb5d20050273363049e9f6d5">
+      <trans-unit id="e42aa265fb5d20050273363049e9f6d5" approved="yes">
         <source>Название новости</source>
-        <target state="translated">Назва новини</target>
+        <target state="final">Назва новини</target>
       </trans-unit>
-      <trans-unit id="345805b88b9ca1e189fa11ea817e5666">
+      <trans-unit id="345805b88b9ca1e189fa11ea817e5666" approved="yes">
         <source>Тип</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Тип</target>
+        <target state="final">Тип</target>
       </trans-unit>
-      <trans-unit id="25a6277a4b6770a85f2f3d78bf1138ba">
+      <trans-unit id="25a6277a4b6770a85f2f3d78bf1138ba" approved="yes">
         <source>Дата добавления</source>
-        <target state="translated">Дата додавання</target>
+        <target state="final">Дата додавання</target>
       </trans-unit>
-      <trans-unit id="50a761a11275b70272b97775ec641e61">
+      <trans-unit id="50a761a11275b70272b97775ec641e61" approved="yes">
         <source>Действие</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Дія</target>
+        <target state="final">Дія</target>
       </trans-unit>
-      <trans-unit id="05e7d3d057147626f0af6cb8f6d61515">
+      <trans-unit id="05e7d3d057147626f0af6cb8f6d61515" approved="yes">
         <source>Редактировать новость</source>
-        <target state="translated">Редагувати новину</target>
+        <target state="final">Редагувати новину</target>
       </trans-unit>
-      <trans-unit id="861b48f1f3978ee321ec45c1192ca940">
+      <trans-unit id="861b48f1f3978ee321ec45c1192ca940" approved="yes">
         <source>Открыть на сайте</source>
-        <target state="translated">Відкрити на сайті</target>
+        <target state="final">Відкрити на сайті</target>
       </trans-unit>
-      <trans-unit id="4d95cdf9f92b361742ec15d9e0beb2ec">
+      <trans-unit id="4d95cdf9f92b361742ec15d9e0beb2ec" approved="yes">
         <source>Изменить дату</source>
-        <target state="translated">Змінити дату</target>
+        <target state="final">Змінити дату</target>
       </trans-unit>
-      <trans-unit id="df7425dd89861814b4598b776ffbdff5">
+      <trans-unit id="df7425dd89861814b4598b776ffbdff5" approved="yes">
         <source>Отправить в телеграм</source>
-        <target state="translated">Відправити в телеграм</target>
+        <target state="final">Відправити в телеграм</target>
       </trans-unit>
-      <trans-unit id="ed2bbfbc53d83d3ad81f7fd6485ac6e8">
+      <trans-unit id="ed2bbfbc53d83d3ad81f7fd6485ac6e8" approved="yes">
         <source>Удалить</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Видалити</target>
+        <target state="final">Видалити</target>
       </trans-unit>
-      <trans-unit id="6bcbe66d5200ca97c04e6ef3d485dca5">
+      <trans-unit id="6bcbe66d5200ca97c04e6ef3d485dca5" approved="yes">
         <source>Добавить новость в список</source>
-        <target state="translated">Додати новину до списку</target>
+        <target state="final">Додати новину до списку</target>
       </trans-unit>
-      <trans-unit id="e1d08dd59f145584d8af5c85aaa69703">
+      <trans-unit id="e1d08dd59f145584d8af5c85aaa69703" approved="yes">
         <source>Новость</source>
-        <target state="translated">Новина</target>
+        <target state="final">Новина</target>
       </trans-unit>
-      <trans-unit id="3e729b3484832c4d7e40709d83a20ee4">
+      <trans-unit id="3e729b3484832c4d7e40709d83a20ee4" approved="yes">
         <source>Время</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Час</target>
+        <target state="final">Час</target>
       </trans-unit>
-      <trans-unit id="30ede6b2878bcf38723287fd02f0de53">
+      <trans-unit id="30ede6b2878bcf38723287fd02f0de53" approved="yes">
         <source>Добавить новость</source>
-        <target state="translated">Додати новину</target>
+        <target state="final">Додати новину</target>
       </trans-unit>
-      <trans-unit id="4212c4bd14865f89bda390471afda25f">
+      <trans-unit id="4212c4bd14865f89bda390471afda25f" approved="yes">
         <source>Изменить: </source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Изменить: </target>
+        <target state="final">Изменить: </target>
       </trans-unit>
-      <trans-unit id="6e24bab0b077be09036e05362b78e1d3">
+      <trans-unit id="6e24bab0b077be09036e05362b78e1d3" approved="yes">
         <source>Удалить: </source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Удалить: </target>
+        <target state="final">Удалить: </target>
       </trans-unit>
-      <trans-unit id="086cc77f502caf277384a815012aba09">
+      <trans-unit id="086cc77f502caf277384a815012aba09" approved="yes">
         <source>Отправить в телеграм: </source>
-        <target state="translated">Відправити в телеграм: </target>
+        <target state="final">Відправити в телеграм: </target>
       </trans-unit>
-      <trans-unit id="9686b54b9a339067ef1ab3a3bd215cd1">
+      <trans-unit id="9686b54b9a339067ef1ab3a3bd215cd1" approved="yes">
         <source>Запись удалена!</source>
-        <target state="translated">Запис був видалений!</target>
+        <target state="final">Запис був видалений!</target>
       </trans-unit>
-      <trans-unit id="d82a7b2d627a6e24ab534cd4b23f3833">
+      <trans-unit id="d82a7b2d627a6e24ab534cd4b23f3833" approved="yes">
         <source>Запись успешно сохранена!</source>
-        <target state="translated">Запис успішно збережено!</target>
+        <target state="final">Запис успішно збережено!</target>
       </trans-unit>
-      <trans-unit id="a4e796230d48ce05a924fb81e5a9dcf5">
+      <trans-unit id="a4e796230d48ce05a924fb81e5a9dcf5" approved="yes">
         <source>Запись успешно создана!</source>
-        <target state="translated">Запис успішно створено!</target>
+        <target state="final">Запис успішно створено!</target>
       </trans-unit>
-      <trans-unit id="6367e6f45dd3f8c5fe870e8fd3fb66d7">
+      <trans-unit id="6367e6f45dd3f8c5fe870e8fd3fb66d7" approved="yes">
         <source>Массив изображений либо сменил структуру, либо не верен.</source>
-        <target state="translated">Масив зображень або змінив структуру, або невірний.</target>
+        <target state="final">Масив зображень або змінив структуру, або невірний.</target>
       </trans-unit>
-      <trans-unit id="6947e878b052eb1df6a70279fea1d438">
+      <trans-unit id="6947e878b052eb1df6a70279fea1d438" approved="yes">
         <source>Изображения пусты</source>
-        <target state="translated">Зображення порожні</target>
+        <target state="final">Зображення порожні</target>
       </trans-unit>
-      <trans-unit id="2e694638ede97c09443d7b7edd973872">
+      <trans-unit id="2e694638ede97c09443d7b7edd973872" approved="yes">
         <source>Новость не соответствует требованиям!</source>
-        <target state="translated">Новина не відповідає вимогам!</target>
+        <target state="final">Новина не відповідає вимогам!</target>
       </trans-unit>
-      <trans-unit id="f05adf4078eb07e2ec4e4dd5d4d35645">
+      <trans-unit id="f05adf4078eb07e2ec4e4dd5d4d35645" approved="yes">
         <source>Файл изображения либо повреждён, либо полностью отсутствует</source>
-        <target state="translated">Файл зображення або пошкоджений, або повністю відсутній</target>
+        <target state="final">Файл зображення або пошкоджений, або повністю відсутній</target>
       </trans-unit>
-      <trans-unit id="cd58ac7c81622333d65bf7a818d52cd1">
+      <trans-unit id="cd58ac7c81622333d65bf7a818d52cd1" approved="yes">
         <source>Файл изображения весит больше допустимого</source>
-        <target state="translated">Файл зображення важить більше дозволеного</target>
+        <target state="final">Файл зображення важить більше дозволеного</target>
       </trans-unit>
-      <trans-unit id="4e5ea8afd56050e3aec101fc592e6f4e">
+      <trans-unit id="4e5ea8afd56050e3aec101fc592e6f4e" approved="yes">
         <source>Размеры изображения больше допустимого!</source>
-        <target state="translated">Розміри зображення більші дозволених!</target>
+        <target state="final">Розміри зображення більші дозволених!</target>
       </trans-unit>
-      <trans-unit id="925e0a0388ada98ce26a045fcf537317">
+      <trans-unit id="925e0a0388ada98ce26a045fcf537317" approved="yes">
         <source>Файл не найден</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Файл не знайдено</target>
+        <target state="final">Файл не знайдено</target>
       </trans-unit>
-      <trans-unit id="f539ed7ce6ba537ce28f2ddadd7420b1">
+      <trans-unit id="f539ed7ce6ba537ce28f2ddadd7420b1" approved="yes">
         <source>Формат файла (:type) не подерживается</source>
-        <target state="translated">Формат файлу (:type) не підтримується</target>
+        <target state="final">Формат файлу (:type) не підтримується</target>
       </trans-unit>
-      <trans-unit id="198ec74c2ceced7a2c6126321751055b">
+      <trans-unit id="198ec74c2ceced7a2c6126321751055b" approved="yes">
         <source>Не указан размер изображения</source>
-        <target state="translated">Не вказано розмір зображення</target>
+        <target state="final">Не вказано розмір зображення</target>
       </trans-unit>
-      <trans-unit id="84271fee370171cc5df2b25fd236634e">
+      <trans-unit id="84271fee370171cc5df2b25fd236634e" approved="yes">
         <source>Файл маски не найден</source>
-        <target state="translated">Файл маски не знайдено</target>
+        <target state="final">Файл маски не знайдено</target>
       </trans-unit>
-      <trans-unit id="b1ca8e33569964751cc7e25580a7df9e">
+      <trans-unit id="b1ca8e33569964751cc7e25580a7df9e" approved="yes">
         <source>Формат файла (:format) маски не поддерживается</source>
-        <target state="translated">Формат файлу (:format) маски не підтримується</target>
+        <target state="final">Формат файлу (:format) маски не підтримується</target>
       </trans-unit>
-      <trans-unit id="1e087161104da1129c22742a46b13eee">
+      <trans-unit id="1e087161104da1129c22742a46b13eee" approved="yes">
         <source>[UPDATE] Изменена функция обработки текстов: удаляются все теги из краткой и полной новости</source>
-        <target state="translated">[UPDATE] Змінено функцію обробки текстів: видаляються всі теги з короткої та повної новини</target>
+        <target state="final">[UPDATE] Змінено функцію обробки текстів: видаляються всі теги з короткої та повної новини</target>
       </trans-unit>
-      <trans-unit id="2ed3eb505e1ec03d9e055a33c8806bf8">
+      <trans-unit id="2ed3eb505e1ec03d9e055a33c8806bf8" approved="yes">
         <source>[FIX] Исправлены все заявленные ошибки</source>
-        <target state="translated">[FIX] Виправлено всі заявлені помилки</target>
+        <target state="final">[FIX] Виправлено всі заявлені помилки</target>
       </trans-unit>
-      <trans-unit id="82f4158ce8d36e135da86cbb177954b2">
+      <trans-unit id="82f4158ce8d36e135da86cbb177954b2" approved="yes">
         <source>&lt;span class="ui red text"&gt;[INFO] Последняя версия данного плагина!&lt;/span&gt;</source>
-        <target state="translated">&lt;span class="ui red text"&gt;[INFO] Остання версія цього плагіна!&lt;/span&gt;</target>
+        <target state="final">&lt;span class="ui red text"&gt;[INFO] Остання версія цього плагіна!&lt;/span&gt;</target>
       </trans-unit>
-      <trans-unit id="2a62d6c925d10f2e8a979993872a71e3">
+      <trans-unit id="2a62d6c925d10f2e8a979993872a71e3" approved="yes">
         <source>[UPDATE] Обновлено до DLE 17.3 и MHAdmin 173.3.4</source>
-        <target state="translated">[UPDATE] Оновлено до DLE 17.3 та MHAdmin 173.3.4</target>
+        <target state="final">[UPDATE] Оновлено до DLE 17.3 та MHAdmin 173.3.4</target>
       </trans-unit>
-      <trans-unit id="cc712f1ab6dc9fc2707b8241d73401dc">
+      <trans-unit id="cc712f1ab6dc9fc2707b8241d73401dc" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</target>
+        <target state="final">[FIX] Виправлена заявлена помилка: https://skripters.biz/forum/threads/telegram-posting.50716/#post-497819</target>
       </trans-unit>
-      <trans-unit id="f9a7b33d16120075ebddf02776134fe2">
+      <trans-unit id="f9a7b33d16120075ebddf02776134fe2" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка: Конвертер изображений неверно обрабатывал пути до временных файлов</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка: Конвертер зображень неправильно обробляв шляхи до тимчасових файлів</target>
+        <target state="final">[FIX] Виправлена заявлена помилка: Конвертер зображень неправильно обробляв шляхи до тимчасових файлів</target>
       </trans-unit>
-      <trans-unit id="044257aaf4d87483c11110f6c295d205">
+      <trans-unit id="044257aaf4d87483c11110f6c295d205" approved="yes">
         <source>[FIX] Исправлен установщик</source>
-        <target state="translated">[FIX] Виправлено інсталятор</target>
+        <target state="final">[FIX] Виправлено інсталятор</target>
       </trans-unit>
-      <trans-unit id="df61541850e0d0f7e802a5483f489b02">
+      <trans-unit id="df61541850e0d0f7e802a5483f489b02" approved="yes">
         <source>[FIX] Исправлены ошибки подключений</source>
-        <target state="translated">[FIX] Виправлено помилки підключень</target>
+        <target state="final">[FIX] Виправлено помилки підключень</target>
       </trans-unit>
-      <trans-unit id="8df700b5d219b4eb9d5fd663d7edd05d">
+      <trans-unit id="8df700b5d219b4eb9d5fd663d7edd05d" approved="yes">
         <source>[FIX] Исправлен скрипт очистки временных файлов</source>
-        <target state="translated">[FIX] Виправлено скрипт очищення тимчасових файлів</target>
+        <target state="final">[FIX] Виправлено скрипт очищення тимчасових файлів</target>
       </trans-unit>
-      <trans-unit id="1e9d0eb6d36a10f2ced289759f7d0544">
+      <trans-unit id="1e9d0eb6d36a10f2ced289759f7d0544" approved="yes">
         <source>[FIX] Исправлено под MH Admin 2.0.8</source>
-        <target state="translated">[FIX] Виправлено сумісність з версією MH Admin 2.0.8</target>
+        <target state="final">[FIX] Виправлено сумісність з версією MH Admin 2.0.8</target>
       </trans-unit>
-      <trans-unit id="e7be370748f260a55a7630edfc635f4f">
+      <trans-unit id="e7be370748f260a55a7630edfc635f4f" approved="yes">
         <source>[FIX] Удалён мусор</source>
-        <target state="translated">[FIX] Видалено сміття</target>
+        <target state="final">[FIX] Видалено сміття</target>
       </trans-unit>
-      <trans-unit id="47f130ea4dff5b0bf3369d25a601a6a4">
+      <trans-unit id="47f130ea4dff5b0bf3369d25a601a6a4" approved="yes">
         <source>[UPDATE] Обновление кода до версии MHAdmin 2.0.7</source>
-        <target state="translated">[UPDATE] Оновлення коду до версії MHAdmin 2.0.7</target>
+        <target state="final">[UPDATE] Оновлення коду до версії MHAdmin 2.0.7</target>
       </trans-unit>
-      <trans-unit id="c5340222a58c0a5447e95d5a4a355226">
+      <trans-unit id="c5340222a58c0a5447e95d5a4a355226" approved="yes">
         <source>[NEW] Добавлена возможность назначать отдельно разделители тегов, хештегов и категорий</source>
-        <target state="translated">[NEW] Додано можливість призначати окремо роздільники тегів, хештегів та категорій</target>
+        <target state="final">[NEW] Додано можливість призначати окремо роздільники тегів, хештегів та категорій</target>
       </trans-unit>
-      <trans-unit id="b61d25d21542307553228d642dca6c7f">
+      <trans-unit id="b61d25d21542307553228d642dca6c7f" approved="yes">
         <source>[FIX] Исправлена совместимость с версией PHP 7.2</source>
-        <target state="translated">[FIX] Виправлена сумісність з версією PHP 7.2</target>
+        <target state="final">[FIX] Виправлена сумісність з версією PHP 7.2</target>
       </trans-unit>
-      <trans-unit id="fcf5a91f11d80c8092a0e3ce708ecd81">
+      <trans-unit id="fcf5a91f11d80c8092a0e3ce708ecd81" approved="yes">
         <source>[FIX] Исправлена совместимость с версией DLE до 1.5.0</source>
-        <target state="translated">[FIX] Виправлена сумісність з версією DLE до 1.5.0</target>
+        <target state="final">[FIX] Виправлена сумісність з версією DLE до 1.5.0</target>
       </trans-unit>
-      <trans-unit id="d350d6d5ef0c2027353477b18cf7fd5e">
+      <trans-unit id="d350d6d5ef0c2027353477b18cf7fd5e" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/prevju.5/</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка: https://devcraft.club/tickets/prevju.5/</target>
+        <target state="final">[FIX] Виправлена заявлена помилка: https://devcraft.club/tickets/prevju.5/</target>
       </trans-unit>
-      <trans-unit id="232bea489b776491bf7b638871c229fc">
+      <trans-unit id="232bea489b776491bf7b638871c229fc" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</target>
+        <target state="final">[FIX] Виправлена заявлена помилка: https://devcraft.club/tickets/jazykovoj-kod-ru_ru-ne-najden-i-mysql-error.4/</target>
       </trans-unit>
-      <trans-unit id="88dec0175e609ef1514794dc346afbe8">
+      <trans-unit id="88dec0175e609ef1514794dc346afbe8" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка: обработка данных тега [telegram_media_</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка: обробка даних тегу [telegram_media_</target>
+        <target state="final">[FIX] Виправлена заявлена помилка: обробка даних тегу [telegram_media_</target>
       </trans-unit>
-      <trans-unit id="6d15a3580bc939acf603d855b695d37c">
+      <trans-unit id="6d15a3580bc939acf603d855b695d37c" approved="yes">
         <source>[FIX] Тег {category} исправлен</source>
-        <target state="translated">[FIX] Тег {category} виправлено</target>
+        <target state="final">[FIX] Тег {category} виправлено</target>
       </trans-unit>
-      <trans-unit id="941a17b7d8b56dcc97bc0b0bd1c602ff">
+      <trans-unit id="941a17b7d8b56dcc97bc0b0bd1c602ff" approved="yes">
         <source>[FIX] Тег {link-category} исправлен</source>
-        <target state="translated">[FIX] Тег {link-category} виправлено</target>
+        <target state="final">[FIX] Тег {link-category} виправлено</target>
       </trans-unit>
-      <trans-unit id="c03f7a57e032dc0b3803a1903d7b0cc5">
+      <trans-unit id="c03f7a57e032dc0b3803a1903d7b0cc5" approved="yes">
         <source>[FIX] Поправлен вывод категорий в виде хештегов</source>
-        <target state="translated">[FIX] Виправлено виведення категорій у вигляді хештегів</target>
+        <target state="final">[FIX] Виправлено виведення категорій у вигляді хештегів</target>
       </trans-unit>
-      <trans-unit id="6b48d35de3c1e356de904b4390a0f2b0">
+      <trans-unit id="6b48d35de3c1e356de904b4390a0f2b0" approved="yes">
         <source>[NEW] Добавлен тег {category-hashtag} - отвечающий за вывод категории новости в виде хештегов.</source>
-        <target state="translated">[NEW] Додано тег {category-hashtag} - відповідає за виведення категорії новини у вигляді хештегів.</target>
+        <target state="final">[NEW] Додано тег {category-hashtag} - відповідає за виведення категорії новини у вигляді хештегів.</target>
       </trans-unit>
-      <trans-unit id="644a2cb0d8a323f892fec4c1ccfbbdb3">
+      <trans-unit id="644a2cb0d8a323f892fec4c1ccfbbdb3" approved="yes">
         <source>[NEW] Добавлен тег {link-category} - отвечающий за вывод категории новости в виде ссылок на вашем сайте.</source>
-        <target state="translated">[NEW] Додано тег {link-category} - відповідає за виведення категорії новини у вигляді посилань на вашому сайті.</target>
+        <target state="final">[NEW] Додано тег {link-category} - відповідає за виведення категорії новини у вигляді посилань на вашому сайті.</target>
       </trans-unit>
-      <trans-unit id="82030df4504805268e0738861d489405">
+      <trans-unit id="82030df4504805268e0738861d489405" approved="yes">
         <source>[NEW] Добавлен тег {category} - отвечающий за вывод категории новости в виде текста.</source>
-        <target state="translated">[NEW] Додано тег {category} - відповідає за виведення категорії новини у вигляді тексту.</target>
+        <target state="final">[NEW] Додано тег {category} - відповідає за виведення категорії новини у вигляді тексту.</target>
       </trans-unit>
-      <trans-unit id="25e896a6114f5c4802d918bef4279b1b">
+      <trans-unit id="25e896a6114f5c4802d918bef4279b1b" approved="yes">
         <source>[NEW] Добавлен тег {views} - отвечающий за кол-во просмотров новости.</source>
-        <target state="translated">[NEW] Додано тег {views} - відповідає за кількість переглядів новини.</target>
+        <target state="final">[NEW] Додано тег {views} - відповідає за кількість переглядів новини.</target>
       </trans-unit>
-      <trans-unit id="52aa69e4f49175eb6dbe80aa0d1e8e3f">
+      <trans-unit id="52aa69e4f49175eb6dbe80aa0d1e8e3f" approved="yes">
         <source>[NEW] Добавлен тег {comments-num} - отвечающий за кол-во комментариев в новости.</source>
-        <target state="translated">[NEW] Додано тег {comments-num} - відповідає за кількість коментарів у новині.</target>
+        <target state="final">[NEW] Додано тег {comments-num} - відповідає за кількість коментарів у новині.</target>
       </trans-unit>
-      <trans-unit id="e4f85bc6eb9190320cb71e56774f0062">
+      <trans-unit id="e4f85bc6eb9190320cb71e56774f0062" approved="yes">
         <source>[NEW] Добавлен тег {now=FORMAT} - отвечающий за текущее время в пользовательском формате.</source>
-        <target state="translated">[NEW] Додано тег {now=FORMAT} - відповідає за поточний час у користувацькому форматі.</target>
+        <target state="final">[NEW] Додано тег {now=FORMAT} - відповідає за поточний час у користувацькому форматі.</target>
       </trans-unit>
-      <trans-unit id="b5c2abaed8c1e62656ce9ab2a7548795">
+      <trans-unit id="b5c2abaed8c1e62656ce9ab2a7548795" approved="yes">
         <source>[NEW] Добавлен тег {now} - отвечающий за текущее время.</source>
-        <target state="translated">[NEW] Додано тег {now} - відповідає за поточний час.</target>
+        <target state="final">[NEW] Додано тег {now} - відповідає за поточний час.</target>
       </trans-unit>
-      <trans-unit id="02bac51930034405f5eafed4fce33a78">
+      <trans-unit id="02bac51930034405f5eafed4fce33a78" approved="yes">
         <source>[NEW] Добавлена функция проверки изображения на требуемые свойства для отправки</source>
-        <target state="translated">[NEW] Додано функцію перевірки зображення на необхідні властивості для відправки</target>
+        <target state="final">[NEW] Додано функцію перевірки зображення на необхідні властивості для відправки</target>
       </trans-unit>
-      <trans-unit id="9d8dc51bb5c641ebeda1460dd701950d">
+      <trans-unit id="9d8dc51bb5c641ebeda1460dd701950d" approved="yes">
         <source>[UPDATE] Поправлена функция конвертации WebP в JPG, если данная опция отключена в настройках DLE.</source>
-        <target state="translated">[UPDATE] Виправлено функцію конвертації WebP у JPG, якщо ця опція вимкнена в налаштуваннях DLE.</target>
+        <target state="final">[UPDATE] Виправлено функцію конвертації WebP у JPG, якщо ця опція вимкнена в налаштуваннях DLE.</target>
       </trans-unit>
-      <trans-unit id="885f3bba59d1d2e479e1db09771e0f7a">
+      <trans-unit id="885f3bba59d1d2e479e1db09771e0f7a" approved="yes">
         <source>[FIX] Исправлена заявленная ошибка на сайте: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</source>
-        <target state="translated">[FIX] Виправлена заявлена помилка на сайті: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</target>
+        <target state="final">[FIX] Виправлена заявлена помилка на сайті: https://devcraft.club/tickets/modul-telegram-posting-rabotaet-s-oshibkami.2/</target>
       </trans-unit>
-      <trans-unit id="4cf35b88a996dbce79939833b55cff0f">
+      <trans-unit id="4cf35b88a996dbce79939833b55cff0f" approved="yes">
         <source>[FIX] Исправлена ошибка отправки лишь одного шаблона в телеграм</source>
-        <target state="translated">[FIX] Виправлено відправку лише одного шаблону в телеграм</target>
+        <target state="final">[FIX] Виправлено відправку лише одного шаблону в телеграм</target>
       </trans-unit>
-      <trans-unit id="4fa315fef16002415f7b79b5be5c3ba1">
+      <trans-unit id="4fa315fef16002415f7b79b5be5c3ba1" approved="yes">
         <source>[FIX] Исправлен файл установки (install.xml), при обновлении выдавало ошибку, что значение TABLE лишнее</source>
-        <target state="translated">[FIX] Виправлено файл установки (install.xml), при оновленні видавав помилку, що значення TABLE зайве</target>
+        <target state="final">[FIX] Виправлено файл установки (install.xml), при оновленні видавав помилку, що значення TABLE зайве</target>
       </trans-unit>
-      <trans-unit id="499dc98941c55f01a8e8d6697a208904">
+      <trans-unit id="499dc98941c55f01a8e8d6697a208904" approved="yes">
         <source>[NEW] К редактору шаблонов была добавлена возможность копирования из других шаблонов</source>
-        <target state="translated">[NEW] До редактора шаблонів додано можливість копіювання з інших шаблонів</target>
+        <target state="final">[NEW] До редактора шаблонів додано можливість копіювання з інших шаблонів</target>
       </trans-unit>
-      <trans-unit id="251d2c14a9468db7a41a56a28f63ffbc">
+      <trans-unit id="251d2c14a9468db7a41a56a28f63ffbc" approved="yes">
         <source>[NEW] К редактору шаблонов была добавлена возможность поиска и вставки возможных тегов с их описанием (макс. 800 символов)</source>
-        <target state="translated">[NEW] До редактора шаблонів додано можливість пошуку та вставки можливих тегів з їх описом (макс. 800 символів)</target>
+        <target state="final">[NEW] До редактора шаблонів додано можливість пошуку та вставки можливих тегів з їх описом (макс. 800 символів)</target>
       </trans-unit>
-      <trans-unit id="fe805a07727c8a8faf208b425c9ffeb2">
+      <trans-unit id="fe805a07727c8a8faf208b425c9ffeb2" approved="yes">
         <source>[UPDATE] Редактор сообщений был упрощён</source>
-        <target state="translated">[UPDATE] Редактор повідомлень було спрощено</target>
+        <target state="final">[UPDATE] Редактор повідомлень було спрощено</target>
       </trans-unit>
-      <trans-unit id="6d55107725587351168ada22f81a5b47">
+      <trans-unit id="6d55107725587351168ada22f81a5b47" approved="yes">
         <source>[FIX] Исправлен парсинг содержимого, переставил местами обработчики</source>
-        <target state="translated">[FIX] Виправлено розбір змісту, переставив місцями обробники</target>
+        <target state="final">[FIX] Виправлено розбір змісту, переставив місцями обробники</target>
       </trans-unit>
-      <trans-unit id="322d02be91e141faa151db898023b51f">
+      <trans-unit id="322d02be91e141faa151db898023b51f" approved="yes">
         <source>[NEW]: Добавлена конвертация WebP в JPG/PNG</source>
-        <target state="translated">[NEW]: Додано конвертацію WebP у JPG/PNG</target>
+        <target state="final">[NEW]: Додано конвертацію WebP у JPG/PNG</target>
       </trans-unit>
-      <trans-unit id="91a44fb2241ed2d7ddd5e0b986dcdb62">
+      <trans-unit id="91a44fb2241ed2d7ddd5e0b986dcdb62" approved="yes">
         <source>[NEW]: Добавлена настройка задержки отправки новостей в телеграм при работе с кроном</source>
-        <target state="translated">[NEW]: Додано налаштування затримки відправки новин у телеграм при роботі з кроном</target>
+        <target state="final">[NEW]: Додано налаштування затримки відправки новин у телеграм при роботі з кроном</target>
       </trans-unit>
-      <trans-unit id="3205c3dd8f761d0b8a320bef5b484336">
+      <trans-unit id="3205c3dd8f761d0b8a320bef5b484336" approved="yes">
         <source>[NEW]: Добавлена настройка удаления неверно добавленных новостей в отложенные сообщения</source>
-        <target state="translated">[NEW]: Додано налаштування видалення неправильно доданих новин у відкладені повідомлення</target>
+        <target state="final">[NEW]: Додано налаштування видалення неправильно доданих новин у відкладені повідомлення</target>
       </trans-unit>
-      <trans-unit id="1faa298cae610fa44c43ed2c5ed57412">
+      <trans-unit id="1faa298cae610fa44c43ed2c5ed57412" approved="yes">
         <source>[UPDATE] Плагин обновлён до последней версии MHAdmin (2.0.5)</source>
-        <target state="translated">[UPDATE] Плагін оновлено до останньої версії MHAdmin (2.0.5)</target>
+        <target state="final">[UPDATE] Плагін оновлено до останньої версії MHAdmin (2.0.5)</target>
       </trans-unit>
-      <trans-unit id="6829677489373ec2f7dc38b811ec4e2c">
+      <trans-unit id="6829677489373ec2f7dc38b811ec4e2c" approved="yes">
         <source>[FIX] Устранена зависимость от класса миниатюр самой DLE, плагин будет работать на DLE 15.1</source>
-        <target state="translated">[FIX] Усунута залежність від класу мініатюр самої DLE, плагін буде працювати на DLE 15.1</target>
+        <target state="final">[FIX] Усунута залежність від класу мініатюр самої DLE, плагін буде працювати на DLE 15.1</target>
       </trans-unit>
-      <trans-unit id="b445c05961de4dd25715ce93a2368670">
+      <trans-unit id="b445c05961de4dd25715ce93a2368670" approved="yes">
         <source>[FIX] Устранена ошибка проверки зависимости при добавлении/редактировании новости</source>
-        <target state="translated">[FIX] Усунута помилка відправки новини по крону, функціонал перебудовано</target>
+        <target state="final">[FIX] Усунута помилка відправки новини по крону, функціонал перебудовано</target>
       </trans-unit>
-      <trans-unit id="d53f69c1e5364f6b2a7117df7d0c2473">
+      <trans-unit id="d53f69c1e5364f6b2a7117df7d0c2473" approved="yes">
         <source>[FIX] Устранена ошибка отправки новости по крону, функционал переработан</source>
-        <target state="translated">[FIX] Усунута помилка перевірки залежності при додаванні/редагуванні новини</target>
+        <target state="final">[FIX] Усунута помилка перевірки залежності при додаванні/редагуванні новини</target>
       </trans-unit>
-      <trans-unit id="fe532edebd4293b47deed416c619c9f1">
+      <trans-unit id="fe532edebd4293b47deed416c619c9f1" approved="yes">
         <source>FIX: Теперь можно указывать прочие зависимости (забыл добавить их в массив)</source>
-        <target state="translated">FIX: Тепер можна вказувати інші залежності (забув додати їх у масив)</target>
+        <target state="final">FIX: Тепер можна вказувати інші залежності (забув додати їх у масив)</target>
       </trans-unit>
-      <trans-unit id="7e693844a0da22e7021ffa0e71e0f1c3">
+      <trans-unit id="7e693844a0da22e7021ffa0e71e0f1c3" approved="yes">
         <source>FIX: Обработка текста перенесена уже в новую функцию, поскольку урезались нужные теги для обработки данных</source>
-        <target state="translated">FIX: Обробка тексту перенесена вже у нову функцію, оскільки скорочено необхідні теги для обробки даних</target>
+        <target state="final">FIX: Обробка тексту перенесена вже у нову функцію, оскільки скорочено необхідні теги для обробки даних</target>
       </trans-unit>
-      <trans-unit id="fa7e8f34273c706138720c3050f493aa">
+      <trans-unit id="fa7e8f34273c706138720c3050f493aa" approved="yes">
         <source>FIX: Поправлен тег [xfvalue_XXX_hashtag]</source>
-        <target state="translated">FIX: Поправлено тег [xfvalue_XXX_hashtag]</target>
+        <target state="final">FIX: Поправлено тег [xfvalue_XXX_hashtag]</target>
       </trans-unit>
-      <trans-unit id="65d6a95e331562cab5414c698a10e985">
+      <trans-unit id="65d6a95e331562cab5414c698a10e985" approved="yes">
         <source>FIX: Исправлена работа с кроном. Временный штамп не отправлялся в базу данных</source>
-        <target state="translated">FIX: Виправлено роботу з кроном. Тимчасовий штамп не відправлявся до бази даних</target>
+        <target state="final">FIX: Виправлено роботу з кроном. Тимчасовий штамп не відправлявся до бази даних</target>
       </trans-unit>
-      <trans-unit id="5dbc6aaff5d53da4ad20d106349eceff">
+      <trans-unit id="5dbc6aaff5d53da4ad20d106349eceff" approved="yes">
         <source>NEW: Добавлен вывод списка с ожидаемыми новостями на отправку</source>
-        <target state="translated">NEW: Додано вивід списку з очікуючими новинами на відправку</target>
+        <target state="final">NEW: Додано вивід списку з очікуючими новинами на відправку</target>
       </trans-unit>
-      <trans-unit id="062dd9e4d5897ed5051c73cbbd7942de">
+      <trans-unit id="062dd9e4d5897ed5051c73cbbd7942de" approved="yes">
         <source>Логирование не работает на PHP 7.4, поэтому для таких случаев сделан вывод в браузер</source>
-        <target state="translated">Логування не працює на PHP 7.4, тому для таких випадків зроблено вивід у браузер</target>
+        <target state="final">Логування не працює на PHP 7.4, тому для таких випадків зроблено вивід у браузер</target>
       </trans-unit>
-      <trans-unit id="b778d794e319267b1ab0abacd5c20f42">
+      <trans-unit id="b778d794e319267b1ab0abacd5c20f42" approved="yes">
         <source>FIX: Убраны дубли</source>
-        <target state="translated">FIX: Видалено дублікати</target>
+        <target state="final">FIX: Видалено дублікати</target>
       </trans-unit>
-      <trans-unit id="c835e1049524daa82d6529169384cd45">
+      <trans-unit id="c835e1049524daa82d6529169384cd45" approved="yes">
         <source>FIX: Исправлена "копипаста</source>
-        <target state="translated">FIX: Виправлено "копіпаста"</target>
+        <target state="final">FIX: Виправлено "копіпаста"</target>
       </trans-unit>
-      <trans-unit id="33508a226ebbe038cc09fa68a4e01291">
+      <trans-unit id="33508a226ebbe038cc09fa68a4e01291" approved="yes">
         <source>FIX: Для файлов в доп. полях которые сохраняются как [attachment...] была сделана обработка (упустил из виду)</source>
-        <target state="translated">FIX: Для файлів у додаткових полях, які зберігаються як [attachment...] було зроблено обробку (пропустив з виду)</target>
+        <target state="final">FIX: Для файлів у додаткових полях, які зберігаються як [attachment...] було зроблено обробку (пропустив з виду)</target>
       </trans-unit>
-      <trans-unit id="6f90459f74fd89e41b4d0925210b7dd6">
+      <trans-unit id="6f90459f74fd89e41b4d0925210b7dd6" approved="yes">
         <source>NEW: Максимальная длина сообщения отправляемого в телеграм была установлена, вшита в код. Это - 1024 символов, включая пробелы. Если длина сообщения равна или больше 1024 символов, то отправляются 1021 символа и троеточие в конце.</source>
-        <target state="translated">NEW: Максимальна довжина повідомлення, відправленого в телеграм, була встановлена, вбудована у код. Це - 1024 символів, включаючи пробіли. Якщо довжина повідомлення дорівнює або більше 1024 символів, то відправляються 1021 символ і три крапки в кінці.</target>
+        <target state="final">NEW: Максимальна довжина повідомлення, відправленого в телеграм, була встановлена, вбудована у код. Це - 1024 символів, включаючи пробіли. Якщо довжина повідомлення дорівнює або більше 1024 символів, то відправляються 1021 символ і три крапки в кінці.</target>
       </trans-unit>
-      <trans-unit id="972ef935761420b367e9aa39446c3bdb">
+      <trans-unit id="972ef935761420b367e9aa39446c3bdb" approved="yes">
         <source>FIX: Сбор изображений из базы данных был исправлен</source>
-        <target state="translated">FIX: Збір зображень з бази даних було виправлено</target>
+        <target state="final">FIX: Збір зображень з бази даних було виправлено</target>
       </trans-unit>
-      <trans-unit id="47615e3c4a663654e207e12f31fc4a46">
+      <trans-unit id="47615e3c4a663654e207e12f31fc4a46" approved="yes">
         <source>FIX: Миниатюры теперь генерируются из списка всех изображений</source>
-        <target state="translated">FIX: Мініатюри тепер генеруються зі списку всіх зображень</target>
+        <target state="final">FIX: Мініатюри тепер генеруються зі списку всіх зображень</target>
       </trans-unit>
-      <trans-unit id="fbd89a7ddc715b549a5840e2c910ac4b">
+      <trans-unit id="fbd89a7ddc715b549a5840e2c910ac4b" approved="yes">
         <source>FIX: Исправлена отправка данные, если указана внутренняя ссылка без домена, а-ля /uploads/...</source>
-        <target state="translated">FIX: Виправлено відправку даних, якщо вказане внутрішнє посилання без домену, а-ля /uploads/...</target>
+        <target state="final">FIX: Виправлено відправку даних, якщо вказане внутрішнє посилання без домену, а-ля /uploads/...</target>
       </trans-unit>
-      <trans-unit id="c79f3a88e7bf567a32befec340625357">
+      <trans-unit id="c79f3a88e7bf567a32befec340625357" approved="yes">
         <source>Добавлено кеширование данных на запросы в базу данных</source>
-        <target state="translated">Додано кешування даних на запити до бази даних</target>
+        <target state="final">Додано кешування даних на запити до бази даних</target>
       </trans-unit>
-      <trans-unit id="d52f4c4ce3e82c175f425418db7fb679">
+      <trans-unit id="d52f4c4ce3e82c175f425418db7fb679" approved="yes">
         <source>В общий массив медиа добавлены изображения и файлы из базы данных, если такие есть.</source>
-        <target state="translated">До загального масиву медіа додані зображення та файли з бази даних, якщо такі є.</target>
+        <target state="final">До загального масиву медіа додані зображення та файли з бази даних, якщо такі є.</target>
       </trans-unit>
-      <trans-unit id="2f69423435c95946a611e07fd3c9687b">
+      <trans-unit id="2f69423435c95946a611e07fd3c9687b" approved="yes">
         <source>FIX: Исправлен запрос в базу данных на новость (забыл закрывающую скобку поставить)</source>
-        <target state="translated">FIX: Виправлено запит до бази даних на новину (забув закрити дужку)</target>
+        <target state="final">FIX: Виправлено запит до бази даних на новину (забув закрити дужку)</target>
       </trans-unit>
-      <trans-unit id="b7d307144f874c59bc50dce5f9843976">
+      <trans-unit id="b7d307144f874c59bc50dce5f9843976" approved="yes">
         <source>Что-бы включить логирование отправки данных, достаточно в файле RePost.php заменить $logs = 0 на $logs = 1</source>
-        <target state="translated">Щоб ввімкнути логування відправки даних, достатньо у файлі RePost.php замінити $logs = 0 на $logs = 1</target>
+        <target state="final">Щоб ввімкнути логування відправки даних, достатньо у файлі RePost.php замінити $logs = 0 на $logs = 1</target>
       </trans-unit>
-      <trans-unit id="d2ac4ce98735fa32c5d75742c205878b">
+      <trans-unit id="d2ac4ce98735fa32c5d75742c205878b" approved="yes">
         <source>FIX: Добавление аудио из доп. полей в общий массив</source>
-        <target state="translated">FIX: Додавання аудіо з додаткових полів до загального масиву</target>
+        <target state="final">FIX: Додавання аудіо з додаткових полів до загального масиву</target>
       </trans-unit>
-      <trans-unit id="a0ec2f7d9380fda06e118e0d0970a3aa">
+      <trans-unit id="a0ec2f7d9380fda06e118e0d0970a3aa" approved="yes">
         <source>FIX: Добавление видео из доп. полей в общий массив</source>
-        <target state="translated">FIX: Додавання відео з додаткових полів до загального масиву</target>
+        <target state="final">FIX: Додавання відео з додаткових полів до загального масиву</target>
       </trans-unit>
-      <trans-unit id="bf6b71ede1d7eacf722a7267c137b1ed">
+      <trans-unit id="bf6b71ede1d7eacf722a7267c137b1ed" approved="yes">
         <source>Добавлена заглушка по умолчанию из сервиса dummyimage.com</source>
-        <target state="translated">Додано заглушку за замовчуванням з сервісу dummyimage.com</target>
+        <target state="final">Додано заглушку за замовчуванням з сервісу dummyimage.com</target>
       </trans-unit>
-      <trans-unit id="9d7f84e9397c2db218cfdb93c05503f3">
+      <trans-unit id="9d7f84e9397c2db218cfdb93c05503f3" approved="yes">
         <source>FIX: Исправлена отправка файлов со сторонних источников</source>
-        <target state="translated">FIX: Виправлено відправку файлів зі сторонніх джерел</target>
+        <target state="final">FIX: Виправлено відправку файлів зі сторонніх джерел</target>
       </trans-unit>
-      <trans-unit id="470f710f377b5c5549bfe5b5afbe066f">
+      <trans-unit id="470f710f377b5c5549bfe5b5afbe066f" approved="yes">
         <source>FIX: Исправлена отправка текстовых сообщений</source>
-        <target state="translated">FIX: Виправлено відправку текстових повідомлень</target>
+        <target state="final">FIX: Виправлено відправку текстових повідомлень</target>
       </trans-unit>
-      <trans-unit id="38b0341772af8c45f5dc8ffe40bbb0e0">
+      <trans-unit id="38b0341772af8c45f5dc8ffe40bbb0e0" approved="yes">
         <source>FIX: Отправка сообщений из настроек</source>
-        <target state="translated">FIX: Відправка повідомлень з налаштувань</target>
+        <target state="final">FIX: Відправка повідомлень з налаштувань</target>
       </trans-unit>
-      <trans-unit id="f1fd7237a0a3ca16a63a0d732e04936c">
+      <trans-unit id="f1fd7237a0a3ca16a63a0d732e04936c" approved="yes">
         <source>FIX: Сохранение зависимостей (скрипт начинал работать после подключения второй зависимости, из-за чего вызывал ошибку 504)</source>
-        <target state="translated">FIX: Збереження залежностей (скрипт починав працювати після підключення другої залежності, через що викликав помилку 504)</target>
+        <target state="final">FIX: Збереження залежностей (скрипт починав працювати після підключення другої залежності, через що викликав помилку 504)</target>
       </trans-unit>
-      <trans-unit id="73c50b805296ffc70ade7d8ef902140a">
+      <trans-unit id="73c50b805296ffc70ade7d8ef902140a" approved="yes">
         <source>FIX: Если файл указан как ссылка (простое текстовое поле), то он пропускался. Теперь, если файл находится не на сервере, то пропускает проверку, а указывается как ссылка.</source>
-        <target state="translated">FIX: Якщо файл вказаний як посилання (просте текстове поле), то він пропускався. Тепер, якщо файл знаходиться не на сервері, то пропускає перевірку, а вказується як посилання.</target>
+        <target state="final">FIX: Якщо файл вказаний як посилання (просте текстове поле), то він пропускався. Тепер, якщо файл знаходиться не на сервері, то пропускає перевірку, а вказується як посилання.</target>
       </trans-unit>
-      <trans-unit id="f395a2f88648a0d4c1c85f33d3d34f43">
+      <trans-unit id="f395a2f88648a0d4c1c85f33d3d34f43" approved="yes">
         <source>FIX: Убраны дубли, из-за чего движок ругался</source>
-        <target state="translated">FIX: Видалено дублікати, через що движок скаржився</target>
+        <target state="final">FIX: Видалено дублікати, через що движок скаржився</target>
       </trans-unit>
-      <trans-unit id="acde529c5718c4c8e5e3c0f2323f2757">
+      <trans-unit id="acde529c5718c4c8e5e3c0f2323f2757" approved="yes">
         <source>Фикс файла version.php. При мёрдже файл был сохранён не верно</source>
-        <target state="translated">Виправлено файл version.php. При мёрджі файл було збережено неправильно</target>
+        <target state="final">Виправлено файл version.php. При мёрджі файл було збережено неправильно</target>
       </trans-unit>
-      <trans-unit id="17ae951c547e07cb8a2d852ad2d709e9">
+      <trans-unit id="17ae951c547e07cb8a2d852ad2d709e9" approved="yes">
         <source>Добавлена поддержка медиа контента. Можно выбирать одно из двух.</source>
-        <target state="translated">Додано підтримку медіаконтенту. Можна обирати одне з двох.</target>
+        <target state="final">Додано підтримку медіаконтенту. Можна обирати одне з двох.</target>
       </trans-unit>
-      <trans-unit id="646af1a896c5fa325c1bf9c57fdce253">
+      <trans-unit id="646af1a896c5fa325c1bf9c57fdce253" approved="yes">
         <source>Добавлена поддержка парсинга всех стандртных тегов DLE</source>
-        <target state="translated">Додано підтримку парсингу всіх стандартних тегів DLE</target>
+        <target state="final">Додано підтримку парсингу всіх стандартних тегів DLE</target>
       </trans-unit>
-      <trans-unit id="7e615beaec3693dffbe20dd66b527d7b">
+      <trans-unit id="7e615beaec3693dffbe20dd66b527d7b" approved="yes">
         <source>Исправлена проблема с отрпавкой данных из HTML редактора</source>
-        <target state="translated">Виправлено проблему з відправкою даних з HTML редактора</target>
+        <target state="final">Виправлено проблему з відправкою даних з HTML редактора</target>
       </trans-unit>
-      <trans-unit id="35878166cb0c57374ec031d7a3b08844">
+      <trans-unit id="35878166cb0c57374ec031d7a3b08844" approved="yes">
         <source>Небольшой фикс касательно поиска названия группы / канала</source>
-        <target state="translated">Невеликий фікс щодо пошуку назви групи / каналу</target>
+        <target state="final">Невеликий фікс щодо пошуку назви групи / каналу</target>
       </trans-unit>
-      <trans-unit id="511e709bc82b5242c717338850f91943">
+      <trans-unit id="511e709bc82b5242c717338850f91943" approved="yes">
         <source>Созданы значения по умолчанию для крона, теперь, даже если он и не настроен, телеграм будет получать сообщения по крону</source>
-        <target state="translated">Створено значення за замовчуванням для крону, тепер, навіть якщо він і не налаштований, телеграм буде отримувати повідомлення по крону</target>
+        <target state="final">Створено значення за замовчуванням для крону, тепер, навіть якщо він і не налаштований, телеграм буде отримувати повідомлення по крону</target>
       </trans-unit>
-      <trans-unit id="4a477a87ef8ea09f8500cc0e559a9183">
+      <trans-unit id="4a477a87ef8ea09f8500cc0e559a9183" approved="yes">
         <source>Обновлено для версии DLE 14.x</source>
-        <target state="translated">Оновлено для версії DLE 14.x</target>
+        <target state="final">Оновлено для версії DLE 14.x</target>
       </trans-unit>
-      <trans-unit id="870eaf98b0a26c3721c9a14e7576e046">
+      <trans-unit id="870eaf98b0a26c3721c9a14e7576e046" approved="yes">
         <source>Добавлена возможность выводить лимитированные описания</source>
-        <target state="translated">Додано можливість виводити обмежені описи</target>
+        <target state="final">Додано можливість виводити обмежені описи</target>
       </trans-unit>
-      <trans-unit id="85e6a724f9f76f710480b3d4f5748aea">
+      <trans-unit id="85e6a724f9f76f710480b3d4f5748aea" approved="yes">
         <source>Исправлен поиск чата</source>
-        <target state="translated">Виправлено пошук чату</target>
+        <target state="final">Виправлено пошук чату</target>
       </trans-unit>
-      <trans-unit id="8bcff3ab349d7c0260b964a825e20e3a">
+      <trans-unit id="8bcff3ab349d7c0260b964a825e20e3a" approved="yes">
         <source>Исправлены мелкие баги и недочёты</source>
-        <target state="translated">Виправлено дрібні баги та недоліки</target>
+        <target state="final">Виправлено дрібні баги та недоліки</target>
       </trans-unit>
-      <trans-unit id="ffc95a3d7047c38622c151ed077e5536">
+      <trans-unit id="ffc95a3d7047c38622c151ed077e5536" approved="yes">
         <source>Добавлена поддержка SOCKS5 прокси.</source>
-        <target state="translated">Додано підтримку SOCKS5 проксі.</target>
+        <target state="final">Додано підтримку SOCKS5 проксі.</target>
       </trans-unit>
-      <trans-unit id="b0d9c7cb29d68f56f2d432d72b0e23df">
+      <trans-unit id="b0d9c7cb29d68f56f2d432d72b0e23df" approved="yes">
         <source>Небольшой фикс со стилями.</source>
-        <target state="translated">Невеликий фікс зі стилями.</target>
+        <target state="final">Невеликий фікс зі стилями.</target>
       </trans-unit>
-      <trans-unit id="0b2ea536fb3058b3e44e9e855068c9d1">
+      <trans-unit id="0b2ea536fb3058b3e44e9e855068c9d1" approved="yes">
         <source>Небольшой фикс по отправке сообщений.</source>
-        <target state="translated">Невеликий фікс по відправці повідомлень.</target>
+        <target state="final">Невеликий фікс по відправці повідомлень.</target>
       </trans-unit>
-      <trans-unit id="ef15443840bf4b8aaba53a07cc5ba45a">
+      <trans-unit id="ef15443840bf4b8aaba53a07cc5ba45a" approved="yes">
         <source>Исправлена ошибка созданная гитом</source>
-        <target state="translated">Виправлено помилку, створену гітом</target>
+        <target state="final">Виправлено помилку, створену гітом</target>
       </trans-unit>
-      <trans-unit id="4c5eb1c9d220af41fffa8d104e6781cc">
+      <trans-unit id="4c5eb1c9d220af41fffa8d104e6781cc" approved="yes">
         <source>Добавлена возможность отправлять в телеграм при добавлении с сайта</source>
-        <target state="translated">Додано можливість відправляти в телеграм при додаванні з сайту</target>
+        <target state="final">Додано можливість відправляти в телеграм при додаванні з сайту</target>
       </trans-unit>
-      <trans-unit id="babfdae09a055869b7d83f72f8316810">
+      <trans-unit id="babfdae09a055869b7d83f72f8316810" approved="yes">
         <source>Добавлены новые теги для шаблонов: %categories% (выводит все категории через разделитель указанный в настройках движка) и %category_links% (выводит так же категории, только ссылками)</source>
-        <target state="translated">Додано нові теги для шаблонів: %categories% (виводить всі категорії через роздільник, вказаний у налаштуваннях движка) та %category_links% (виводить також категорії, тільки посиланнями)</target>
+        <target state="final">Додано нові теги для шаблонів: %categories% (виводить всі категорії через роздільник, вказаний у налаштуваннях движка) та %category_links% (виводить також категорії, тільки посиланнями)</target>
       </trans-unit>
-      <trans-unit id="ce8361e223b1836d4a2b68e20b80fced">
+      <trans-unit id="ce8361e223b1836d4a2b68e20b80fced" approved="yes">
         <source>Добавлены новые теги для шаблонов: [xfgiven_XXX]XYZ[/xfgiven_XXX] (аналогичен тегам для новостей, если доп. поле заполнено, то выведет информацию заключённую в теги)</source>
-        <target state="translated">Додано нові теги для шаблонів: [xfgiven_XXX]XYZ[/xfgiven_XXX] (аналогічні тегам для новин, якщо додаткове поле заповнене, то виведе інформацію, закорочену в теги)</target>
+        <target state="final">Додано нові теги для шаблонів: [xfgiven_XXX]XYZ[/xfgiven_XXX] (аналогічні тегам для новин, якщо додаткове поле заповнене, то виведе інформацію, закорочену в теги)</target>
       </trans-unit>
-      <trans-unit id="328b9e8a684c1e372839afffee1e0dab">
+      <trans-unit id="328b9e8a684c1e372839afffee1e0dab" approved="yes">
         <source>Добавлены новые теги для шаблонов: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (аналогичен тегам для новостей, если доп. поле не заполнено, то выведет информацию заключённую в теги)</source>
-        <target state="translated">Додано нові теги для шаблонів: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (аналогічні тегам для новин, якщо додаткове поле не заповнене, то виведе інформацію, закорочену в теги)</target>
+        <target state="final">Додано нові теги для шаблонів: [xfnotgiven_XXX]XYZ[/xfnotgiven_XXX] (аналогічні тегам для новин, якщо додаткове поле не заповнене, то виведе інформацію, закорочену в теги)</target>
       </trans-unit>
-      <trans-unit id="5252231ab462b010db7b707370d41200">
+      <trans-unit id="5252231ab462b010db7b707370d41200" approved="yes">
         <source>Исправлено пару багов</source>
-        <target state="translated">Виправлено пару багів</target>
+        <target state="final">Виправлено пару багів</target>
       </trans-unit>
-      <trans-unit id="514f189473c2ade11124191dd4e93b3d">
+      <trans-unit id="514f189473c2ade11124191dd4e93b3d" approved="yes">
         <source>Облегчённая версия</source>
-        <target state="translated">Полегшена версія</target>
+        <target state="final">Полегшена версія</target>
       </trans-unit>
-      <trans-unit id="c67c905a44110e7686084485e65f9787">
+      <trans-unit id="c67c905a44110e7686084485e65f9787" approved="yes">
         <source>Версия для DLE 13 и выше</source>
-        <target state="translated">Версія для DLE 13 та вище</target>
+        <target state="final">Версія для DLE 13 та вище</target>
       </trans-unit>
-      <trans-unit id="f4877e9cea055c8140cde26a462a2ded">
+      <trans-unit id="f4877e9cea055c8140cde26a462a2ded" approved="yes">
         <source>Мелкие правки</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Мелкі виправлення</target>
+        <target state="final">Мелкі виправлення</target>
       </trans-unit>
-      <trans-unit id="d7cc8da16df939c916ff5826fbd6f201">
+      <trans-unit id="d7cc8da16df939c916ff5826fbd6f201" approved="yes">
         <source>Добавлена возможность использовать прокси (актуально для сайтов размещённых в РФ)</source>
-        <target state="translated">Додано можливість використовувати проксі (актуально для сайтів розміщених в РФ)</target>
+        <target state="final">Додано можливість використовувати проксі (актуально для сайтів розміщених в РФ)</target>
       </trans-unit>
-      <trans-unit id="6ac5e828f9f819c790a374d2810c71bd">
+      <trans-unit id="6ac5e828f9f819c790a374d2810c71bd" approved="yes">
         <source>Добавлена возможность отправки сообщений по крону</source>
-        <target state="translated">Додано можливість відправки повідомлень по крону</target>
+        <target state="final">Додано можливість відправки повідомлень по крону</target>
       </trans-unit>
-      <trans-unit id="91c38227796c235cd68e63ed92ed50ed">
+      <trans-unit id="91c38227796c235cd68e63ed92ed50ed" approved="yes">
         <source>Последняя версия для DLE 12.x (Добавлена конвертация текстав нужную кодировку)</source>
-        <target state="translated">Остання версія для DLE 12.x (Додано конвертацію текстів у потрібну кодування)</target>
+        <target state="final">Остання версія для DLE 12.x (Додано конвертацію текстів у потрібну кодування)</target>
       </trans-unit>
-      <trans-unit id="1598396666caac44b5f65035eb4d7046">
+      <trans-unit id="1598396666caac44b5f65035eb4d7046" approved="yes">
         <source>Исправлена ошибка со считыванием данных</source>
-        <target state="translated">Виправлено помилку зі зчитуванням даних</target>
+        <target state="final">Виправлено помилку зі зчитуванням даних</target>
       </trans-unit>
-      <trans-unit id="3f5996c8be823133b947be1960740cfb">
+      <trans-unit id="3f5996c8be823133b947be1960740cfb" approved="yes">
         <source>Добавлены новые теги для шаблонов: %full_descr% и %short_descr%</source>
-        <target state="translated">Додано нові теги для шаблонів: %full_descr% та %short_descr%</target>
+        <target state="final">Додано нові теги для шаблонів: %full_descr% та %short_descr%</target>
       </trans-unit>
-      <trans-unit id="5f9848c6d7434c863152900e85dcfeb3">
+      <trans-unit id="5f9848c6d7434c863152900e85dcfeb3" approved="yes">
         <source>Тег %descr% будет заменён на %short_descr%</source>
-        <target state="translated">Тег %descr% буде замінено на %short_descr%</target>
+        <target state="final">Тег %descr% буде замінено на %short_descr%</target>
       </trans-unit>
-      <trans-unit id="50de0fbef15e1769f526648805d77237">
+      <trans-unit id="50de0fbef15e1769f526648805d77237" approved="yes">
         <source>Исправлена ошибка с доп. полями</source>
-        <target state="translated">Виправлено помилку з додатковими полями</target>
+        <target state="final">Виправлено помилку з додатковими полями</target>
       </trans-unit>
-      <trans-unit id="226ca30a4aa10e67705406e0ba59cc67">
+      <trans-unit id="226ca30a4aa10e67705406e0ba59cc67" approved="yes">
         <source>Базовая версия</source>
-        <target state="translated">Базова версія</target>
+        <target state="final">Базова версія</target>
       </trans-unit>
-      <trans-unit id="15180cb881cfcb9ac831d1e0d76078ff">
+      <trans-unit id="15180cb881cfcb9ac831d1e0d76078ff" approved="yes">
         <source>Отправка сообщений при добавлении новости</source>
-        <target state="translated">Відправка повідомлень при додаванні новини</target>
+        <target state="final">Відправка повідомлень при додаванні новини</target>
       </trans-unit>
-      <trans-unit id="173d292548669a0223ab86718678a9f7">
+      <trans-unit id="173d292548669a0223ab86718678a9f7" approved="yes">
         <source>Отправка сообщений при редактировании новости</source>
-        <target state="translated">Відправка повідомлень при редагуванні новини</target>
+        <target state="final">Відправка повідомлень при редагуванні новини</target>
       </trans-unit>
-      <trans-unit id="72f0f271c171c2e351f9411c74f4f54f">
+      <trans-unit id="72f0f271c171c2e351f9411c74f4f54f" approved="yes">
         <source>Отправка при зависимости от полей</source>
-        <target state="translated">Відправка при залежності від полів</target>
+        <target state="final">Відправка при залежності від полів</target>
       </trans-unit>
-      <trans-unit id="d77dcc3bfda156e285c689d65ef3b006">
+      <trans-unit id="d77dcc3bfda156e285c689d65ef3b006" approved="yes">
         <source>Отправка обычного сообщения на канал</source>
-        <target state="translated">Відправка звичайного повідомлення на канал</target>
+        <target state="final">Відправка звичайного повідомлення на канал</target>
       </trans-unit>
-      <trans-unit id="17e880b26896b24afce7a15c70c3ac1e">
+      <trans-unit id="17e880b26896b24afce7a15c70c3ac1e" approved="yes">
         <source>Поиск нужного чата</source>
-        <target state="translated">Пошук потрібного чату</target>
+        <target state="final">Пошук потрібного чату</target>
       </trans-unit>
-      <trans-unit id="095aea736b89d1d24b73b71136f02a48">
+      <trans-unit id="095aea736b89d1d24b73b71136f02a48" approved="yes">
         <source>Настройка шаблонов для отправки сообщений</source>
-        <target state="translated">Налаштування шаблонів для відправки повідомлень</target>
+        <target state="final">Налаштування шаблонів для відправки повідомлень</target>
       </trans-unit>
-      <trans-unit id="8808519d077254a78c4d8c112f1f4652">
+      <trans-unit id="8808519d077254a78c4d8c112f1f4652" approved="yes">
         <source>Если сайт работает через SSL, то будет возможность приобразовать бота в Webhook</source>
-        <target state="translated">Якщо сайт працює через SSL, то буде можливість перетворити бота у Webhook</target>
+        <target state="final">Якщо сайт працює через SSL, то буде можливість перетворити бота у Webhook</target>
       </trans-unit>
-      <trans-unit id="593c9576a2a5b74de0d875b0af564132">
+      <trans-unit id="593c9576a2a5b74de0d875b0af564132" approved="yes">
         <source>Журнал изменений</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Журнал змін</target>
+        <target state="final">Журнал змін</target>
       </trans-unit>
-      <trans-unit id="cf6061b60978974b598cc6c58a0ee21e">
+      <trans-unit id="cf6061b60978974b598cc6c58a0ee21e" approved="yes">
         <source>Список отложенной отправки</source>
-        <target state="translated">Список відкладеної відправки</target>
+        <target state="final">Список відкладеної відправки</target>
       </trans-unit>
-      <trans-unit id="a9796357b87c6e2e998370b12b21c9c4">
+      <trans-unit id="a9796357b87c6e2e998370b12b21c9c4" approved="yes">
         <source>ID Новости</source>
-        <target state="translated">ID Новини</target>
+        <target state="final">ID Новини</target>
       </trans-unit>
-      <trans-unit id="0f294eb506cdfa7b88cd2b7f4ce88f8e">
+      <trans-unit id="0f294eb506cdfa7b88cd2b7f4ce88f8e" approved="yes">
         <source>Запланированная отправка</source>
-        <target state="translated">Запланована відправка</target>
+        <target state="final">Запланована відправка</target>
       </trans-unit>
-      <trans-unit id="2db281c93395da574576e224c17375a2">
+      <trans-unit id="2db281c93395da574576e224c17375a2" approved="yes">
         <source>Страница %page%</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Сторінка %page%</target>
+        <target state="final">Сторінка %page%</target>
       </trans-unit>
-      <trans-unit id="78851c4377266e5ed513628d76b6f479">
+      <trans-unit id="78851c4377266e5ed513628d76b6f479" approved="yes">
         <source>Разрешеить комментарии</source>
-        <target state="translated">Дозволити коментарі</target>
+        <target state="final">Дозволити коментарі</target>
       </trans-unit>
-      <trans-unit id="b475317d4d28461ae61ccf975b1c98f2">
+      <trans-unit id="b475317d4d28461ae61ccf975b1c98f2" approved="yes">
         <source>Настройки модуля</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Налаштування модуля</target>
+        <target state="final">Налаштування модуля</target>
       </trans-unit>
-      <trans-unit id="eb1c9dbf462343f43f2b9da2e7af4b3f">
+      <trans-unit id="eb1c9dbf462343f43f2b9da2e7af4b3f" approved="yes">
         <source>ID новости</source>
-        <target state="translated">ID новини</target>
+        <target state="final">ID новини</target>
       </trans-unit>
-      <trans-unit id="beec20f25573359ea30a38b26a119989">
+      <trans-unit id="beec20f25573359ea30a38b26a119989" approved="yes">
         <source>Запланированная дата</source>
-        <target state="translated">Запланована дата</target>
+        <target state="final">Запланована дата</target>
       </trans-unit>
-      <trans-unit id="77f6adb2a8bea2db77669b05b898a5f0">
+      <trans-unit id="77f6adb2a8bea2db77669b05b898a5f0" approved="yes">
         <source>Как новую новость</source>
-        <target state="translated">Як нову новину</target>
+        <target state="final">Як нову новину</target>
       </trans-unit>
-      <trans-unit id="67fda529f3f37e1ff05c9f88125e8b94">
+      <trans-unit id="67fda529f3f37e1ff05c9f88125e8b94" approved="yes">
         <source>Как отредактированную новость</source>
-        <target state="translated">Як відредаговану новину</target>
+        <target state="final">Як відредаговану новину</target>
       </trans-unit>
-      <trans-unit id="0e264e07f5d108d472222fb4b7e43b32">
+      <trans-unit id="0e264e07f5d108d472222fb4b7e43b32" approved="yes">
         <source>Ошибка при парсинге новостей! Подробности в консоли!</source>
-        <target state="translated">Сталася помилка при обробці новин! Подробиці в консолі!</target>
+        <target state="final">Сталася помилка при обробці новин! Подробиці в консолі!</target>
       </trans-unit>
-      <trans-unit id="74ea58b6a801f0dce4e5d34dbca034dc">
+      <trans-unit id="74ea58b6a801f0dce4e5d34dbca034dc" approved="yes">
         <source>Сохранить</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Зберегти</target>
+        <target state="final">Зберегти</target>
       </trans-unit>
-      <trans-unit id="987b33c664dce148f1d17f6eb9ab3e79">
+      <trans-unit id="987b33c664dce148f1d17f6eb9ab3e79" approved="yes">
         <source>Отмена</source>
-        <target state="translated">Скасувати</target>
+        <target state="final">Скасувати</target>
       </trans-unit>
-      <trans-unit id="55ab82df9f5c62852b221667f36d7ab0">
+      <trans-unit id="55ab82df9f5c62852b221667f36d7ab0" approved="yes">
         <source>Изменить:</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Изменить:</target>
+        <target state="final">Изменить:</target>
       </trans-unit>
-      <trans-unit id="56b0125ea0a9282c4a4e68b233a8c1e3">
+      <trans-unit id="56b0125ea0a9282c4a4e68b233a8c1e3" approved="yes">
         <source>Отправление было успешно изменено!</source>
-        <target state="translated">Відправлення було успішно змінено!</target>
+        <target state="final">Відправлення було успішно змінено!</target>
       </trans-unit>
-      <trans-unit id="340963393760c4e42d1dfe25f10343a9">
+      <trans-unit id="340963393760c4e42d1dfe25f10343a9" approved="yes">
         <source>Удалить:</source>
-        <target state="needs-review-translation" state-qualifier="leveraged-tm">Видалити:</target>
+        <target state="final">Видалити:</target>
       </trans-unit>
-      <trans-unit id="75f153e9501c62a58e1a87ac6cd83e46">
+      <trans-unit id="75f153e9501c62a58e1a87ac6cd83e46" approved="yes">
         <source>После удаления, данные будет не возможно вернуть!</source>
-        <target state="translated">Після видалення, дані буде неможливо повернути!</target>
+        <target state="final">Після видалення, дані буде неможливо повернути!</target>
       </trans-unit>
-      <trans-unit id="32457a30a74b2e78c0723008bd974388">
+      <trans-unit id="32457a30a74b2e78c0723008bd974388" approved="yes">
         <source>Отправить в телеграм:</source>
-        <target state="translated">Відправити в телеграм:</target>
+        <target state="final">Відправити в телеграм:</target>
       </trans-unit>
-      <trans-unit id="7e5972c4fa28e972199db8a96a492892">
+      <trans-unit id="7e5972c4fa28e972199db8a96a492892" approved="yes">
         <source>Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!</source>
-        <target state="translated">Підтвердіть відправку новини в телеграм! Після успішного відправлення, новина видалиться зі списку очікування на відправку!</target>
+        <target state="final">Підтвердіть відправку новини в телеграм! Після успішного відправлення, новина видалиться зі списку очікування на відправку!</target>
       </trans-unit>
-      <trans-unit id="6da0f0ae044012e784cdb53ab72a16f1">
+      <trans-unit id="6da0f0ae044012e784cdb53ab72a16f1" approved="yes">
         <source>Отправить</source>
-        <target state="translated">Відправити</target>
+        <target state="final">Відправити</target>
       </trans-unit>
-      <trans-unit id="9d34a0c9610305ab5db3a4f8cfd9e5c6">
+      <trans-unit id="9d34a0c9610305ab5db3a4f8cfd9e5c6" approved="yes">
         <source>Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!</source>
-        <target state="translated">Сталася помилка при обробці даних! Дивіться консоль браузера для подробиць!</target>
+        <target state="final">Сталася помилка при обробці даних! Дивіться консоль браузера для подробиць!</target>
       </trans-unit>
-      <trans-unit id="e5e353b12e00e5af8c4d9c43942c20e0">
+      <trans-unit id="e5e353b12e00e5af8c4d9c43942c20e0" approved="yes">
         <source>Новость была успешно отправлена в телеграм!</source>
-        <target state="translated">Новина була успішно відправлена в телеграм!</target>
+        <target state="final">Новина була успішно відправлена в телеграм!</target>
       </trans-unit>
-      <trans-unit id="1e70e3c3db6388be4620e87e61ca066d">
+      <trans-unit id="1e70e3c3db6388be4620e87e61ca066d" approved="yes">
         <source>Новость не могла быть обработана!&lt;br&gt;&lt;b&gt;Причина&lt;/b&gt;:</source>
-        <target state="translated">Новина не могла бути оброблена!&lt;br&gt;&lt;b&gt;Причина&lt;/b&gt;:</target>
+        <target state="final">Новина не могла бути оброблена!&lt;br&gt;&lt;b&gt;Причина&lt;/b&gt;:</target>
       </trans-unit>
-      <trans-unit id="eda08fe58a5f60383f8132a1012a3125">
+      <trans-unit id="eda08fe58a5f60383f8132a1012a3125" approved="yes">
         <source>Отправка сообщений в телеграм канал или группу</source>
-        <target state="translated">Відправка повідомлень в телеграм канал або групу</target>
+        <target state="final">Відправка повідомлень в телеграм канал або групу</target>
       </trans-unit>
     </body>
   </file>
