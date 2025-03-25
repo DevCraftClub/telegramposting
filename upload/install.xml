@@ -3,7 +3,7 @@
 	<name>Telegram Posting</name>
 	<description>Модуль будет отправлять сообщения в выбранный чат при помощи бота. Гибкие настройки позволят модулю отправлять лишь то, что вы хотите.</description>
 	<icon>engine/inc/maharder/_modules/telegram/assets/icon.png</icon>
-	<version>173.8.0</version>
+	<version>18.8.0</version>
 	<dleversion>17.3</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
