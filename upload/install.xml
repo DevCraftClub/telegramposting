@@ -3,7 +3,7 @@
 	<name>Telegram Posting</name>
 	<description>Модуль будет отправлять сообщения в выбранный чат при помощи бота. Гибкие настройки позволят модулю отправлять лишь то, что вы хотите.</description>
 	<icon>engine/inc/maharder/_modules/telegram/assets/icon.png</icon>
-	<version>18.8.0</version>
+	<version>180.8.1</version>
 	<dleversion>17.3</dleversion>
 	<versioncompare>greater</versioncompare>
 	<upgradeurl></upgradeurl>
@@ -11,12 +11,12 @@
 	<needplugin>MH Admin</needplugin>
 	<mnotice>0</mnotice>
 	<mysqlinstall><![CDATA[ALTER TABLE {prefix}_post ENGINE=InnoDB;]]></mysqlinstall>
-	<mysqlupgrade><![CDATA[UPDATE {prefix}_admin_sections SET title = 'Telegram Posting v173.8.0' WHERE name = 'telegram';
+	<mysqlupgrade><![CDATA[UPDATE {prefix}_admin_sections SET title = 'Telegram Posting v180.8.1' WHERE name = 'telegram';
 ALTER TABLE {prefix}_post ENGINE=InnoDB;]]></mysqlupgrade>
-	<mysqlenable><![CDATA[INSERT INTO {prefix}_admin_sections (name, title, descr, icon, allow_groups) VALUES ('telegram', 'Telegram Posting v173.8.0', 'Публикация сообщений при появлении и / или обновлений новостей', 'engine/inc/maharder/_modules/telegram/assets/icon.png', '1') ON DUPLICATE KEY UPDATE title = 'Telegram Posting v173.8.0';]]></mysqlenable>
+	<mysqlenable><![CDATA[INSERT INTO {prefix}_admin_sections (name, title, descr, icon, allow_groups) VALUES ('telegram', 'Telegram Posting v180.8.1', 'Публикация сообщений при появлении и / или обновлений новостей', 'engine/inc/maharder/_modules/telegram/assets/icon.png', '1') ON DUPLICATE KEY UPDATE title = 'Telegram Posting v180.8.1';]]></mysqlenable>
 	<mysqldisable><![CDATA[DELETE FROM {prefix}_admin_sections WHERE name = 'telegram';]]></mysqldisable>
 	<mysqldelete><![CDATA[DELETE FROM {prefix}_admin_sections WHERE name = 'telegram';
-DROP TABLE {prefix}_telegram_cron;]]></mysqldelete>
+DROP TABLE {prefix}_telegram_posting_cron;]]></mysqldelete>
 	<phpinstall><![CDATA[]]></phpinstall>
 	<phpupgrade><![CDATA[]]></phpupgrade>
 	<phpenable><![CDATA[]]></phpenable>
@@ -25,8 +25,8 @@ DROP TABLE {prefix}_telegram_cron;]]></mysqldelete>
 	<notice><![CDATA[]]></notice>
 	<file name="engine/inc/addnews.php">
 		<operation action="before">
-			<searchcode><![CDATA[clear_cache( array('news_', ]]></searchcode>
-			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
+			<searchcode><![CDATA[clear_cache( array('news_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );]]></searchcode>
+			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/_modules/telegram/helpers/sender.php"));
 sendTelegram($id);]]></replacecode>
 			<searchcount>1</searchcount>
 			<replacecount>1</replacecount>
@@ -36,7 +36,7 @@ sendTelegram($id);]]></replacecode>
 	<file name="engine/inc/editnews.php">
 		<operation action="before">
 			<searchcode><![CDATA[clear_cache(]]></searchcode>
-			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
+			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/_modules/telegram/helpers/sender.php"));
 sendTelegram($item_db[0], 'editnews');]]></replacecode>
 			<searchcount>1</searchcount>
 			<replacecount>1</replacecount>
@@ -45,8 +45,8 @@ sendTelegram($item_db[0], 'editnews');]]></replacecode>
 	</file>
 	<file name="engine/modules/addnews.php">
 		<operation action="before">
-			<searchcode><![CDATA[clear_cache( array('news_', ]]></searchcode>
-			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/telegram/helpers/sender.php"));
+			<searchcode><![CDATA[clear_cache( array('news_', 'related_', 'tagscloud_', 'archives_', 'calendar_', 'topnews_', 'rss', 'stats') );]]></searchcode>
+			<replacecode><![CDATA[include_once (DLEPlugins::Check(ENGINE_DIR . "/inc/maharder/_modules/telegram/helpers/sender.php"));
 sendTelegram($row['id']);]]></replacecode>
 			<searchcount>1</searchcount>
 			<replacecount>1</replacecount>
@@ -56,14 +56,14 @@ sendTelegram($row['id']);]]></replacecode>
 	<file name="engine/inc/include/functions.inc.php">
 		<operation action="after">
 			<searchcode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_subscribe WHERE news_id='{$id}'");]]></searchcode>
-			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_cron WHERE news_id='{$id}'");]]></replacecode>
+			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_posting_cron WHERE news_id='{$id}'");]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
 	</file>
 	<file name="engine/modules/functions.php">
 		<operation action="after">
 			<searchcode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_subscribe WHERE news_id='{$id}'");]]></searchcode>
-			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_cron WHERE news_id='{$id}'");]]></replacecode>
+			<replacecode><![CDATA[$db->query( "DELETE FROM " . PREFIX . "_telegram_posting_cron WHERE news_id='{$id}'");]]></replacecode>
 			<enabled>1</enabled>
 		</operation>
 	</file>
