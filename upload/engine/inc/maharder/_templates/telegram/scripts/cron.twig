@@ -1,0 +1,390 @@
+{% autoescape 'js' %}
+	<script>
+
+        var news_obj = [];
+
+        function tableEntry(id, news_id, type, time) {
+			console.info('id: ' + id);
+			console.info('news_id: ' + news_id);
+			console.info('type: ' + type);
+			console.info('time: ' + time);
+
+            return `
+                <tr id="c-${id}" data-id="${id}" data-news_id="${news_id}">
+					<td>
+						<div class="ui checkbox">
+							<input type="checkbox" name="cron[]" value="${id}">
+						</div>
+					</td>
+                    <td>${id}</td>
+					<td data-name="news_id">${news_id}</td>
+					<td data-name="type">${type}</td>
+					<td data-name="time">${time.date}</td>
+					<td class="right aligned">
+						<div class='ui buttons'>
+								<a class='ui item' href="{{ dle_config.http_home_url }}{{ dle_config.admin_path }}?mod=editnews&action=editnews&id=${news_id}" target="_blank">
+									<i class="fa-duotone fa-pen-to-square"></i> {% trans %}Редактировать новость{% endtrans %}
+								</a>
+								<a class='ui item' href="{{ dle_config.http_home_url }}index.php?newsid=${news_id}" target="_blank">
+									<i class="fa-duotone fa-pen-to-square"></i> {% trans %}Открыть на сайте{% endtrans %}
+								</a>
+								<a data-action='change' class='ui item act_btn' data-id='${id}'>
+									<i class="fa-duotone fa-timer"></i> {% trans %}Изменить дату{% endtrans %}
+								</a>
+								<a data-action='send' class='ui item act_btn' data-id='${id}'>
+									<i class="fa-duotone fa-eye"></i> {% trans %}Отправить в телеграм{% endtrans %}
+								</a>
+								<a data-action='delete' class='ui item act_btn' data-id='${id}'>
+									<i class="fa-duotone fa-trash-can"></i> {% trans %}Удалить{% endtrans %}
+								</a>
+						</div>
+					</td>
+				</tr>
+            `
+        }
+
+        function prepareNews(selected = 0) {
+            let obj = [];
+
+            for (let i = 0, max = news_obj.length; i < max; i++) {
+                let _el = news_obj[i], _sel = (selected == _el.id) ? ' selected' : '';
+
+                obj.push(`<option value="${_el.id}" ${_sel}>#${_el.id}: ${_el.title}</option>`)
+            }
+
+            return obj.join('\n')
+
+        }
+
+        function cronForm(time, type = 'addnews', news_id = 0, id = 0) {
+            const regex = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/gm;
+
+            let
+                time_regex = regex.exec(time),
+                id_field = (id !== 0) ? `<input type="hidden" name="form_id" id="form_id" value="${id}">` : '',
+                new_time = ''
+            ;
+
+            if (time_regex === null) {
+                if (time === null || time === '') time = new Date().getTime();
+                const date = new Date(time);
+                new_time = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0') + 'T' + date.getHours().toString().padStart(2, '0') + ':' + date.getMinutes().toString().padStart(2, '0') + ':' + date.getSeconds().toString().padStart(2, '0');
+            } else {
+                new_time = (time_regex.length > 1) ? `${time_regex[1]}-${time_regex[2]}-${time_regex[3]}T${time_regex[4]}:${time_regex[5]}:${time_regex[6]}` : '';
+            }
+
+            return '<div class="ui form">' +
+                '<div class="field">\n' +
+                '<label for="new_news">{% trans %}Новость{% endtrans %}</label>\n' +
+                '<select id="new_news" name="new_news" class="ui dropdown" required>\n' +
+                prepareNews(news_id) +
+                '</select>' +
+                '<label for="new_type">{% trans %}Тип{% endtrans %}</label>\n' +
+                '<select id="new_type" name="new_type" class="ui dropdown" required>\n' +
+                '<option value="addnews" ' + ((type === 'addnews') ? 'selected' : '') + '>{% trans %}Как новую новость{% endtrans %}</option>' +
+                '<option value="editnews" ' + ((type === 'editnews') ? 'selected' : '') + '>{% trans %}Как отредактированную новость{% endtrans %}</option>' +
+                '</select>' +
+                '</div>' +
+                '<div class="field">\n' +
+                '<label for="new_time">{% trans %}Время{% endtrans %}</label>\n' +
+                '<input type="datetime-local" name="new_time" id="new_time" value="' + new_time + '" required>\n' +
+                '</div>' +
+                id_field +
+                '</div>';
+
+        }
+
+        function getNews() {
+            startLoading();
+            $.ajax({
+                url: 'engine/ajax/controller.php?mod=maharder',
+                data: {
+                    user_hash: '{{ dle_login_hash }}',
+                    module: 'telegram',
+                    file: 'master',
+                    method: 'get_news',
+                },
+                type: 'POST',
+                success: function (data) {
+
+                    try {
+                        data = JSON.parse(data);
+                    } catch (e) {
+                        if (typeof (data) != 'object') {
+                            console.log(data);
+                            $('body')
+                                .toast({
+                                    displayTime: 'auto',
+                                    showProgress: 'bottom',
+                                    classProgress: 'blue',
+                                    class: 'error',
+                                    message: __('Ошибка при парсинге новостей! Подробности в консоли!')
+                                })
+                            ;
+                        }
+                    }
+
+                    news_obj = data.news;
+
+                    hideLoading('');
+                }
+            });
+        }
+
+        $(() => {
+            $(document).on('click', '.act_btn', function () {
+                const
+                    parent = $(this).parents('tr'),
+                    id = $(parent).data('id'),
+                    news_id = $(parent).data('news_id'),
+                    title = $(parent).find('[data-name="title"]').html(),
+                    type = $(parent).find('[data-name="type"]').html(),
+                    time = $(parent).find('[data-name="time"]').html(),
+                    action = $(this).data('action');
+
+                startLoading();
+
+                switch (action) {
+                    case 'new':
+                        getNews();
+                        $.confirm({
+                            title: __('Добавить новость'),
+                            theme: 'supervan',
+                            useBootstrap: false,
+                            content: cronForm(new Date().getTime()),
+                            buttons: {
+                                spreichern: {
+                                    text: __('Сохранить'),
+                                    btnClass: 'ui button green',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        let new_news = $('#new_news').val(), new_time = $('#new_time').val(),
+                                            new_type = $('#new_type').val();
+                                        sendAjaxRequest({
+                                            url: 'engine/ajax/controller.php?mod=maharder',
+                                            data: {
+                                                user_hash: '{{ dle_login_hash }}',
+                                                module: 'telegram',
+                                                file: 'master',
+                                                method: 'cron_new_entry',
+                                                data: {
+                                                    news_id: new_news,
+                                                    time: new_time,
+                                                    type: new_type,
+                                                }
+                                            },
+                                            successCallback: function (data) {
+												console.log(data)
+                                                $('[data-id="cron_data"]').append(tableEntry(data.meta.id, data.meta.news_id, data.meta.type, data.meta.time));
+                                            }
+                                        });
+                                        hideLoading();
+                                    }
+                                },
+                                abbrechen: {
+                                    text: __('Отмена'),
+                                    btnClass: 'ui button red',
+                                    keys: ['esc'],
+                                    action: function () {
+                                        hideLoading();
+                                    }
+                                },
+                            }
+                        });
+                        break;
+
+                    case 'change':
+                        $.confirm({
+                            title: '{% trans %}Изменить: {% endtrans %}' + title,
+                            theme: 'supervan',
+                            useBootstrap: false,
+                            content: cronForm(time, type, news_id, id),
+                            buttons: {
+                                spreichern: {
+                                    text: __('Сохранить'),
+                                    btnClass: 'ui button green',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        let new_news = $('#new_news').val(), new_time = $('#new_time').val(),
+                                            new_type = $('#new_type').val(), id = $('#form_id').val();
+                                        sendAjaxRequest({
+                                            url: 'engine/ajax/controller.php?mod=maharder',
+                                            data: {
+                                                user_hash: '{{ dle_login_hash }}',
+                                                module: 'telegram',
+                                                file: 'master',
+                                                method: 'save_cron_data',
+                                                data: {
+                                                    news_id: new_news,
+                                                    time: new_time,
+                                                    type: new_type,
+                                                    cron_id: id
+                                                }
+                                            },
+                                            successCallback: function (data) {
+                                                let
+                                                    entry = $(document).find('#c-' + id).first(),
+                                                    title = $(entry).find('[data-name="news_id"]').first(),
+                                                    type = $(entry).find('[data-name="type"]').first(),
+                                                    time = $(entry).find('[data-name="time"]').first()
+                                                ;
+
+                                                $(title).html(data.meta.news_id);
+                                                $(type).html(data.meta.type);
+                                                $(time).html(data.meta.time);
+                                                $('body')
+                                                    .toast({
+                                                        displayTime: 'auto',
+                                                        showProgress: 'top',
+                                                        classProgress: 'white',
+                                                        class: 'success',
+                                                        message: __('Отправление было успешно изменено!')
+                                                    })
+                                                ;
+                                            }
+                                        });
+
+                                    }
+                                },
+                                abbrechen: {
+                                    text: __('Отмена'),
+                                    btnClass: 'ui button red',
+                                    keys: ['esc'],
+                                    action: function () {
+                                        hideLoading();
+                                    }
+                                },
+                            }
+                        });
+                        break;
+
+                    case 'delete':
+                        $.confirm({
+                            title: '{% trans %}Удалить: {% endtrans %}' + title,
+                            theme: 'supervan',
+                            useBootstrap: false,
+                            content: __("После удаления, данные будет не возможно вернуть!"),
+                            buttons: {
+                                delete: {
+                                    text: __('Удалить'),
+                                    btnClass: 'ui button green',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        sendAjaxRequest({
+                                            url: 'engine/ajax/controller.php?mod=maharder',
+                                            data: {
+                                                user_hash: '{{ dle_login_hash }}',
+                                                module: 'telegram',
+                                                file: 'master',
+                                                method: 'delete_cron_data',
+                                                data: {
+                                                    cron_id: id
+                                                }
+                                            },
+                                        });
+                                    }
+                                },
+                                abbrechen: {
+                                    text: __('Отмена'),
+                                    btnClass: 'ui button red',
+                                    keys: ['esc'],
+                                    action: function () {
+                                        hideLoading();
+                                    }
+                                },
+                            }
+                        });
+                        break;
+
+                    case 'send':
+                        $.confirm({
+                            title: __('Отправить в телеграм: ') + title,
+                            theme: 'supervan',
+                            useBootstrap: false,
+                            content: __("Подтвердите отправку новости в телеграм! После успешного отправления, новость удалится из списка ожидания на отправку!"),
+                            buttons: {
+                                send: {
+                                    text: __('Отправить'),
+                                    btnClass: 'ui button green',
+                                    keys: ['enter'],
+                                    action: function () {
+                                        $.ajax({
+                                            url: 'engine/ajax/controller.php?mod=maharder',
+                                            data: {
+                                                user_hash: '{{ dle_login_hash }}',
+                                                module: 'telegram',
+                                                file: 'master',
+                                                method: 'send_cron_data',
+                                                data: {
+                                                    cron_id: id,
+                                                    news_id: news_id,
+                                                    type: type
+                                                }
+                                            },
+                                            type: 'POST',
+                                            success: function (data) {
+                                                try {
+                                                    data = JSON.parse(data);
+                                                } catch (e) {
+                                                    if (typeof (data) != 'object') {
+                                                        console.log(data);
+                                                        $('body')
+                                                            .toast({
+                                                                displayTime: 'auto',
+                                                                showProgress: 'bottom',
+                                                                classProgress: 'white',
+                                                                class: 'error',
+                                                                message: __('Произошла ошибка при обработке данных! Смотрите консоль браузера для подробностей!')
+                                                            })
+                                                        ;
+                                                    }
+                                                }
+
+                                                if (data.success) {
+                                                    $(parent).remove();
+                                                    $('body')
+                                                        .toast({
+                                                            displayTime: 'auto',
+                                                            showProgress: 'top',
+                                                            classProgress: 'white',
+                                                            class: 'success',
+                                                            message: __('Новость была успешно отправлена в телеграм!')
+                                                        })
+                                                    ;
+                                                } else {
+                                                    console.log(data);
+                                                    $('body')
+                                                        .toast({
+                                                            displayTime: 'auto',
+                                                            showProgress: 'bottom',
+                                                            classProgress: 'white',
+                                                            class: 'error',
+                                                            message: __('Новость не могла быть обработана!<br><b>Причина</b>: ') + data.message
+                                                        })
+                                                    ;
+                                                }
+                                            }
+                                        });
+
+                                        hideLoading();
+                                    }
+                                },
+                                abbrechen: {
+                                    text: __('Отмена'),
+                                    btnClass: 'ui button red',
+                                    keys: ['esc'],
+                                    action: function () {
+                                        hideLoading();
+                                    }
+                                },
+                            }
+                        });
+                        break;
+                }
+            });
+
+
+            getNews();
+        });
+	</script>
+{% endautoescape %}

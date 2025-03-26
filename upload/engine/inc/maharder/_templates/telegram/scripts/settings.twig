@@ -1,0 +1,407 @@
+{% autoescape 'js' %}
+	<script>
+        var dependencyFields = JSON.parse('{{ dependencies }}'),
+            depID = '#field',
+            parentDependencyFields = $(document).find(depID).first().parent(),
+            dependencyFieldItems = 0,
+            dependencyFieldCount = 0;
+
+        function createItem(num_id, field_id = null, field_value = '', field_source = '', field_name = '') {
+
+            function gen_options(fields, field_id, field_source, field_name) {
+                let groups = {
+                    post: {
+                        name: 'Новости',
+                        type: 'post',
+                        values: []
+                    },
+                    post_extras: {
+                        name: 'Новости',
+                        type: 'post_extras',
+                        values: []
+                    },
+                    categories: {
+                        name: 'Категории',
+                        type: 'category',
+                        values: []
+                    },
+                    xfields: {
+                        name: 'Доп. поля',
+                        type: 'xfields',
+                        values: []
+                    },
+                    others: {
+                        name: 'Прочее',
+                        type: 'other',
+                        values: []
+                    }
+                }, html = '';
+                $.each(fields, function (key, value) {
+                    let
+                        val = {
+                            name: value.name,
+                            source: value.source,
+                            field_id: field_id,
+                            value: value.value,
+                            selected: false
+                        },
+                        val_id = field_id + ':' + field_source + ':' + field_name,
+                        val_check = val.field_id + ':' + val.source + ':' + val.name
+                    ;
+                    val.selected = val_id === val_check;
+                    if (val.source === 'post') groups.post.values.push(val);
+                    else if (val.source === 'post_extras') groups.post_extras.values.push(val);
+                    else if (val.source === 'category') groups.categories.values.push(val);
+                    else if (val.source === 'xfields') groups.xfields.values.push(val);
+                    else {
+                        if (val.name !== '' || val.source !== '') groups.others.values.push(val);
+                    }
+
+                });
+                $.each(groups, function (k, v) {
+                    html += '<optgroup label="' + v.name + ' (' + v.type + ')">';
+                    for (let i = 0, max = v.values.length; i < max; i++) {
+                        let
+                            val = v.values[i],
+                            val_key = val.field_id + ':' + val.source + ':' + val.name,
+                            selected = (val.selected) ? 'selected' : '',
+                            id_name = (val.source === 'category') ? 'ID: ' : ''
+                        ;
+                        html += '<option value="' + val_key + '" ' + selected + '>' + val.value + ' ' +
+                            '(' + id_name + val.name + ')</option>';
+                    }
+                    html += '</optgroup>';
+                });
+
+
+                return html;
+            }
+
+            let
+                html = '<div class="ui three column grid fieldItem" data-id="' + num_id + '">' +
+                    '<div class="column ui input">' +
+                    '<input	class="depField" data-source="' + field_source + '"	data-field_id="' + field_id + '" data-name="' + field_name + '" type="text" placeholder="Зависимость" name="field-' + num_id + '" id="field-' + num_id + '" value="' + field_value + '">' +
+                    '</div>' +
+                    '<div class="column">' +
+                    '<select class="aksDd" id="source-' + num_id + '" data-id="' + num_id + '">';
+            html += gen_options(dependencyFields, num_id, field_source, field_name);
+
+            html += `			</select>
+	</div>
+	<div class="column">
+		<div class="ui mini icon buttons">
+			<div role="button" class="ui green button" data-action="addNewField" title="Добавить новую зависимость">
+				<i class="plus icon"></i>
+			</div>
+			<div role="button" class="ui red button" data-action="delThisField" title="Удалить зависимость">
+				<i class="minus icon"></i>
+			</div>
+		</div>
+	</div>
+</div>`;
+
+            return html;
+        }
+
+        function createKeyInputs() {
+            let html = '<div class="" name="dependencyFields">';
+            let keysValue = {}, countFields = 0;
+            try {
+                keysValue = JSON.parse(atob($(depID).val()));
+                countFields = keysValue.length;
+            } catch (e) {
+                console.log('No field dependencies were set');
+                // $.alert({
+                // 	title: 'Ошибка!',
+                // 	content: 'Не указана зависимость!',
+                // });
+            }
+
+            if (countFields > 0) {
+                for (let i = 0; i < countFields; i++) {
+                    dependencyFieldItems++;
+                    dependencyFieldCount++;
+                    html += createItem(dependencyFieldItems, keysValue[i].field_id, keysValue[i].value, keysValue[i].source, keysValue[i].name);
+                }
+            } else {
+                dependencyFieldItems++;
+                dependencyFieldCount++;
+                html += createItem(dependencyFieldItems);
+            }
+
+            html += '</div>';
+
+            return html;
+        }
+
+        function modifyFieldVal() {
+            let fields = [];
+
+            $('[name="dependencyFields"] .aksDd').each(function () {
+                let
+                    thisID = $(this).data('id'),
+                    field_data = $('#source-' + thisID).val().split(':'),
+                    field_val = $(document).find('#field-' + thisID).first().val()
+                ;
+
+                if (field_data.source === 'other') {
+                    let source_split = field_val.split(':'), val_split = source_split[1].split('|');
+                    field_data.source = source_split[0];
+                    field_data.name = val_split[0];
+                    field_val = val_split[1];
+                }
+
+                fields.push({
+                    field_num: field_data[0],
+                    name: field_data[2],
+                    source: field_data[1],
+                    value: field_val,
+                });
+            });
+            $(depID).val(btoa(JSON.stringify(fields)));
+        }
+
+        $(() => {
+            let inputs = createKeyInputs();
+            $(parentDependencyFields).append(inputs);
+            $('.dropdown').dropdown();
+            $(depID).hide();
+
+            $(document).on('click', '.save', function () {
+                startLoading();
+                $.ajax({
+                    url: 'engine/ajax/controller.php?mod=maharder',
+                    data: {
+                        user_hash: '{{dle_login_hash}}',
+                        module: '{{module_code}}',
+                        file: 'master',
+                        method: 'settings',
+                        data: $('.form').serialize()
+                    },
+                    type: 'POST',
+                    success: function (data) {
+                        hideLoading('');
+                        $('body').toast({
+                            class: 'success',
+                            title: `Всё отлично!`,
+                            message: `Данные были сохранены!`,
+                            showProgress: 'bottom'
+                        });
+
+                    }
+                });
+            });
+            $(document).on('click', '.send_tg_msg', function () {
+                let
+                    $token = $('#token'),
+                    $chat = $('#chat')
+                ;
+                if ($token.val() === '' || $chat.val() === '') {
+                    $.alert({
+                        useBootstrap: false,
+                        title: 'Не заполненые поля!',
+                        content: 'Поля с токеном и ID чата должны быть заполнены!'
+                    });
+                } else {
+                    startLoading();
+                    $.ajax({
+                        url: 'engine/ajax/controller.php?mod=maharder',
+                        data: {
+                            user_hash: '{{ dle_login_hash }}',
+                            module: '{{ module_code }}',
+                            file: 'master',
+                            method: 'send_message',
+                            data: {
+                                bot: $token.val(),
+                                chat: $chat.val()
+                            }
+                        },
+                        type: 'POST',
+                        success: function (data) {
+                            try {
+                                data = JSON.parse(data);
+                            } catch (e) {
+                                if (typeof (data) != 'object') {
+                                    console.log({
+                                        recieved: data,
+                                        error: e
+                                    });
+                                }
+                            }
+                            hideLoading();
+                            if (data.ok) {
+                                $('body')
+                                    .toast({
+                                        title: 'Сообщение отправлено!',
+                                        message: `<b>Тестовое сообщение</b> было отправлено в чат ${data.result.chat.title} [<a href="https://t.me/${data.result.chat.username}" target="_blank">@${data.result.chat.username}</a>].`,
+                                        showProgress: 'bottom',
+                                        classProgress: 'red',
+                                        displayTime: 'auto',
+                                        class: 'success',
+                                    })
+                                ;
+                            } else {
+                                $('body')
+                                    .toast({
+                                        title: 'Сообщение не было отправлено!',
+                                        message: `<b>Тестовое сообщение</b> было не могло быть отправлено при текущих настройках!<br>Проверьте данные и попробуйте снова!<br><br><i>Описание ошибки можно увидеть в консоли браузера!</i>`,
+                                        showProgress: 'bottom',
+                                        classProgress: 'blue',
+                                        displayTime: 'auto',
+                                        class: 'error',
+                                    })
+                                ;
+                                console.log(data);
+                            }
+
+                        }
+                    });
+                }
+            });
+            $(document).on('click', '.get_chat_id', function () {
+                let
+                    $token = $('#token'),
+                    $chat = $('#chat')
+                ;
+                if ($token.val() === '') {
+                    $.alert({
+                        useBootstrap: false,
+                        title: 'Не заполненые поля!',
+                        content: 'Поле с токеном должно быть заполнено!'
+                    });
+                } else {
+                    $.confirm({
+                        useBootstrap: false,
+                        theme: 'material',
+                        title: 'Внимание!',
+                        content: 'Перед поиском ID канала / группы, убедитесь, что в нём были оставлены какие-нибудь сообщения. Если активности мало, то оставьте любое сообщение на свой лад.',
+                        buttons: {
+                            send: {
+                                text: 'Искать',
+                                btnClass: 'ui green button',
+                                keys: ['enter',],
+                                action: function(){
+                                    startLoading();
+                                    $.ajax({
+                                        url: 'engine/ajax/controller.php?mod=maharder',
+                                        data: {
+                                            user_hash: '{{ dle_login_hash }}',
+                                            module: '{{ module_code }}',
+                                            file: 'master',
+                                            method: 'get_chat_id',
+                                            data: {
+                                                bot: $token.val()
+                                            }
+                                        },
+                                        type: 'POST',
+                                        success: function (data) {
+                                            try {
+                                                data = JSON.parse(data);
+                                            } catch (e) {
+                                                if (typeof (data) != 'object') {
+                                                    console.log({
+                                                        recieved: data,
+                                                        error: e
+                                                    });
+                                                }
+                                            }
+                                            hideLoading();
+                                            if (data.ok) {
+                                                if (data.result.length === 0) {
+                                                    $('body')
+                                                        .toast({
+                                                            title: 'Чат не найден!',
+                                                            message: `Данные авторизации верны, но в чате давно не было активности! Оставьте сообщение в чате и попробуйте снова!<br><br><i>Описание ошибки можно увидеть в консоли браузера!</i>`,
+                                                            showProgress: 'bottom',
+                                                            classProgress: 'blue',
+                                                            displayTime: 'auto',
+                                                            class: 'error',
+                                                        })
+                                                    ;
+                                                    console.log(data);
+                                                } else {
+                                                    $('body')
+                                                        .toast({
+                                                            title: 'Чат найден!!',
+                                                            message: `Скрипт нашёл чат ${data.result[0].channel_post.chat.title} [<a href="https://t.me/${data.result[0].channel_post.chat.username}" target="_blank">@${data.result[0].channel_post.chat.username}</a>] и проставил ID в поле. Сохраните настройки.`,
+                                                            showProgress: 'bottom',
+                                                            classProgress: 'red',
+                                                            displayTime: 'auto',
+                                                            class: 'success',
+                                                        })
+                                                    ;
+                                                    $chat.val(data.result[0].channel_post.chat.id);
+                                                }
+                                            } else {
+                                                $('body')
+                                                    .toast({
+                                                        title: 'Чат не найден!',
+                                                        message: `По какой-то причине ID канала / группы не могло быть найдено. Возможно что-то пошло не так. Как альтернатива - используйте другие методы по поиску ID в документации.<br><br><i>Описание ошибки можно увидеть в консоли браузера!</i>`,
+                                                        showProgress: 'bottom',
+                                                        classProgress: 'blue',
+                                                        displayTime: 'auto',
+                                                        class: 'error',
+                                                    })
+                                                ;
+                                                console.log(data);
+                                            }
+
+                                        }
+                                    });
+                                }
+                            },
+                            cancel: {
+                                text: 'Отменить',
+                                btnClass: 'ui red button',
+                                keys: ['esc',],
+                                action: function(){
+                                }
+                            }
+                        }
+                    })
+
+
+                }
+            });
+            $(document).on('change', '.fieldItem, [data-name="field"]', function () {
+                modifyFieldVal();
+            });
+            $(document).on('input', '.fieldItem', function () {
+                modifyFieldVal();
+            });
+            $(document).on('click', '[data-action="addNewField"]', function () {
+                dependencyFieldItems++;
+                dependencyFieldCount++;
+                let item = createItem(dependencyFieldItems);
+                $('[name="dependencyFields"]').append(item);
+                modifyFieldVal();
+            });
+            $(document).on('click', '[data-action="delThisField"]', function () {
+
+                if (dependencyFieldCount > 1) {
+                    dependencyFieldCount--;
+
+                    $(document).find(this).first().parents('.fieldItem').remove();
+
+                    modifyFieldVal();
+                } else $.alert({
+                    useBootstrap: false,
+                    title: 'Ошибка!',
+                    content: 'Нельзя удалять все поля! Хотя-бы одно да должно остаться!',
+                });
+
+            });
+            $(document).on('click', '[data-editor-action="copy_data"]', function () {
+                let $el = $(this),
+                    data = $el.data(),
+                    source_id = '#' + data.copy + '_editor',
+                    output_id = '#' + data.output + '_editor',
+                    source_data = $(source_id).val()
+                ;
+
+                $(output_id).val(source_data);
+
+            })
+        });
+	</script>
+{% endautoescape %}
