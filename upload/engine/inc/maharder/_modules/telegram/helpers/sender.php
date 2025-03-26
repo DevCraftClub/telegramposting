@@ -4,7 +4,7 @@ if( !defined( 'DATALIFEENGINE' ) ) die( "Oh! You little bastard!" );
 
 
 $mh_data = new MhAjax();
-$tg_config = DataManager::getConfig('telegram', ENGINE_DIR . '/inc/maharder/_config', 'telebot');
+$tg_config = DataManager::getConfig('telegram');
 
 function sendTelegram($id, $type = 'addnews') {
 	global $tg_config, $MHDB;
@@ -21,7 +21,7 @@ function sendTelegram($id, $type = 'addnews') {
 
 			$cron->news_id = $news_id;
 			$cron->type = $type;
-			$cron->time = new DateTimeImmutable();
+			$cron->time = (new DateTimeImmutable())->add(new DateInterval("P{$tg_config['cron_time']}M"));
 
 			$MHDB->create($cron);
 		} else {
