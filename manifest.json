@@ -1,8 +1,8 @@
 {
 	"status": "beta",
-	"dle": ["17.x"],
+	"dle": ["17.x", "18.x"],
 	"php": ["8.3"],
-	"mhadmin": "173.3.3",
-	"version": "173.8.0",
+	"mhadmin": "180.3.5",
+	"version": "173.8.1",
 	"name": "TelegramPosting"
 }

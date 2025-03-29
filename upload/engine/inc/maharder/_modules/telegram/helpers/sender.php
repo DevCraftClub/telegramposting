@@ -17,6 +17,10 @@ function sendTelegram($id, $type = 'addnews') {
 	if($tg_config['onof']) {
 
 		if($tg_config['cron']) {
+			if(!class_exists('TgCron')) {
+				require_once DLEPlugins::Check(ENGINE_DIR . '/inc/maharder/_includes/extras/paths.php');
+			}
+
 			$cron = new TgCron();
 
 			$cron->news_id = $news_id;
