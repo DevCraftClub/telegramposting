@@ -11,10 +11,10 @@
 
 global $MHDB, $config;
 
-@error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
-@ini_set('display_errors', true);
-@ini_set('html_errors', false);
-@ini_set('error_reporting', E_ALL ^ E_WARNING ^ E_NOTICE);
+//@error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
+//@ini_set('display_errors', true);
+//@ini_set('html_errors', false);
+//@ini_set('error_reporting', E_ALL ^ E_WARNING ^ E_NOTICE);
 
 define( 'DATALIFEENGINE', true );
 define( 'ROOT_DIR', dirname(__DIR__, 5) );
