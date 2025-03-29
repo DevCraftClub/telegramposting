@@ -3,6 +3,7 @@
 class RePost {
 
 	use DataLoader;
+	use DleData;
 
 	/**
 	 * @var string|null
@@ -521,6 +522,10 @@ class RePost {
 	public function parse_content($content, array $filter = []) {
 		global $lang, $_TIME, $PHP_SELF, $cat_info, $config, $user_group, $member_id, $customlangdate, $news_date;
 
+		if (!$cat_info) {
+			$cat_info = $this->getFullCats();
+		}
+
 		if (count($this->getContentTags()) === 0) {
 
 			$content = htmlspecialchars_decode($content);
@@ -767,7 +772,7 @@ class RePost {
 			} else {
 				$my_cat      = [];
 				$my_cat_link = [];
-				$cat_list    = $row['cats'] = explode($this->getCategorySeparator(), $row['category']);
+				$cat_list    = explode($this->getCategorySeparator(), $row['category']);
 
 				$this->setContentTags('[has-category]', "");
 				$this->setContentTags('[/has-category]', "");
