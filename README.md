@@ -1,3 +1,6 @@
+Для дальнейшего использования перейдите на новую разработку: [Re: Post](https://devcraft.club/downloads/re-post.36/)
+
+
 [![GitHub issues](https://img.shields.io/github/issues/Gokujo/telegramposting.svg?style=flat-square)](https://github.com/Gokujo/telegramposting/issues)
 [![GitHub forks](https://img.shields.io/github/forks/Gokujo/telegramposting.svg?style=flat-square)](https://github.com/Gokujo/telegramposting/network)
 
